@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
 
 export const Hero = () => {
@@ -52,11 +52,13 @@ export const Hero = () => {
             <span>GitHub</span>
           </a>
            <a
-            href={`tel:${personal.phone.replace(/\s/g, '')}`}
-            className="flex items-center gap-2 px-6 py-3 bg-green-700 hover:bg-green-600 rounded-full transition-colors text-white"
+            href={personal.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] rounded-full transition-colors text-white"
           >
-            <Phone size={20} />
-            <span>Call</span>
+            <MessageCircle size={20} />
+            <span>WhatsApp</span>
           </a>
         </div>
       </motion.div>
@@ -65,9 +67,10 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 animate-bounce"
+        className="absolute bottom-10 animate-bounce flex flex-col items-center"
       >
-        <span className="text-gray-500 text-sm">Scroll Down</span>
+        <span className="text-gray-500 text-lg">Scroll Down</span>
+        <ChevronDown className="text-gray-500 mt-2" size={24} />
       </motion.div>
     </section>
   );

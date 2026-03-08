@@ -4,6 +4,7 @@ export const portfolioData = {
     title: "AI Agent Engineer",
     email: "michaelchan@ymail.com",
     phone: "6035 8263",
+    whatsapp: "https://wa.me/85260358263",
     linkedin: "https://linkedin.com/in/michael-chanchunming",
     github: "https://github.com/p445ccm4",
     summary: "AI Agent Engineer with over 3 years of experience in Machine Learning, Python and Full-Stack Development. Specializes in building Agentic AI systems using LLMs, Vector Databases, and RAG frameworks. Currently developing enterprise meeting assistants at HKT, utilizing React.js and Nest.js within a strict CI/CD environment. Experienced in high-performance backend architecture, including GoLang microservices and gRPC. Adept at translating business needs into technical designs and driving digital transformation for non-technical stakeholders."
@@ -65,7 +66,9 @@ export const portfolioData = {
   ],
   projects: [
     {
+      id: "ai-meeting-summary",
       title: "AI Meeting Summary App",
+      role: "Senior AI Application Developer",
       company: "HKT",
       year: "2026",
       description: "A platform to generate summary and insights from meeting recordings",
@@ -73,32 +76,10 @@ export const portfolioData = {
         "Developing an enterprise-grade meeting assistant that transcribes audio (Whisper) and generates summaries, action points and insights.",
         "Engineered an asynchronous task queue system (BullMQ) to handle high-concurrency audio processing."
       ],
-      tech: ["Whisper", "BullMQ", "React", "Nest.js"]
+      tech: ["Whisper", "BullMQ", "React", "Nest.js", "AI Security", "K8S", "AWS", "CI/CD"]
     },
     {
-      title: "AI Agent",
-      company: "Oodles Systems",
-      year: "2025",
-      description: "A smart system automating complex tasks without human interference.",
-      details: [
-        "Designed a fully autonomous agentic system that automates workflows for Tender, HR and Admin depts.",
-        "Implemented RAG on NAS servers and orchestrated multiple agents using Model Context Protocol (MCP).",
-        "Successfully automated complex tasks like resume filtering and payment voucher processing."
-      ],
-      tech: ["RAG", "MCP", "LLMs", "Vector DB"]
-    },
-    {
-      title: "AI YouTuber",
-      company: "Self Project",
-      year: "2025",
-      description: "A platform to create and edit long videos with just a few clicks",
-      details: [
-        "Uses many SOTA AI models to generate script, speech, image and music, then integrate them into wonderful YouTube videos.",
-        "Autonomously making 1000+ views per video with super low maintenance."
-      ],
-      tech: ["Generative AI", "SOTA Models", "Automation"]
-    },
-    {
+      id: "enterprise-hrms",
       title: "Enterprise HR Management System",
       company: "Self Project",
       year: "2026",
@@ -107,28 +88,74 @@ export const portfolioData = {
       tech: ["React.js", "GoLang", "Microservices", "gRPC"]
     },
     {
+      id: "ai-agent",
+      title: "AI Agent",
+      role: "Artificial Intelligence Engineer",
+      company: "Oodles Systems",
+      year: "2025",
+      description: "A smart system automating complex tasks without human interference.",
+      details: [
+        "Designed a fully autonomous agentic system that automates workflows for Tender, HR and Admin depts.",
+        "Implemented RAG on NAS servers and orchestrated multiple agents using Model Context Protocol (MCP).",
+        "Successfully automated complex tasks like resume filtering and payment voucher processing."
+      ],
+      tech: ["AI Agent", "RAG", "MCP", "LLMs", "Vector DB", "OCR", "On-premise Deployment", "Python", "React.js", "Docker"]
+    },
+    {
+      id: "ai-youtuber",
+      title: "AI YouTuber",
+      company: "Self Project",
+      year: "2025",
+      description: "A platform to create and edit long videos with just a few clicks",
+      details: [
+        "Uses many SOTA AI models to generate script, speech, image and music, then integrate them into wonderful YouTube videos.",
+        "Autonomously making 1000+ views per video with super low maintenance."
+      ],
+      tech: ["GenAI", "Automation", "Open Source SOTA Models", "Python", "Ollama", "Gradio", "Google APIs"]
+    },
+    {
+      id: "child-abuse-detection",
+      title: "Real-time Child Abuse Detection",
+      role: "Artificial Intelligence Engineer",
+      company: "HKU Sports & AI Lab",
+      year: "2024",
+      description: "A system to detect fast human motion in real-time",
+      details: [
+        "Performs object detection for video with 95% accuracy, real-time and low resource",
+        "Recommended by OGCIO as the best model in child abuse detection",
+        "Now being deployed to multiple childcare homes"
+      ],
+      tech: ["Python", "OpenCV", "Computer Vision", "TensorRT", "Real-time inference on Edge Device", "Research"]
+    },
+    {
+      id: "customer-attention-tracking",
       title: "Real-time Customer Attention Tracking",
-      company: "HKUIT",
+      role: "Artificial Intelligence Engineer",
+      company: "HKU Sports & AI Lab",
       year: "2024",
       description: "A system to record which products customers are looking at or touching",
       details: [],
-      tech: ["Computer Vision", "Real-time Tracking"]
+      tech: ["Computer Vision", "Real-time Edge Device Inference", "Human Posture Tracking", "Depth Camera", "3D Reconstruction", "Python", "PyTorch", "ONNX", "OpenCV", "Matplotlib"]
     },
     {
+      id: "momentum-transformer",
       title: "Trading with Momentum Transformer",
-      company: "Graded A-, MSc",
+      role: "Final Project, Graded A-",
+      company: "HKU Master of Science (Computer Science)",
       year: "2023",
       description: "An finetuned, optimized transformer model for trading",
       details: [],
-      tech: ["Transformer", "FinTech", "Optimization"]
+      tech: ["Transformer", "FinTech", "Finetuning & Optimization", "Python"]
     },
     {
+      id: "lightweight-cnn",
       title: "A light-weight CNN for Object Recognition",
-      company: "Graded A-, BEng",
+      role: "Final Year Project, Graded A-",
+      company: "HKU Bachelor of Engineering (Computer Science)",
       year: "2021",
       description: "A mobile app deployed with finetuned MobileNet, ShuffleNet and Xception",
       details: [],
-      tech: ["CNN", "MobileNet", "ShuffleNet", "Xception"]
+      tech: ["Python", "TensorFlow", "Mobile App Development", "CNN", "MobileNet", "ShuffleNet", "Xception", "Android Studio", "Flutter"]
     }
   ],
   education: [
@@ -147,7 +174,7 @@ export const portfolioData = {
     genAI: ["Agentic Workflows", "RAG", "Prompt Engineering", "MCP"],
     mlOps: ["Python", "PyTorch", "TensorFlow", "FastMCP", "LangChain", "LangGraph", "HuggingFace Libraries", "OpenAI libraries", "ONNX", "TensorRT", "OpenCV", "Numpy", "Pandas"],
     database: ["Vector DB", "SQL", "PostgreSQL", "Milvus", "MySQL", "MongoDB", "Prisma ORM"],
-    web: ["React.js", "Nest.js", "GoLang", "Microservices", "gRPC", "FastAPI", "TypeScript"],
-    devOps: ["Docker", "Kubernetes", "GitLab CI/CD", "Azure", "AWS EKS", "Grafana", "KeyCloak"]
+    web: ["React.js", "Nest.js", "GoLang", "Microservices", "gRPC", "FastAPI", "TypeScript", "Java Srping Boot"],
+    devOps: ["Docker", "Kubernetes", "GitLab CI/CD", "AWS", "Grafana/Promtail", "SSO/OAuth/KeyCloak"]
   }
 };
