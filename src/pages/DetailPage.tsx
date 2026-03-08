@@ -3,7 +3,7 @@ import { portfolioData } from '../data/portfolio';
 import { ArrowLeft, Calendar, Briefcase, Code, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export const ProjectPage = () => {
+export const DetailPage = () => {
   const { id } = useParams();
   
   // Try to find in projects first
@@ -100,7 +100,7 @@ export const ProjectPage = () => {
             </p>
           )}
           
-          {/* Project Details (if any) */}
+          {/* Details (if any) */}
           {details && details.length > 0 && (
             <>
               <h3 className="text-2xl font-bold mb-4">Key Highlights</h3>

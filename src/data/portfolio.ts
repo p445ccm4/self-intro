@@ -79,6 +79,19 @@ export const portfolioData = {
       tech: ["Whisper", "BullMQ", "React", "Nest.js", "AI Security", "K8S", "AWS", "CI/CD"]
     },
     {
+      id: "hkt-genai-platform",
+      title: "Internal GenAI Platform Features",
+      role: "Senior AI Application Developer",
+      company: "HKT",
+      year: "2025",
+      description: "Feature development for an internal GenAI platform",
+      details: [
+        "Implemented sorting, filtering, and homepage editing features.",
+        "Collaborated on the full SDLC within a strict CI/CD environment."
+      ],
+      tech: ["React.js", "Nest.js", "Java Spring Boot", "CI/CD", "AWS", "K8S", "API development"]
+    },
+    {
       id: "enterprise-hrms",
       title: "Enterprise HR Management System",
       company: "Self Project",
@@ -100,6 +113,19 @@ export const portfolioData = {
         "Successfully automated complex tasks like resume filtering and payment voucher processing."
       ],
       tech: ["AI Agent", "RAG", "MCP", "LLMs", "Vector DB", "OCR", "On-premise Deployment", "Python", "React.js", "Docker"]
+    },
+    {
+      id: "oodles-smart",
+      title: "Oodles Smart Renovation Simulation Platform",
+      role: "Artificial Intelligence Engineer",
+      company: "Oodles Systems",
+      year: "2025",
+      description: "A renovation simulation website using computer vision and diffusion models.",
+      details: [
+        "Researched algorithms for removing furniture, generating empty rooms, and reverse image searching for textures.",
+        "Implemented features to replace wallpaper and simulate renovation styles."
+      ],
+      tech: ["Python", "Computer Vision", "GenAI", "OpenAI CLIP", "Object Segmentation", "Edge Detection", "Stable Diffusion"]
     },
     {
       id: "ai-youtuber",
@@ -126,6 +152,19 @@ export const portfolioData = {
         "Now being deployed to multiple childcare homes"
       ],
       tech: ["Python", "OpenCV", "Computer Vision", "TensorRT", "Real-time inference on Edge Device", "Research"]
+    },
+    {
+      id: "drawing-detection",
+      title: "Real-time Drawing Detection System",
+      role: "Artificial Intelligence Engineer",
+      company: "HKU Sports & AI Lab",
+      year: "2024",
+      description: "Real-time drawing detection system implemented by YOLOv7.",
+      details: [
+        "Participated in the machine learning life cycle: data collection, labelling, training, finetuning, and transformation to TensorRT static models.",
+        "Deployed on Nvidia Jetson series edge computers."
+      ],
+      tech: ["Python", "C++", "OpenCV", "Numpy", "Nvidia Jetson", "TensorRT", "YOLOv7", "Object Detection"]
     },
     {
       id: "customer-attention-tracking",
