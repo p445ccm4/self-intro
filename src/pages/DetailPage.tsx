@@ -1,19 +1,25 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { portfolioData } from '../data/portfolio';
-import { ArrowLeft, Calendar, Briefcase, Code, GraduationCap } from 'lucide-react';
+import { ArrowLeft, Calendar, Briefcase, Code, GraduationCap, Github, Youtube } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const getEmbedUrl = (url: string) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = new RegExp(regExp).exec(url);
+  return (match?.[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+};
 
 export const DetailPage = () => {
   const { id } = useParams();
+  const { pathname } = useLocation();
   
-  // Try to find in projects first
-  const project = portfolioData.projects.find((p) => p.id === id);
-  
-  // If not found, try experience (work)
-  const work = project ? null : portfolioData.experience.find((e) => `work-${e.id}` === id);
-  
-  // If not found, try education
-  const education = !project && !work ? portfolioData.education.find((e) => `edu-${e.school}-${e.degree}` === id) : null;
+  const isProject = pathname.startsWith('/project/');
+  const isExperience = pathname.startsWith('/experience/');
+  const isEducation = pathname.startsWith('/education/');
+
+  const project = isProject ? portfolioData.projects.find((p) => p.id === id) : null;
+  const work = isExperience ? portfolioData.experience.find((e) => e.id === id) : null;
+  const education = isEducation ? portfolioData.education.find((e) => e.id === id) : null;
 
   const item = project || work || education;
 
@@ -29,11 +35,13 @@ export const DetailPage = () => {
   // Normalize data for display
   const title = project ? project.title : work?.role || education?.degree || '';
   const subtitle = project ? project.company : work?.company || education?.school || '';
-  const date = project ? project.year : work?.period || education?.period || '';
+  const date = project ? project.period : work?.period || education?.period || '';
   const description = project ? project.description : work?.description || [];
-  const details = project ? project.details : [];
+  const details = project ? project.details : work?.details || [];
   const tech = project ? project.tech : [];
   const role = project ? project.role : work?.role || '';
+  const githubLinks = project?.githubLinks || [];
+  const youtubeLinks = project?.youtubeLinks || [];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -77,6 +85,55 @@ export const DetailPage = () => {
                   {t}
                 </span>
               ))}
+            </div>
+          </div>
+        )}
+
+        {githubLinks && githubLinks.length > 0 && (
+          <div className="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <Github className="text-blue-400" /> GitHub Repositories
+            </h2>
+            <div className="flex flex-col gap-3">
+              {githubLinks.map((link, i) => (
+                <a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-300 hover:text-blue-100 hover:underline flex items-center gap-2 transition-colors break-all"
+                >
+                  <Github size={16} />
+                  {link}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {youtubeLinks && youtubeLinks.length > 0 && (
+          <div className="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <Youtube className="text-red-500" /> YouTube Demos
+            </h2>
+            <div className="grid grid-cols-1 gap-6">
+              {youtubeLinks.map((link: string, i: number) => {
+                 const embedUrl = getEmbedUrl(link);
+                 if (!embedUrl) return null;
+                 return (
+                  <div key={i} className="aspect-video rounded-lg overflow-hidden border border-gray-700 bg-black">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={embedUrl}
+                      title={`YouTube video player ${i}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                 );
+              })}
             </div>
           </div>
         )}
