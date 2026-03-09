@@ -7,9 +7,10 @@ interface TimelineMilestoneProps {
   spacerHeight: number;
   cardRef?: (el: HTMLDivElement | null) => void;
   setHoveredItemId: (id: string | null) => void;
+  hoveredItemId: string | null;
 }
 
-export const TimelineMilestone = ({ item, spacerHeight, cardRef, setHoveredItemId }: TimelineMilestoneProps) => {
+export const TimelineMilestone = ({ item, spacerHeight, cardRef, setHoveredItemId, hoveredItemId }: TimelineMilestoneProps) => {
   return (
     <motion.div
       ref={cardRef}
@@ -19,15 +20,19 @@ export const TimelineMilestone = ({ item, spacerHeight, cardRef, setHoveredItemI
       viewport={{ once: true, margin: "-50px" }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      style={{ marginTop: spacerHeight }}
-      className="relative md:flex items-center justify-center w-full"
+      style={{ '--spacer-height': `${spacerHeight}px` } as React.CSSProperties}
+      className="relative md:flex items-center justify-center w-full mt-0 md:mt-[var(--spacer-height)] pointer-events-none"
     >
       <div
-        className="relative z-10 flex flex-col items-center max-w-md text-center px-4 py-6"
+        className="relative z-10 flex flex-col items-center max-w-md text-center px-4 py-6 pointer-events-auto"
         onMouseEnter={() => setHoveredItemId(item.id)}
         onMouseLeave={() => setHoveredItemId(null)}
       >
-        <div className="relative bg-gray-900/60 backdrop-blur-md p-6 rounded-2xl border border-yellow-500/30 shadow-[0_0_30px_rgba(234,179,8,0.1)] hover:border-yellow-500/50 transition-all group cursor-default">
+        <div className={`relative bg-gray-900/60 backdrop-blur-md p-6 rounded-2xl border transition-all group cursor-default ${
+          hoveredItemId === item.id
+            ? 'border-yellow-500/60 shadow-[0_0_40px_rgba(234,179,8,0.2)]'
+            : 'border-yellow-500/30 shadow-[0_0_30px_rgba(234,179,8,0.1)] hover:border-yellow-500/50'
+        }`}>
           <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 to-transparent rounded-2xl opacity-50" />
           
           <div className="relative flex flex-col items-center">

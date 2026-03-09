@@ -6,7 +6,7 @@ export const Hero = () => {
   const { personal } = portfolioData;
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pb-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black opacity-50"></div>
       
       <motion.div
@@ -67,7 +67,7 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 animate-bounce flex flex-col items-center"
+        className="absolute bottom-4 md:bottom-10 animate-bounce flex flex-col items-center"
       >
         <span className="text-gray-500 text-lg">Scroll Down</span>
         <ChevronDown className="text-gray-500 mt-2" size={24} />

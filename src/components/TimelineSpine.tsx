@@ -113,7 +113,7 @@ export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemI
              return (
                <motion.div
                  key={`spine-${item.id}`}
-                 className={`absolute rounded-full ${getPillColor(item.category)} ${isMilestone ? 'z-20' : 'z-10'} transition-shadow duration-300 ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
+                 className={`absolute rounded-full ${getPillColor(item.category)} ${isMilestone ? 'z-20' : 'z-10'} transition-shadow duration-300 pointer-events-auto cursor-pointer ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
                  style={{
                    top: isMilestone ? `calc(${top}% - 3px)` : `${top}%`,
                    height: isMilestone ? '6px' : `${height}%`,

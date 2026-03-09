@@ -261,7 +261,7 @@ export const portfolioData: PortfolioData = {
     genAI: ["Agentic Workflows", "RAG", "Prompt Engineering", "MCP"],
     mlOps: ["Python", "PyTorch", "TensorFlow", "FastMCP", "LangChain", "LangGraph", "HuggingFace Libraries", "OpenAI libraries", "ONNX", "TensorRT", "OpenCV", "Numpy", "Pandas"],
     database: ["Vector DB", "SQL", "PostgreSQL", "Milvus", "MySQL", "MongoDB", "Prisma ORM"],
-    web: ["React.js", "Nest.js", "GoLang", "Microservices", "gRPC", "FastAPI", "TypeScript", "Java Srping Boot"],
+    web: ["React.js", "Nest.js", "GoLang", "Microservices", "gRPC", "FastAPI", "TypeScript", "Java Spring Boot"],
     devOps: ["Docker", "Kubernetes", "GitLab CI/CD", "AWS", "Grafana/Promtail", "SSO/OAuth/KeyCloak"]
   }
 };

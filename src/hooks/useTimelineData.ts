@@ -123,7 +123,10 @@ export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all') 
     // 350px per item allows enough space for the card + gap
     const pixelsPerYear = Math.max(maxDensity * 350, 400);
     
-    return yearSpan * pixelsPerYear;
+    // Ensure minimum height to prevent milestone overlap when filtered
+    const minTotalHeight = filteredItems.length * 300;
+
+    return Math.max(yearSpan * pixelsPerYear, minTotalHeight);
   }, [filteredItems, maxDate, minDate]);
 
   return {

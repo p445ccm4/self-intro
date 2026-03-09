@@ -31,7 +31,10 @@ export const Timeline = () => {
 
       filteredItems.forEach((item) => {
         const cardEl = cardRefs.current.get(item.id);
-        if (!cardEl) return;
+        if (!cardEl) {
+          console.log(`Card ref missing for ${item.id}`);
+          return;
+        }
 
         const cardHeight = cardEl.offsetHeight;
 
@@ -49,7 +52,9 @@ export const Timeline = () => {
         }
 
         // Ensure we don't overlap with previous content
-        targetY = Math.max(targetY, currentStackY);
+        const stackedY = Math.max(targetY, currentStackY);
+        
+        targetY = stackedY;
         
         const marginTop = Math.max(0, targetY - currentStackY);
         newSpacers.set(item.id, marginTop);
@@ -167,7 +172,7 @@ export const Timeline = () => {
         <TimelineFilters filter={filter} onFilterChange={setFilter} />
       </div>
 
-      <div className="relative" ref={containerRef} style={{ height: `${totalHeight}px` }}>
+      <div className="relative h-auto md:h-[var(--total-height)]" ref={containerRef} style={{ '--total-height': `${totalHeight}px` } as React.CSSProperties}>
         {/* Connector Lines (Desktop) */}
         <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0">
           {connectorPaths.map(p => (
@@ -194,8 +199,7 @@ export const Timeline = () => {
         
         {/* Mobile Spine (Left) */}
         <div className="md:hidden absolute left-6 top-0 bottom-0 w-px bg-gray-800" />
-
-        <div className="md:space-y-0">
+        <div className="space-y-4 md:space-y-0">
           <AnimatePresence mode='popLayout'>
             {filteredItems.map((item) => {
               const isLeftTrack = item.category === 'work' || item.category === 'education';
@@ -213,6 +217,7 @@ export const Timeline = () => {
                       else cardRefs.current.delete(item.id);
                     }}
                     setHoveredItemId={setHoveredItemId}
+                    hoveredItemId={hoveredItemId}
                   />
                 );
               }
@@ -228,6 +233,7 @@ export const Timeline = () => {
                     else cardRefs.current.delete(item.id);
                   }}
                   setHoveredItemId={setHoveredItemId}
+                  hoveredItemId={hoveredItemId}
                 />
               );
             })}
