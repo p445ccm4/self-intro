@@ -2,6 +2,7 @@ import { useParams, Link, useLocation } from 'react-router-dom';
 import { portfolioData } from '../data/portfolio';
 import { ArrowLeft, Calendar, Briefcase, Code, GraduationCap, Github, Youtube } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const getEmbedUrl = (url: string) => {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -12,6 +13,10 @@ const getEmbedUrl = (url: string) => {
 export const DetailPage = () => {
   const { id } = useParams();
   const { pathname, state } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   
   const isProject = pathname.startsWith('/project/');
   const isExperience = pathname.startsWith('/experience/');

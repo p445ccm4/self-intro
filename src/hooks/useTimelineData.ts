@@ -10,7 +10,7 @@ import {
   parseDateStr
 } from '../utils/timeline';
 
-export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all') => {
+export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', sortOrder: 'asc' | 'desc' = 'desc') => {
   const { items, minDate, maxDate, laneCount } = useMemo(() => {
     const { experience, projects, education, milestones } = portfolioData;
 
@@ -87,20 +87,32 @@ export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all') 
     // Calculate global range
     const { min, max } = getTimelineRange(lanedItems);
 
-    // Sort by End Date Descending (Visual Top first) for the card list
+    // Sort items based on sortOrder
     const sortedItems = lanedItems.sort((a, b) => {
-      const endA = a.endDate === 'Present' ? new Date() : a.endDate;
-      const endB = b.endDate === 'Present' ? new Date() : b.endDate;
-      
-      const diff = endB.getTime() - endA.getTime();
-      if (diff !== 0) return diff;
-      
-      // If end dates are same, sort by start date (Newest start first)
-      return b.startDate.getTime() - a.startDate.getTime();
+      if (sortOrder === 'desc') {
+        // Descending: Newest End Date first
+        const endA = a.endDate === 'Present' ? new Date() : a.endDate;
+        const endB = b.endDate === 'Present' ? new Date() : b.endDate;
+        
+        const diff = endB.getTime() - endA.getTime();
+        if (diff !== 0) return diff;
+        
+        // If end dates are same, sort by start date (Newest start first)
+        return b.startDate.getTime() - a.startDate.getTime();
+      } else {
+        // Ascending: Oldest Start Date first
+        const diff = a.startDate.getTime() - b.startDate.getTime();
+        if (diff !== 0) return diff;
+
+        // If start dates are same, sort by end date (Oldest end first)
+        const endA = a.endDate === 'Present' ? new Date() : a.endDate;
+        const endB = b.endDate === 'Present' ? new Date() : b.endDate;
+        return endA.getTime() - endB.getTime();
+      }
     });
 
     return { items: sortedItems, minDate: min, maxDate: max, laneCount };
-  }, []);
+  }, [sortOrder]);
 
   // Filter logic: Milestones are ALWAYS included.
   const filteredItems = useMemo(() => items.filter(item =>

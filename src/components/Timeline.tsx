@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import type { Category } from '../utils/timeline';
 import { SPINE_LAYOUT , getConnectorColor } from '../utils/timeline-theme';
 import { TimelineSpine } from './TimelineSpine';
 import { useTimelineData } from '../hooks/useTimelineData';
-import { TimelineFilters } from './TimelineFilters';
+import { TimelineSettings } from './TimelineSettings';
 import { TimelineCard } from './TimelineCard';
 
 export const Timeline = () => {
@@ -14,15 +14,24 @@ export const Timeline = () => {
   const [connectorPaths, setConnectorPaths] = useState<{ id: string; d: string; color: string }[]>([]);
   const [cardSpacers, setCardSpacers] = useState<Map<string, number>>(new Map());
   const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const isSortingRef = useRef(false);
 
   // Filter now excludes milestones (they are always shown)
   const [filter, setFilter] = useState<Exclude<Category, 'milestone'> | 'all'>('all');
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { items: filteredItems, minDate, maxDate, laneCount, totalHeight } = useTimelineData(filter);
+  const { items: filteredItems, minDate, maxDate, laneCount, totalHeight } = useTimelineData(filter, sortOrder);
 
   // Handle scroll restoration from DetailPage
   useEffect(() => {
+    // If we are sorting, ignore the scroll restoration for this update
+    if (isSortingRef.current) {
+      isSortingRef.current = false;
+      return;
+    }
+
     if (location.hash && cardSpacers.size > 0) {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
@@ -54,7 +63,16 @@ export const Timeline = () => {
 
         // Calculate ideal time-based Y position
         const endDate = item.endDate === 'Present' ? new Date() : item.endDate;
-        const timePercent = (maxDate.getTime() - endDate.getTime()) / totalDuration;
+        
+        let timePercent;
+        if (sortOrder === 'desc') {
+          // Descending: Align to End Date (Newest at top)
+          timePercent = (maxDate.getTime() - endDate.getTime()) / totalDuration;
+        } else {
+          // Ascending: Align to Start Date (Oldest at top)
+          timePercent = (item.startDate.getTime() - minDate.getTime()) / totalDuration;
+        }
+
         const idealY = Math.max(0, Math.min(1, timePercent)) * totalHeight;
 
         // Align card top with the time point (idealY)
@@ -96,7 +114,7 @@ export const Timeline = () => {
       window.removeEventListener('resize', calculateSpacers);
       observer.disconnect();
     };
-  }, [filteredItems, maxDate, minDate, totalHeight]);
+  }, [filteredItems, maxDate, minDate, totalHeight, sortOrder]);
 
   useEffect(() => {
     const updatePaths = () => {
@@ -136,14 +154,26 @@ export const Timeline = () => {
         const endDate = item.endDate === 'Present' ? new Date() : item.endDate;
         const startDate = item.startDate;
         
-        // Calculate Pill Top (End Date) and Bottom (Start Date)
-        const topPercent = (maxDate.getTime() - endDate.getTime()) / totalDuration;
-        const bottomPercent = (maxDate.getTime() - startDate.getTime()) / totalDuration;
-        
-        const pillTop = Math.max(0, Math.min(1, topPercent)) * containerRect.height;
-        const pillBottom = Math.max(0, Math.min(1, bottomPercent)) * containerRect.height;
+        let pillTop, pillBottom;
+
+        if (sortOrder === 'desc') {
+          // Descending: Top is End Date, Bottom is Start Date
+          const topPercent = (maxDate.getTime() - endDate.getTime()) / totalDuration;
+          const bottomPercent = (maxDate.getTime() - startDate.getTime()) / totalDuration;
+          
+          pillTop = Math.max(0, Math.min(1, topPercent)) * containerRect.height;
+          pillBottom = Math.max(0, Math.min(1, bottomPercent)) * containerRect.height;
+        } else {
+          // Ascending: Top is Start Date, Bottom is End Date
+          const topPercent = (startDate.getTime() - minDate.getTime()) / totalDuration;
+          const bottomPercent = (endDate.getTime() - minDate.getTime()) / totalDuration;
+
+          pillTop = Math.max(0, Math.min(1, topPercent)) * containerRect.height;
+          pillBottom = Math.max(0, Math.min(1, bottomPercent)) * containerRect.height;
+        }
 
         // Clamp connection point to be within the pill's vertical range
+        // Note: In SVG coords, pillTop is numerically smaller than pillBottom
         const endY = Math.max(pillTop, Math.min(pillBottom, startY));
 
         const laneIndex = item.lane || 0;
@@ -169,7 +199,7 @@ export const Timeline = () => {
     
     const timer = setTimeout(updatePaths, 500);
     return () => clearTimeout(timer);
-  }, [filteredItems, maxDate, minDate, laneCount, cardSpacers]);
+  }, [filteredItems, maxDate, minDate, laneCount, cardSpacers, sortOrder]);
 
   return (
     <section className="py-20 px-4 max-w-7xl mx-auto relative overflow-hidden">
@@ -178,7 +208,20 @@ export const Timeline = () => {
           My Journey
         </h2>
         
-        <TimelineFilters filter={filter} onFilterChange={setFilter} />
+        <div className="flex flex-col items-center gap-4">
+          <TimelineSettings
+            filter={filter}
+            onFilterChange={setFilter}
+            sortOrder={sortOrder}
+            onSortChange={() => {
+              isSortingRef.current = true;
+              setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'));
+              if (location.hash) {
+                navigate(location.pathname, { replace: true });
+              }
+            }}
+          />
+        </div>
       </div>
 
       <div className="relative h-auto md:h-[var(--total-height)]" ref={containerRef} style={{ '--total-height': `${totalHeight}px` } as React.CSSProperties}>
@@ -204,6 +247,7 @@ export const Timeline = () => {
           laneCount={laneCount}
           hoveredItemId={hoveredItemId}
           setHoveredItemId={setHoveredItemId}
+          sortOrder={sortOrder}
         />
         
         {/* Mobile Spine (Left) */}
@@ -235,3 +279,4 @@ export const Timeline = () => {
     </section>
   );
 };
+

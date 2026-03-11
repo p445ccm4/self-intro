@@ -9,15 +9,22 @@ interface TimelineSpineProps {
   laneCount: number;
   hoveredItemId: string | null;
   setHoveredItemId: (id: string | null) => void;
+  sortOrder: 'asc' | 'desc';
 }
 
-export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemId, setHoveredItemId }: TimelineSpineProps) => {
+export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemId, setHoveredItemId, sortOrder }: TimelineSpineProps) => {
   const navigate = useNavigate();
   const totalDuration = maxDate.getTime() - minDate.getTime();
 
   const getPosition = (date: Date) => {
-    // Invert mapping: MaxDate (Newest) is at top (0%), MinDate (Oldest) is at bottom (100%)
-    const pos = ((maxDate.getTime() - date.getTime()) / totalDuration) * 100;
+    let pos;
+    if (sortOrder === 'desc') {
+      // Descending: MaxDate (Newest) at top (0%), MinDate (Oldest) at bottom (100%)
+      pos = ((maxDate.getTime() - date.getTime()) / totalDuration) * 100;
+    } else {
+      // Ascending: MinDate (Oldest) at top (0%), MaxDate (Newest) at bottom (100%)
+      pos = ((date.getTime() - minDate.getTime()) / totalDuration) * 100;
+    }
     return Math.max(0, Math.min(100, pos)); // Clamp between 0 and 100
   };
 
@@ -95,11 +102,12 @@ export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemI
 
           {/* Render Pills */}
           {items.map((item) => {
-             // For Newest-First layout:
-             // Top of pill = End Date (Newest)
-             // Bottom of pill = Start Date (Oldest)
              const endDate = item.endDate === 'Present' ? new Date() : item.endDate;
-             const top = getPosition(endDate);
+             
+             // In Descending mode, we align to End Date (Newest at top)
+             // In Ascending mode, we align to Start Date (Oldest at top)
+             const alignDate = sortOrder === 'desc' ? endDate : item.startDate;
+             const top = getPosition(alignDate);
              
              const height = getHeight(item.startDate, item.endDate);
              const laneIndex = item.lane || 0;
@@ -110,22 +118,30 @@ export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemI
 
              return (
                <motion.div
-                 key={`spine-${item.id}`}
-                 className={`absolute rounded-full ${getPillColor(item.category)} z-10 transition-shadow duration-300 pointer-events-auto ${item.link ? 'cursor-pointer' : ''} ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
+                 key={`spine-wrapper-${item.id}`}
+                 className="absolute z-10 pointer-events-none"
                  style={{
                    top: `${top}%`,
                    height: `${height}%`,
                    width: `${LANE_WIDTH}px`,
                    left: leftPos,
                  }}
-                 initial={{ opacity: 0, scaleY: 0 }}
-                 whileInView={{ opacity: 1, scaleY: 1 }}
-                 viewport={{ once: true, margin: "200px" }}
-                 transition={{ duration: 0.8, delay: 0.2 }}
-                 onClick={() => item.link && navigate(item.link)}
-                 onMouseEnter={() => setHoveredItemId(item.id)}
-                 onMouseLeave={() => setHoveredItemId(null)}
-               />
+                 initial="hidden"
+                 whileInView="visible"
+                 viewport={{ once: true, amount: 0, margin: "200px" }}
+               >
+                 <motion.div
+                   className={`w-full h-full rounded-full ${getPillColor(item.category)} transition-shadow duration-300 pointer-events-auto ${item.link ? 'cursor-pointer' : ''} ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
+                   variants={{
+                     hidden: { opacity: 0, scaleY: 0 },
+                     visible: { opacity: 1, scaleY: 1 }
+                   }}
+                   transition={{ duration: 0.8, delay: 0.2 }}
+                   onClick={() => item.link && navigate(item.link)}
+                   onMouseEnter={() => setHoveredItemId(item.id)}
+                   onMouseLeave={() => setHoveredItemId(null)}
+                 />
+               </motion.div>
              );
           })}
        </div>

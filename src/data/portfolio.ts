@@ -122,7 +122,7 @@ export const portfolioData: PortfolioData = {
       id: "ai-agent",
       title: "AI Agent",
       role: "Artificial Intelligence Engineer",
-      company: "Oodles Systems",
+      company: "Success Base Engineering Limited",
       period: "March 2025 - October 2025",
       description: "A smart system automating complex tasks without human interference.",
       details: [
@@ -151,7 +151,7 @@ export const portfolioData: PortfolioData = {
       id: "oodles-smart",
       title: "Oodles Smart Renovation Simulation Platform",
       role: "Artificial Intelligence Engineer",
-      company: "Oodles Systems",
+      company: "Oodles Systems Limited",
       period: "October 2024 - March 2025",
       description: "A renovation simulation website using computer vision and diffusion models.",
       details: [
@@ -165,7 +165,7 @@ export const portfolioData: PortfolioData = {
       id: "customer-attention-tracking",
       title: "Real-time Customer Attention Tracking",
       role: "Artificial Intelligence Engineer",
-      company: "HKU Sports & AI Lab",
+      company: "Hong Kong Univisual Intelligence Technology",
       period: "April 2024 – May 2024",
       description: "A system to record which products customers are looking at or touching",
       details: [],
@@ -177,7 +177,7 @@ export const portfolioData: PortfolioData = {
       id: "child-abuse-detection",
       title: "Real-time Child Abuse Detection",
       role: "Artificial Intelligence Engineer",
-      company: "HKU Sports & AI Lab",
+      company: "Hong Kong Univisual Intelligence Technology",
       period: "November 2023 - January 2024",
       description: "A system to detect fast human motion in real-time",
       details: [
@@ -193,8 +193,8 @@ export const portfolioData: PortfolioData = {
       id: "drowning-detection",
       title: "Real-time Drowning Detection System",
       role: "Artificial Intelligence Engineer",
-      company: "HKU Sports & AI Lab",
-      period: "September 2023 – December 2023",
+      company: "Hong Kong Univisual Intelligence Technology",
+      period: "October 2023 – December 2023",
       description: "Real-time drowning detection system implemented by YOLOv7.",
       details: [
         "Participated in the machine learning life cycle: data collection, labelling, training, finetuning, and transformation to TensorRT static models.",
