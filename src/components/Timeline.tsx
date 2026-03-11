@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import type { Category } from '../utils/timeline';
 import { SPINE_LAYOUT , getConnectorColor } from '../utils/timeline-theme';
@@ -6,7 +7,6 @@ import { TimelineSpine } from './TimelineSpine';
 import { useTimelineData } from '../hooks/useTimelineData';
 import { TimelineFilters } from './TimelineFilters';
 import { TimelineCard } from './TimelineCard';
-import { TimelineMilestone } from './TimelineMilestone';
 
 export const Timeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,8 +17,23 @@ export const Timeline = () => {
 
   // Filter now excludes milestones (they are always shown)
   const [filter, setFilter] = useState<Exclude<Category, 'milestone'> | 'all'>('all');
+  const location = useLocation();
 
   const { items: filteredItems, minDate, maxDate, laneCount, totalHeight } = useTimelineData(filter);
+
+  // Handle scroll restoration from DetailPage
+  useEffect(() => {
+    if (location.hash && cardSpacers.size > 0) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        // Small delay to ensure layout is stable
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+  }, [location.hash, cardSpacers]);
 
   // Calculate spacers to align cards with time
   useEffect(() => {
@@ -32,7 +47,6 @@ export const Timeline = () => {
       filteredItems.forEach((item) => {
         const cardEl = cardRefs.current.get(item.id);
         if (!cardEl) {
-          console.log(`Card ref missing for ${item.id}`);
           return;
         }
 
@@ -43,13 +57,10 @@ export const Timeline = () => {
         const timePercent = (maxDate.getTime() - endDate.getTime()) / totalDuration;
         const idealY = Math.max(0, Math.min(1, timePercent)) * totalHeight;
 
-        // For milestones, we want to center the card on the time point (idealY).
-        const isMilestone = item.category === 'milestone';
-        
+        // Align card top with the time point (idealY)
+        // Previously we centered milestones, but this caused them to appear "in the future" (higher up)
+        // relative to their date, confusing the year markers.
         let targetY = idealY;
-        if (isMilestone) {
-          targetY = idealY - cardHeight / 2;
-        }
 
         // Ensure we don't overlap with previous content
         const stackedY = Math.max(targetY, currentStackY);
@@ -98,8 +109,6 @@ export const Timeline = () => {
       const totalDuration = maxDate.getTime() - minDate.getTime();
 
       const newPaths = filteredItems.map(item => {
-        if (item.category === 'milestone') return null;
-
         const cardEl = cardRefs.current.get(item.id);
         if (!cardEl) return null;
 
@@ -203,24 +212,7 @@ export const Timeline = () => {
           <AnimatePresence mode='popLayout'>
             {filteredItems.map((item) => {
               const isLeftTrack = item.category === 'work' || item.category === 'education';
-              const isMilestone = item.category === 'milestone';
               const spacerHeight = cardSpacers.get(item.id) || 0;
-
-              if (isMilestone) {
-                return (
-                  <TimelineMilestone
-                    key={item.id}
-                    item={item}
-                    spacerHeight={spacerHeight}
-                    cardRef={(el) => {
-                      if (el) cardRefs.current.set(item.id, el);
-                      else cardRefs.current.delete(item.id);
-                    }}
-                    setHoveredItemId={setHoveredItemId}
-                    hoveredItemId={hoveredItemId}
-                  />
-                );
-              }
 
               return (
                 <TimelineCard

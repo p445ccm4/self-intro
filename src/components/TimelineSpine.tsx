@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { type TimelineItem, type Category, SPINE_LAYOUT } from '../utils/timeline';
 
 interface TimelineSpineProps {
@@ -11,6 +12,7 @@ interface TimelineSpineProps {
 }
 
 export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemId, setHoveredItemId }: TimelineSpineProps) => {
+  const navigate = useNavigate();
   const totalDuration = maxDate.getTime() - minDate.getTime();
 
   const getPosition = (date: Date) => {
@@ -93,17 +95,13 @@ export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemI
 
           {/* Render Pills */}
           {items.map((item) => {
-             // Skip milestones for the spine pills if they are just points,
-             // or render them as dots. Let's render them as small dots.
-             const isMilestone = item.category === 'milestone';
-             
              // For Newest-First layout:
              // Top of pill = End Date (Newest)
              // Bottom of pill = Start Date (Oldest)
              const endDate = item.endDate === 'Present' ? new Date() : item.endDate;
              const top = getPosition(endDate);
              
-             const height = isMilestone ? 0.5 : getHeight(item.startDate, item.endDate);
+             const height = getHeight(item.startDate, item.endDate);
              const laneIndex = item.lane || 0;
              
              const leftPos = laneIndex * (LANE_WIDTH + LANE_GAP);
@@ -113,17 +111,18 @@ export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemI
              return (
                <motion.div
                  key={`spine-${item.id}`}
-                 className={`absolute rounded-full ${getPillColor(item.category)} ${isMilestone ? 'z-20' : 'z-10'} transition-shadow duration-300 pointer-events-auto cursor-pointer ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
+                 className={`absolute rounded-full ${getPillColor(item.category)} z-10 transition-shadow duration-300 pointer-events-auto ${item.link ? 'cursor-pointer' : ''} ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
                  style={{
-                   top: isMilestone ? `calc(${top}% - 3px)` : `${top}%`,
-                   height: isMilestone ? '6px' : `${height}%`,
-                   width: isMilestone ? '6px' : `${LANE_WIDTH}px`,
-                   left: isMilestone ? leftPos : leftPos,
+                   top: `${top}%`,
+                   height: `${height}%`,
+                   width: `${LANE_WIDTH}px`,
+                   left: leftPos,
                  }}
-                 initial={{ opacity: 0, scaleY: isMilestone ? 0 : 1 }}
+                 initial={{ opacity: 0, scaleY: 0 }}
                  whileInView={{ opacity: 1, scaleY: 1 }}
                  viewport={{ once: true, margin: "200px" }}
                  transition={{ duration: 0.8, delay: 0.2 }}
+                 onClick={() => item.link && navigate(item.link)}
                  onMouseEnter={() => setHoveredItemId(item.id)}
                  onMouseLeave={() => setHoveredItemId(null)}
                />

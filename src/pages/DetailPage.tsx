@@ -11,7 +11,7 @@ const getEmbedUrl = (url: string) => {
 
 export const DetailPage = () => {
   const { id } = useParams();
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
   
   const isProject = pathname.startsWith('/project/');
   const isExperience = pathname.startsWith('/experience/');
@@ -45,11 +45,14 @@ export const DetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
-      <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
+      <Link
+        to={state?.scrollToId ? `/#${state.scrollToId}` : '/'}
+        className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors"
+      >
         <ArrowLeft size={20} /> Back to Home
       </Link>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

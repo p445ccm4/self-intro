@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { TimelineItem } from '../utils/timeline';
-import { getCategoryColor, getIcon, getPillColor } from '../utils/timeline-theme';
+import { getCategoryColor, getIcon, getPillColor, getGradient } from '../utils/timeline-theme';
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -18,6 +18,7 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
 
   return (
     <motion.div
+      id={item.id}
       layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -42,18 +43,14 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
           className={`group relative bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border transition-all cursor-pointer overflow-hidden pointer-events-auto ${
             hoveredItemId === item.id ? 'border-gray-600 shadow-[0_0_15px_rgba(59,130,246,0.15)]' : 'border-gray-800 hover:border-gray-700'
           }`}
-          onClick={() => item.link && navigate(item.link)}
+          onClick={() => item.link && navigate(item.link, { state: { scrollToId: item.id } })}
           onMouseEnter={() => setHoveredItemId(item.id)}
           onMouseLeave={() => setHoveredItemId(null)}
         >
           {/* Hover Gradient Background */}
           <div className={`absolute inset-0 transition-opacity duration-500 bg-gradient-to-br ${
             hoveredItemId === item.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-          } ${
-            item.category === 'work' ? 'from-blue-500/5 via-transparent to-transparent' :
-            item.category === 'project' ? 'from-purple-500/5 via-transparent to-transparent' :
-            'from-green-500/5 via-transparent to-transparent'
-          }`} />
+          } ${getGradient(item.category)}`} />
 
           <div className="flex flex-col md:items-start">
             {/* Header: Date & Duration */}
@@ -87,7 +84,8 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
             </h3>
             <div className={`flex items-center gap-2 mt-1 ${
               item.category === 'work' ? 'text-blue-300' :
-              item.category === 'project' ? 'text-purple-300' : 'text-green-300'
+              item.category === 'project' ? 'text-purple-300' :
+              item.category === 'milestone' ? 'text-yellow-300' : 'text-green-300'
             }`}>
               <span className="text-sm font-medium">{item.subtitle}</span>
             </div>
