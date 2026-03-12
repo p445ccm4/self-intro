@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import { ChevronDown, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
+import { cn } from '../utils/cn';
 
 export const Hero = () => {
   const { personal } = portfolioData;
+
+  const socialLinkBaseClass = "flex items-center gap-2 px-6 py-3 rounded-full transition-colors text-white";
 
   return (
     <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pb-32 relative overflow-hidden">
@@ -28,7 +31,7 @@ export const Hero = () => {
         <div className="flex flex-wrap justify-center gap-6">
           <a
             href={`mailto:${personal.email}`}
-            className="flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors"
+            className={cn(socialLinkBaseClass, "bg-gray-800 hover:bg-gray-700")}
           >
             <Mail size={20} />
             <span>Email</span>
@@ -37,7 +40,7 @@ export const Hero = () => {
             href={personal.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-[#0077b5] hover:bg-[#006396] rounded-full transition-colors text-white"
+            className={cn(socialLinkBaseClass, "bg-[#0077b5] hover:bg-[#006396]")}
           >
             <Linkedin size={20} />
             <span>LinkedIn</span>
@@ -46,7 +49,7 @@ export const Hero = () => {
             href={personal.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-[#333] hover:bg-[#242424] rounded-full transition-colors text-white"
+            className={cn(socialLinkBaseClass, "bg-[#333] hover:bg-[#242424]")}
           >
             <Github size={20} />
             <span>GitHub</span>
@@ -55,7 +58,7 @@ export const Hero = () => {
             href={personal.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] rounded-full transition-colors text-white"
+            className={cn(socialLinkBaseClass, "bg-[#25D366] hover:bg-[#20bd5a]")}
           >
             <MessageCircle size={20} />
             <span>WhatsApp</span>

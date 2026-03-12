@@ -50,3 +50,12 @@ export const getConnectorColor = (category: Category) => {
     case 'milestone': return '#facc15'; // yellow-400
   }
 };
+
+export const getSubtitleColor = (category: Category) => {
+  switch (category) {
+    case 'work': return 'text-blue-300';
+    case 'project': return 'text-purple-300';
+    case 'education': return 'text-green-300';
+    case 'milestone': return 'text-yellow-300';
+  }
+};

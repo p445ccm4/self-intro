@@ -83,13 +83,13 @@ export const DetailPage = () => {
         </div>
 
         {tech.length > 0 && (
-          <div className="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+          <div className="section-card">
+            <h2 className="section-title">
               <Code className="text-blue-400" /> Tech Stack
             </h2>
             <div className="flex flex-wrap gap-3">
               {tech.map((t, i) => (
-                <span key={i} className="px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full border border-blue-800/50">
+                <span key={i} className="tech-tag">
                   {t}
                 </span>
               ))}
@@ -98,8 +98,8 @@ export const DetailPage = () => {
         )}
 
         {githubLinks && githubLinks.length > 0 && (
-          <div className="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+          <div className="section-card">
+            <h2 className="section-title">
               <Github className="text-blue-400" /> GitHub Repositories
             </h2>
             <div className="flex flex-col gap-3">
@@ -109,7 +109,7 @@ export const DetailPage = () => {
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-blue-100 hover:underline flex items-center gap-2 transition-colors break-all"
+                  className="link-item"
                 >
                   <Github size={16} />
                   {link}
@@ -120,8 +120,8 @@ export const DetailPage = () => {
         )}
 
         {youtubeLinks && youtubeLinks.length > 0 && (
-          <div className="bg-gray-800 rounded-xl p-8 mb-8 border border-gray-700">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+          <div className="section-card">
+            <h2 className="section-title">
               <Youtube className="text-red-500" /> YouTube Demos
             </h2>
             <div className="grid grid-cols-1 gap-6">
@@ -129,7 +129,7 @@ export const DetailPage = () => {
                  const embedUrl = getEmbedUrl(link);
                  if (!embedUrl) return null;
                  return (
-                  <div key={i} className="aspect-video rounded-lg overflow-hidden border border-gray-700 bg-black">
+                  <div key={i} className="aspect-video rounded-lg overflow-hidden border border-card-border bg-black">
                     <iframe
                       width="100%"
                       height="100%"
@@ -153,8 +153,8 @@ export const DetailPage = () => {
           {Array.isArray(description) ? (
              <ul className="space-y-4 mb-8">
              {description.map((desc, i) => (
-               <li key={i} className="flex items-start gap-3 text-gray-300 text-xl leading-relaxed">
-                 <span className="mt-2 w-2 h-2 bg-blue-500 rounded-full shrink-0" />
+               <li key={i} className="bullet-list-item">
+                 <span className="bullet-point bg-blue-500" />
                  <span>{desc}</span>
                </li>
              ))}
@@ -171,8 +171,8 @@ export const DetailPage = () => {
               <h3 className="text-2xl font-bold mb-4">Key Highlights</h3>
               <ul className="space-y-4">
                 {details.map((detail, i) => (
-                  <li key={i} className="flex items-start gap-3 text-gray-300">
-                    <span className="mt-2 w-2 h-2 bg-purple-500 rounded-full shrink-0" />
+                  <li key={i} className="bullet-list-item text-base">
+                    <span className="bullet-point bg-purple-500" />
                     <span className="leading-relaxed">{detail}</span>
                   </li>
                 ))}

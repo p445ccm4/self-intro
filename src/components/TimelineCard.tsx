@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { Calendar, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { TimelineItem } from '../utils/timeline';
-import { getCategoryColor, getIcon, getPillColor, getGradient } from '../utils/timeline-theme';
+import { getCategoryColor, getIcon, getPillColor, getGradient, getSubtitleColor } from '../utils/timeline-theme';
+import { cn } from '../utils/cn';
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -15,6 +16,7 @@ interface TimelineCardProps {
 
 export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHoveredItemId, hoveredItemId }: TimelineCardProps) => {
   const navigate = useNavigate();
+  const isHovered = hoveredItemId === item.id;
 
   return (
     <motion.div
@@ -26,31 +28,39 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
       style={{ '--spacer-height': `${spacerHeight}px` } as React.CSSProperties}
-      className={`relative md:flex items-center mt-0 md:mt-[var(--spacer-height)] pointer-events-none ${
-        isLeftTrack ? 'justify-start md:pr-[50%]' : 'justify-end md:pl-[50%]'
-      }`}
+      className={cn(
+        "relative md:flex items-center mt-0 md:mt-[var(--spacer-height)] pointer-events-none",
+        isLeftTrack ? "justify-start md:pr-[50%]" : "justify-end md:pl-[50%]"
+      )}
     >
       {/* Mobile Dot */}
-      <div className={`md:hidden absolute left-6 w-3 h-3 rounded-full transform -translate-x-1/2 mt-6 z-10 border-2 border-gray-900 ${getPillColor(item.category)}`} />
+      <div className={cn(
+        "md:hidden absolute left-6 w-3 h-3 rounded-full transform -translate-x-1/2 mt-6 z-10 border-2 border-gray-900",
+        getPillColor(item.category)
+      )} />
 
       {/* Content Card */}
-      <div className={`w-full pl-12 md:pl-0 md:text-left ${
-        isLeftTrack ? 'md:pr-24' : 'md:pl-24'
-      }`}>
+      <div className={cn(
+        "w-full pl-12 md:pl-0 md:text-left",
+        isLeftTrack ? "md:pr-24" : "md:pl-24"
+      )}>
         <motion.div
           ref={cardRef}
           whileHover={{ y: -4 }}
-          className={`group relative bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border transition-all cursor-pointer overflow-hidden pointer-events-auto ${
-            hoveredItemId === item.id ? 'border-gray-600 shadow-[0_0_15px_rgba(59,130,246,0.15)]' : 'border-gray-800 hover:border-gray-700'
-          }`}
+          className={cn(
+            "group relative bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border transition-all cursor-pointer overflow-hidden pointer-events-auto",
+            isHovered ? "border-gray-600 shadow-[0_0_15px_rgba(59,130,246,0.15)]" : "border-gray-800 hover:border-gray-700"
+          )}
           onClick={() => item.link && navigate(item.link, { state: { scrollToId: item.id } })}
           onMouseEnter={() => setHoveredItemId(item.id)}
           onMouseLeave={() => setHoveredItemId(null)}
         >
           {/* Hover Gradient Background */}
-          <div className={`absolute inset-0 transition-opacity duration-500 bg-gradient-to-br ${
-            hoveredItemId === item.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-          } ${getGradient(item.category)}`} />
+          <div className={cn(
+            "absolute inset-0 transition-opacity duration-500 bg-gradient-to-br",
+            isHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+            getGradient(item.category)
+          )} />
 
           <div className="flex flex-col md:items-start">
             {/* Header: Date & Duration */}
@@ -60,33 +70,31 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
                 {item.dateString}
               </span>
               {item.duration && (
-                <span className={`px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 border border-gray-700/50`}>
+                <span className="px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 border border-gray-700/50">
                   {item.duration}
                 </span>
               )}
             </div>
 
             {/* Title & Subtitle */}
-            <h3 className={`text-lg font-bold transition-colors flex items-center gap-2 ${
-              hoveredItemId === item.id ? 'text-blue-400' : 'text-white group-hover:text-blue-400'
-            }`}>
+            <h3 className={cn(
+              "text-lg font-bold transition-colors flex items-center gap-2",
+              isHovered ? "text-blue-400" : "text-white group-hover:text-blue-400"
+            )}>
               {item.title}
               {item.link && (
                 <ChevronRight
                   size={16}
-                  className={`transition-all ${
-                    hoveredItemId === item.id
-                      ? 'opacity-100 translate-x-0'
-                      : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
-                  }`}
+                  className={cn(
+                    "transition-all",
+                    isHovered
+                      ? "opacity-100 translate-x-0"
+                      : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
+                  )}
                 />
               )}
             </h3>
-            <div className={`flex items-center gap-2 mt-1 ${
-              item.category === 'work' ? 'text-blue-300' :
-              item.category === 'project' ? 'text-purple-300' :
-              item.category === 'milestone' ? 'text-yellow-300' : 'text-green-300'
-            }`}>
+            <div className={cn("flex items-center gap-2 mt-1", getSubtitleColor(item.category))}>
               <span className="text-sm font-medium">{item.subtitle}</span>
             </div>
 
@@ -120,7 +128,7 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
             )}
             
             {/* Category Icon Badge (Absolute positioned) */}
-            <div className={`absolute top-4 right-4 md:right-4 p-2 rounded-lg ${getCategoryColor(item.category)}`}>
+            <div className={cn("absolute top-4 right-4 md:right-4 p-2 rounded-lg", getCategoryColor(item.category))}>
               {getIcon(item.category)}
             </div>
           </div>

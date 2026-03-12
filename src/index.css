@@ -1,5 +1,38 @@
 @import "tailwindcss";
 
+@theme {
+  --color-card-bg: var(--color-gray-800);
+  --color-card-border: var(--color-gray-700);
+  --color-accent-blue: var(--color-blue-400);
+  --color-accent-purple: var(--color-purple-600);
+}
+
+@layer components {
+  .section-card {
+    @apply bg-card-bg rounded-xl p-8 mb-8 border border-card-border;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold mb-4 flex items-center gap-2;
+  }
+
+  .tech-tag {
+    @apply px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full border border-blue-800/50;
+  }
+
+  .bullet-list-item {
+    @apply flex items-start gap-3 text-gray-300 text-xl leading-relaxed;
+  }
+
+  .bullet-point {
+    @apply mt-2 w-2 h-2 rounded-full shrink-0;
+  }
+
+  .link-item {
+    @apply text-blue-300 hover:text-blue-100 hover:underline flex items-center gap-2 transition-colors break-all;
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -7,7 +40,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #111827; /* gray-900 */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,11 +52,4 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
 }
