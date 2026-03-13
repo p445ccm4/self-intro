@@ -5,6 +5,8 @@ export interface Experience {
   period: string;
   description: string;
   details: string[];
+  githubLinks?: string[];
+  youtubeLinks?: string[];
 }
 
 export interface Project {

@@ -45,8 +45,8 @@ export const DetailPage = () => {
   const details = project ? project.details : work?.details || [];
   const tech = project ? project.tech : [];
   const role = project ? project.role : work?.role || '';
-  const githubLinks = project?.githubLinks || [];
-  const youtubeLinks = project?.youtubeLinks || [];
+  const githubLinks = project?.githubLinks || work?.githubLinks || [];
+  const youtubeLinks = project?.youtubeLinks || work?.youtubeLinks || [];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -103,7 +103,7 @@ export const DetailPage = () => {
               <Github className="text-blue-400" /> GitHub Repositories
             </h2>
             <div className="flex flex-col gap-3">
-              {githubLinks.map((link, i) => (
+              {githubLinks.map((link: string, i: number) => (
                 <a
                   key={i}
                   href={link}

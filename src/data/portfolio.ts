@@ -80,7 +80,8 @@ export const portfolioData: PortfolioData = {
       description: "R&D internship focusing on sonar data visualising.",
       details: [
         "Researched and implemented Sonar Data Visualization, Cleansing and Denoising Algorithms for an Autonomous Underwater Vehicle project."
-      ]
+      ],
+      youtubeLinks: ["https://www.youtube.com/watch?v=wsrc4_r5DRI", "https://www.youtube.com/watch?v=hYieObGts7M"]
     }
   ],
   projects: [
