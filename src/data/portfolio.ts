@@ -9,6 +9,7 @@ export const portfolioData: PortfolioData = {
     whatsapp: "https://wa.me/85260358263",
     linkedin: "https://linkedin.com/in/michael-chanchunming",
     github: "https://github.com/p445ccm4",
+    resume: "/Resume 03-2025.pdf",
     summary: "AI Agent Engineer with over 3 years of experience in Machine Learning, Python and Full-Stack Development. Specializes in building Agentic AI systems using LLMs, Vector Databases, and RAG frameworks. Currently developing enterprise meeting assistants at HKT, utilizing React.js and Nest.js within a strict CI/CD environment. Experienced in high-performance backend architecture, including GoLang microservices and gRPC. Adept at translating business needs into technical designs and driving digital transformation for non-technical stakeholders."
   },
   experience: [

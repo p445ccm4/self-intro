@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ChevronDown, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
+import { ChevronDown, FileText, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
 import { cn } from '../utils/cn';
 
@@ -62,6 +62,16 @@ export const Hero = () => {
           >
             <MessageCircle size={20} />
             <span>WhatsApp</span>
+          </a>
+          <a
+            href={personal.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            download
+            className={cn(socialLinkBaseClass, "bg-white text-black hover:bg-gray-200")}
+          >
+            <FileText size={20} />
+            <span>Resume</span>
           </a>
         </div>
       </motion.div>
