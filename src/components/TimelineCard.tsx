@@ -128,9 +128,23 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
             )}
             
             {/* Category Icon Badge (Absolute positioned) */}
-            <div className={cn("absolute top-4 right-4 md:right-4 p-2 rounded-lg", getCategoryColor(item.category))}>
+            <motion.div
+              className={cn(
+                "absolute top-4 right-4 md:right-4 p-2 rounded-lg flex items-center gap-2 z-20 transition-all duration-300",
+                getCategoryColor(item.category)
+              )}
+              layout
+            >
+              <span
+                className={cn(
+                  "text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 overflow-hidden",
+                  isHovered ? "max-w-[100px] opacity-100" : "max-w-0 opacity-0"
+                )}
+              >
+                {item.category}
+              </span>
               {getIcon(item.category)}
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

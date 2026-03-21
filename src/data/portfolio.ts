@@ -134,7 +134,7 @@ export const portfolioData: PortfolioData = {
       ],
       tech: ["AI Agent", "RAG", "MCP", "LLMs", "Vector DB", "OCR", "On-premise Deployment", "Python", "React.js", "Docker"],
       githubLinks: ["https://github.com/p445ccm4/AI_Agent", "https://github.com/p445ccm4/ai-agent-frontend-v2", "https://github.com/p445ccm4/Local_Agent", "https://github.com/p445ccm4/comprehension-mcp-server", "https://github.com/p445ccm4/Google-Search-MCP-server-with-Streamable-HTTP"],
-      youtubeLinks: ["https://www.youtube.com/watch?v=fFg6FHFKT_w"]
+      youtubeLinks: ["https://www.youtube.com/watch?v=-MrheQ6qReo", "https://www.youtube.com/watch?v=e3O8_sPGVoc", "https://www.youtube.com/watch?v=fFg6FHFKT_w"]
     },
     {
       id: "ai-youtuber",
