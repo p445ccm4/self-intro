@@ -121,7 +121,7 @@ export const portfolioData: PortfolioData = {
       tech: ["React.js", "GoLang", "Microservices", "gRPC"]
     },
     {
-      id: "ai-agent",
+      id: "sb-ai-agent",
       title: "AI Agent",
       role: "Artificial Intelligence Engineer",
       company: "Success Base Engineering Limited",
