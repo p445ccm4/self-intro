@@ -11,7 +11,7 @@ import {
 } from '../utils/timeline';
 
 export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', sortOrder: 'asc' | 'desc' = 'desc') => {
-  const { items, minDate, maxDate, laneCount } = useMemo(() => {
+  const { items, laneCount } = useMemo(() => {
     const { experience, projects, education, milestones } = portfolioData;
 
     const workItems: TimelineItem[] = experience.map(job => {
@@ -84,9 +84,6 @@ export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', 
     // Assign lanes
     const { items: lanedItems, laneCount } = assignLanes(allItems);
     
-    // Calculate global range
-    const { min, max } = getTimelineRange(lanedItems);
-
     // Sort items based on sortOrder
     const sortedItems = lanedItems.sort((a, b) => {
       if (sortOrder === 'desc') {
@@ -111,13 +108,19 @@ export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', 
       }
     });
 
-    return { items: sortedItems, minDate: min, maxDate: max, laneCount };
+    return { items: sortedItems, laneCount };
   }, [sortOrder]);
 
   // Filter logic: Milestones are ALWAYS included.
   const filteredItems = useMemo(() => items.filter(item =>
     item.category === 'milestone' || filter === 'all' || item.category === filter
   ), [items, filter]);
+
+  // Calculate range based on filtered items
+  const { minDate, maxDate } = useMemo(() => {
+    const { min, max } = getTimelineRange(filteredItems);
+    return { minDate: min, maxDate: max };
+  }, [filteredItems]);
 
   // Calculate optimal height based on item density
   const totalHeight = useMemo(() => {

@@ -158,10 +158,12 @@ export const portfolioData: PortfolioData = {
       description: "A renovation simulation website using computer vision and diffusion models.",
       details: [
         "Researched algorithms for removing furniture, generating empty rooms, and reverse image searching for textures.",
-        "Implemented features to replace wallpaper and simulate renovation styles."
+        "Implemented features to replace wallpaper and simulate renovation styles.",
+        "Product Website: https://oodles-smart.com/"
       ],
       tech: ["Python", "Computer Vision", "GenAI", "OpenAI CLIP", "Object Segmentation", "Edge Detection", "Stable Diffusion"],
-      githubLinks: ["https://github.com/p445ccm4/flux", "https://github.com/p445ccm4/ViewCrafter", "https://github.com/p445ccm4/DimensionX"]
+      githubLinks: ["https://github.com/p445ccm4/flux", "https://github.com/p445ccm4/ViewCrafter", "https://github.com/p445ccm4/DimensionX"],
+      youtubeLinks: ["https://www.youtube.com/watch?v=aXK1OQNoMDE"]
     },
     {
       id: "customer-attention-tracking",
