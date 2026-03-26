@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -14,22 +15,27 @@ interface TimelineCardProps {
   hoveredItemId: string | null;
 }
 
-export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHoveredItemId, hoveredItemId }: TimelineCardProps) => {
+export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, setHoveredItemId, hoveredItemId }: TimelineCardProps) => {
   const navigate = useNavigate();
   const isHovered = hoveredItemId === item.id;
 
   return (
     <motion.div
       id={item.id}
-      layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.4 }}
-      style={{ '--spacer-height': `${spacerHeight}px` } as React.CSSProperties}
+      transition={{
+        opacity: { duration: 0.3 },
+        y: { duration: 0.4 }
+      }}
+      style={{
+        '--spacer-height': `${spacerHeight}px`,
+        contain: 'layout style'
+      } as React.CSSProperties}
       className={cn(
-        "relative md:flex items-center mt-0 md:mt-[var(--spacer-height)] pointer-events-none",
+        "relative md:flex items-center mt-0 md:mt-[var(--spacer-height)] pointer-events-none will-change-[transform,margin-top] transition-[margin-top] duration-500 ease-in-out",
         isLeftTrack ? "justify-start md:pr-[50%]" : "justify-end md:pl-[50%]"
       )}
     >
@@ -150,4 +156,4 @@ export const TimelineCard = ({ item, isLeftTrack, spacerHeight, cardRef, setHove
       </div>
     </motion.div>
   );
-};
+});

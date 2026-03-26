@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { type TimelineItem, type Category, SPINE_LAYOUT } from '../utils/timeline';
@@ -12,7 +13,7 @@ interface TimelineSpineProps {
   sortOrder: 'asc' | 'desc';
 }
 
-export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemId, setHoveredItemId, sortOrder }: TimelineSpineProps) => {
+export const TimelineSpine = memo(({ items, minDate, maxDate, laneCount, hoveredItemId, setHoveredItemId, sortOrder }: TimelineSpineProps) => {
   const navigate = useNavigate();
   const totalDuration = maxDate.getTime() - minDate.getTime();
 
@@ -147,4 +148,4 @@ export const TimelineSpine = ({ items, minDate, maxDate, laneCount, hoveredItemI
        </div>
     </div>
   );
-};
+});
