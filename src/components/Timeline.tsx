@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { Category } from '../utils/timeline';
 import { TimelineSpine } from './TimelineSpine';
 import { useTimelineData } from '../hooks/useTimelineData';
 import { TimelineSettings } from './TimelineSettings';
 import { TimelineCard } from './TimelineCard';
 import { useTimelineLayout } from '../hooks/useTimelineLayout';
+import { connectorTransition } from '../utils/animations';
 
 export const Timeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -80,14 +81,15 @@ export const Timeline = () => {
         {/* Connector Lines (Desktop) */}
         <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0">
           {connectorPaths.map(p => (
-            <path
+            <motion.path
               key={p.id}
               d={p.d}
               stroke={p.color}
-              strokeWidth="1.5"
+              strokeWidth={hoveredItemId === p.id ? "2.5" : "1.5"}
               fill="none"
-              opacity="0.3"
-              className="transition-[d] duration-500 ease-in-out"
+              opacity={hoveredItemId === p.id ? "1" : "0.3"}
+              layout
+              transition={connectorTransition}
             />
           ))}
         </svg>

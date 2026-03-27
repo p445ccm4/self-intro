@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import type { TimelineItem } from '../utils/timeline';
 import { getCategoryColor, getIcon, getPillColor, getGradient, getSubtitleColor } from '../utils/timeline-theme';
 import { cn } from '../utils/cn';
+import { cardVariants, cardContentVariants, hoverGradientVariants, categoryTextVariants, springTransition } from '../utils/animations';
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -22,20 +23,18 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
   return (
     <motion.div
       id={item.id}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{
-        opacity: { duration: 0.3 },
-        y: { duration: 0.4 }
-      }}
+      exit="exit"
+      layout
       style={{
         '--spacer-height': `${spacerHeight}px`,
         contain: 'layout style'
       } as React.CSSProperties}
       className={cn(
-        "relative md:flex items-center mt-0 md:mt-[var(--spacer-height)] pointer-events-none will-change-[transform,margin-top] transition-[margin-top] duration-500 ease-in-out",
+        "relative md:flex items-center mt-0 md:mt-[var(--spacer-height)] pointer-events-none will-change-[transform]",
         isLeftTrack ? "justify-start md:pr-[50%]" : "justify-end md:pl-[50%]"
       )}
     >
@@ -52,9 +51,12 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
       )}>
         <motion.div
           ref={cardRef}
-          whileHover={{ y: -4 }}
+          variants={cardContentVariants}
+          initial="rest"
+          animate={isHovered ? "hover" : "rest"}
+          whileHover="hover"
           className={cn(
-            "group relative bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border transition-all cursor-pointer overflow-hidden pointer-events-auto",
+            "group relative bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border transition-colors cursor-pointer overflow-hidden pointer-events-auto",
             isHovered ? "border-gray-600 shadow-[0_0_15px_rgba(59,130,246,0.15)]" : "border-gray-800 hover:border-gray-700"
           )}
           onClick={() => item.link && navigate(item.link, { state: { scrollToId: item.id } })}
@@ -62,11 +64,16 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
           onMouseLeave={() => setHoveredItemId(null)}
         >
           {/* Hover Gradient Background */}
-          <div className={cn(
-            "absolute inset-0 transition-opacity duration-500 bg-gradient-to-br",
-            isHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-            getGradient(item.category)
-          )} />
+          <motion.div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-br",
+              getGradient(item.category)
+            )}
+            variants={hoverGradientVariants}
+            initial="initial"
+            animate={isHovered ? "visible" : "hidden"}
+            whileHover="visible"
+          />
 
           <div className="flex flex-col md:items-start">
             {/* Header: Date & Duration */}
@@ -136,19 +143,20 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
             {/* Category Icon Badge (Absolute positioned) */}
             <motion.div
               className={cn(
-                "absolute top-4 right-4 md:right-4 p-2 rounded-lg flex items-center gap-2 z-20 transition-all duration-300",
+                "absolute top-4 right-4 md:right-4 p-2 rounded-lg flex items-center gap-2 z-20",
                 getCategoryColor(item.category)
               )}
               layout
+              transition={springTransition}
             >
-              <span
-                className={cn(
-                  "text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 overflow-hidden",
-                  isHovered ? "max-w-[100px] opacity-100" : "max-w-0 opacity-0"
-                )}
+              <motion.span
+                className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden"
+                variants={categoryTextVariants}
+                initial="collapsed"
+                animate={isHovered ? "expanded" : "collapsed"}
               >
                 {item.category}
-              </span>
+              </motion.span>
               {getIcon(item.category)}
             </motion.div>
           </div>

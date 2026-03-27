@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { type TimelineItem, type Category, SPINE_LAYOUT } from '../utils/timeline';
+import { pillVariants, pillHoverVariants } from '../utils/animations';
 
 interface TimelineSpineProps {
   items: TimelineItem[];
@@ -132,16 +133,23 @@ export const TimelineSpine = memo(({ items, minDate, maxDate, laneCount, hovered
                  viewport={{ once: true, amount: 0, margin: "200px" }}
                >
                  <motion.div
-                   className={`w-full h-full rounded-full ${getPillColor(item.category)} transition-shadow duration-300 pointer-events-auto ${item.link ? 'cursor-pointer' : ''} ${isHovered ? 'shadow-[0_0_12px_currentColor]' : ''}`}
-                   variants={{
-                     hidden: { opacity: 0, scaleY: 0 },
-                     visible: { opacity: 1, scaleY: 1 }
-                   }}
-                   transition={{ duration: 0.8, delay: 0.2 }}
-                   onClick={() => item.link && navigate(item.link)}
-                   onMouseEnter={() => setHoveredItemId(item.id)}
-                   onMouseLeave={() => setHoveredItemId(null)}
-                 />
+                   className={`w-full h-full rounded-full ${getPillColor(item.category)} pointer-events-auto ${item.link ? 'cursor-pointer' : ''}`}
+                   variants={pillVariants}
+                   initial="hidden"
+                   whileInView="visible"
+                   viewport={{ once: true, amount: 0, margin: "200px" }}
+                 >
+                   <motion.div
+                     className="w-full h-full rounded-full"
+                     variants={pillHoverVariants}
+                     initial="rest"
+                     animate={isHovered ? "hover" : "rest"}
+                     whileHover="hover"
+                     onClick={() => item.link && navigate(item.link)}
+                     onMouseEnter={() => setHoveredItemId(item.id)}
+                     onMouseLeave={() => setHoveredItemId(null)}
+                   />
+                 </motion.div>
                </motion.div>
              );
           })}
