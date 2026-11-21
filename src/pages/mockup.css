@@ -1,97 +1,166 @@
-/* Dark liquid glass mockup — self-contained, scoped under .mockup-root */
+/* Dark liquid glass mockup — multi-color mist atmospheres */
 
 .mockup-root {
   --mg-bg: #07090f;
   --mg-text: #e8ecf4;
   --mg-muted: #9aa3b5;
-  --mg-glass: rgb(255 255 255 / 0.07);
-  --mg-glass-border: rgb(255 255 255 / 0.16);
-  --mg-glass-highlight: rgb(255 255 255 / 0.38);
+  --mg-glass: rgb(255 255 255 / 0.08);
+  --mg-glass-border: rgb(255 255 255 / 0.18);
+  --mg-glass-highlight: rgb(255 255 255 / 0.42);
   --mg-radius: 1.25rem;
   --mg-control-h: 2.5rem;
-  --mg-accent: #7dd3fc;
-  --mg-accent-soft: rgb(125 211 252 / 0.18);
-  --mg-accent-text: #e0f2fe;
-  --mg-mist-1: rgb(56 189 248 / 0.16);
-  --mg-mist-2: rgb(167 139 250 / 0.14);
-  --mg-mist-3: rgb(52 211 153 / 0.1);
-  --mg-mist-4: rgb(96 165 250 / 0.12);
 
+  /* Multi-accent system (A/B/C) — never a single hue */
+  --mg-a: #00e5ff;
+  --mg-b: #ff2e97;
+  --mg-c: #b000ff;
+  --mg-accent-soft: color-mix(in srgb, var(--mg-a) 22%, transparent);
+  --mg-accent-text: #e8fbff;
+  --mg-mist-1: color-mix(in srgb, var(--mg-a) 55%, transparent);
+  --mg-mist-2: color-mix(in srgb, var(--mg-b) 50%, transparent);
+  --mg-mist-3: color-mix(in srgb, var(--mg-c) 45%, transparent);
+  --mg-mist-4: color-mix(in srgb, var(--mg-a) 35%, transparent);
+  --mg-mist-5: color-mix(in srgb, var(--mg-b) 30%, transparent);
+
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   color: var(--mg-text);
   background-color: var(--mg-bg);
-  background-image:
-    radial-gradient(ellipse 90% 55% at 8% -8%, var(--mg-mist-1), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 95% 5%, var(--mg-mist-2), transparent 52%),
-    radial-gradient(ellipse 60% 40% at 50% 45%, var(--mg-mist-4), transparent 58%),
-    radial-gradient(ellipse 55% 40% at 82% 88%, var(--mg-mist-3), transparent 55%);
-  background-attachment: fixed;
   font-family: "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
-/* Palette themes */
-.mockup-root[data-palette="ice"] {
-  --mg-accent: #7dd3fc;
-  --mg-accent-soft: rgb(125 211 252 / 0.18);
-  --mg-accent-text: #e0f2fe;
-  --mg-mist-1: rgb(56 189 248 / 0.18);
-  --mg-mist-2: rgb(148 163 184 / 0.12);
-  --mg-mist-3: rgb(34 211 238 / 0.1);
-  --mg-mist-4: rgb(125 211 252 / 0.1);
+/* Fixed mist layer — visible on mobile (background-attachment:fixed often fails) */
+.mockup-root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--mg-bg);
+  background-image:
+    radial-gradient(ellipse 80% 55% at 5% 0%, var(--mg-mist-1), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 100% 8%, var(--mg-mist-2), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 50% 40%, var(--mg-mist-3), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 15% 85%, var(--mg-mist-4), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 88% 92%, var(--mg-mist-5), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 70% 55%, var(--mg-mist-2), transparent 60%);
+}
+
+/* —— Palettes (multi-color) —— */
+.mockup-root[data-palette="cyberpunk"] {
+  --mg-bg: #0a0a0f;
+  --mg-a: #00f0ff;
+  --mg-b: #ff0080;
+  --mg-c: #b000ff;
+  --mg-accent-text: #dffcff;
+  --mg-muted: #6a6a8a;
+}
+
+.mockup-root[data-palette="vice"] {
+  /* GTA / Miami Vice: hot pink + teal + violet */
+  --mg-bg: #0b0614;
+  --mg-a: #ff2e97;
+  --mg-b: #00e5ff;
+  --mg-c: #c084fc;
+  --mg-accent-text: #ffe4f3;
+  --mg-muted: #a78aaa;
+}
+
+.mockup-root[data-palette="neon"] {
+  /* Neon lights: cyan + pink + electric yellow */
+  --mg-bg: #020408;
+  --mg-a: #00f5ff;
+  --mg-b: #ff006e;
+  --mg-c: #ffe600;
+  --mg-accent-text: #e6feff;
+  --mg-muted: #7a8499;
+}
+
+.mockup-root[data-palette="monokai"] {
+  /* Classic Monokai accents on editor black-green */
+  --mg-bg: #272822;
+  --mg-text: #f8f8f2;
+  --mg-muted: #a8a48e;
+  --mg-a: #f92672;
+  --mg-b: #a6e22e;
+  --mg-c: #66d9ef;
+  --mg-accent-text: #ffe0ec;
+  --mg-mist-1: color-mix(in srgb, #f92672 48%, transparent);
+  --mg-mist-2: color-mix(in srgb, #a6e22e 42%, transparent);
+  --mg-mist-3: color-mix(in srgb, #66d9ef 45%, transparent);
+  --mg-mist-4: color-mix(in srgb, #fd971f 40%, transparent);
+  --mg-mist-5: color-mix(in srgb, #ae81ff 40%, transparent);
 }
 
 .mockup-root[data-palette="aurora"] {
-  --mg-accent: #a78bfa;
-  --mg-accent-soft: rgb(167 139 250 / 0.2);
-  --mg-accent-text: #ede9fe;
-  --mg-mist-1: rgb(56 189 248 / 0.14);
-  --mg-mist-2: rgb(167 139 250 / 0.18);
-  --mg-mist-3: rgb(52 211 153 / 0.12);
-  --mg-mist-4: rgb(244 114 182 / 0.08);
+  --mg-bg: #070b14;
+  --mg-a: #22d3ee;
+  --mg-b: #a78bfa;
+  --mg-c: #f472b6;
+  --mg-accent-text: #e0f7ff;
 }
 
-.mockup-root[data-palette="mint"] {
-  --mg-accent: #5eead4;
-  --mg-accent-soft: rgb(94 234 212 / 0.16);
-  --mg-accent-text: #ccfbf1;
-  --mg-mist-1: rgb(45 212 191 / 0.16);
-  --mg-mist-2: rgb(56 189 248 / 0.1);
-  --mg-mist-3: rgb(74 222 128 / 0.1);
-  --mg-mist-4: rgb(165 243 252 / 0.1);
-}
-
-.mockup-root[data-palette="silver"] {
-  --mg-accent: #e2e8f0;
-  --mg-accent-soft: rgb(226 232 240 / 0.14);
-  --mg-accent-text: #f8fafc;
-  --mg-mist-1: rgb(148 163 184 / 0.14);
-  --mg-mist-2: rgb(100 116 139 / 0.12);
-  --mg-mist-3: rgb(226 232 240 / 0.06);
-  --mg-mist-4: rgb(71 85 105 / 0.16);
+.mockup-root[data-palette="ice"] {
+  --mg-bg: #07090f;
+  --mg-a: #7dd3fc;
+  --mg-b: #67e8f9;
+  --mg-c: #a5b4fc;
+  --mg-accent-text: #e0f2fe;
 }
 
 .mockup-root[data-palette="bea"] {
-  --mg-accent: #ff8f00;
-  --mg-accent-soft: rgb(237 23 31 / 0.2);
-  --mg-accent-text: #ffe4c4;
-  --mg-mist-1: rgb(255 204 0 / 0.14);
-  --mg-mist-2: rgb(255 143 0 / 0.14);
-  --mg-mist-3: rgb(237 23 31 / 0.12);
-  --mg-mist-4: rgb(234 65 32 / 0.1);
+  --mg-bg: #10080a;
+  --mg-a: #ed171f;
+  --mg-b: #ff8f00;
+  --mg-c: #ffcc00;
+  --mg-accent-text: #ffe8d2;
 }
 
+/* Recompute soft fills from active A when palette changes */
+.mockup-root[data-palette] {
+  --mg-accent-soft: color-mix(in srgb, var(--mg-a) 24%, transparent);
+  --mg-mist-1: color-mix(in srgb, var(--mg-a) 55%, transparent);
+  --mg-mist-2: color-mix(in srgb, var(--mg-b) 50%, transparent);
+  --mg-mist-3: color-mix(in srgb, var(--mg-c) 45%, transparent);
+  --mg-mist-4: color-mix(in srgb, var(--mg-a) 38%, transparent);
+  --mg-mist-5: color-mix(in srgb, var(--mg-b) 34%, transparent);
+}
+
+.mockup-root[data-palette="monokai"] {
+  --mg-mist-1: color-mix(in srgb, #f92672 48%, transparent);
+  --mg-mist-2: color-mix(in srgb, #a6e22e 42%, transparent);
+  --mg-mist-3: color-mix(in srgb, #66d9ef 45%, transparent);
+  --mg-mist-4: color-mix(in srgb, #fd971f 40%, transparent);
+  --mg-mist-5: color-mix(in srgb, #ae81ff 40%, transparent);
+}
+
+/* Glass panels — multi-color edge via gradient border trick */
 .mockup-glass {
   position: relative;
   isolation: isolate;
   background: var(--mg-glass);
-  border: 1px solid var(--mg-glass-border);
+  border: 1px solid transparent;
   border-radius: var(--mg-radius);
+  background-image:
+    linear-gradient(var(--mg-glass), var(--mg-glass)),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--mg-a) 55%, white 20%),
+      rgb(255 255 255 / 0.18) 35%,
+      color-mix(in srgb, var(--mg-b) 45%, transparent) 70%,
+      color-mix(in srgb, var(--mg-c) 40%, transparent)
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   box-shadow:
-    0 10px 36px rgb(0 0 0 / 0.35),
+    0 12px 40px rgb(0 0 0 / 0.4),
     inset 0 1px 1px var(--mg-glass-highlight),
-    inset 0 -1px 1px rgb(255 255 255 / 0.06);
-  -webkit-backdrop-filter: blur(16px) saturate(165%) brightness(1.05);
-  backdrop-filter: blur(16px) saturate(165%) brightness(1.05);
+    inset 0 -1px 1px rgb(255 255 255 / 0.05),
+    0 0 40px color-mix(in srgb, var(--mg-a) 12%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(170%) brightness(1.06);
+  backdrop-filter: blur(18px) saturate(170%) brightness(1.06);
 }
 
 .mockup-glass::after {
@@ -103,21 +172,29 @@
   pointer-events: none;
   background: linear-gradient(
     145deg,
-    rgb(255 255 255 / 0.22) 0%,
-    rgb(255 255 255 / 0.05) 28%,
-    transparent 58%
+    color-mix(in srgb, var(--mg-a) 18%, white 40%) 0%,
+    rgb(255 255 255 / 0.08) 28%,
+    color-mix(in srgb, var(--mg-b) 10%, transparent) 55%,
+    transparent 70%
   );
   mix-blend-mode: screen;
 }
 
+/* Multi-stop title gradient */
 .mockup-title-grad {
-  background: linear-gradient(100deg, #fff 0%, var(--mg-accent) 55%, #fff 110%);
+  background: linear-gradient(
+    100deg,
+    #fff 0%,
+    var(--mg-a) 28%,
+    var(--mg-b) 58%,
+    var(--mg-c) 82%,
+    #fff 120%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Unified hero buttons — same height / radius / padding */
 .mockup-btn {
   position: relative;
   z-index: 1;
@@ -141,14 +218,17 @@
     0 4px 14px rgb(0 0 0 / 0.2);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
   backdrop-filter: blur(12px) saturate(160%);
-  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease, box-shadow 150ms ease;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .mockup-btn:hover {
   background: rgb(255 255 255 / 0.14);
-  border-color: rgb(255 255 255 / 0.28);
+  border-color: color-mix(in srgb, var(--mg-a) 40%, white 20%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.3),
+    0 0 18px color-mix(in srgb, var(--mg-a) 25%, transparent);
 }
 
 .mockup-btn:active {
@@ -157,19 +237,19 @@
 
 .mockup-btn-accent {
   color: #0b1220;
-  background: linear-gradient(135deg, #fff 0%, var(--mg-accent) 100%);
-  border-color: rgb(255 255 255 / 0.35);
+  border-color: transparent;
+  background-image: linear-gradient(135deg, var(--mg-a) 0%, var(--mg-b) 55%, var(--mg-c) 100%);
   box-shadow:
-    0 6px 18px color-mix(in srgb, var(--mg-accent) 35%, transparent),
+    0 6px 22px color-mix(in srgb, var(--mg-a) 40%, transparent),
+    0 0 28px color-mix(in srgb, var(--mg-b) 25%, transparent),
     inset 0 1px 1px rgb(255 255 255 / 0.55);
 }
 
 .mockup-btn-accent:hover {
-  filter: brightness(1.05);
-  background: linear-gradient(135deg, #fff 0%, var(--mg-accent) 100%);
+  filter: brightness(1.06);
+  background-image: linear-gradient(135deg, var(--mg-a) 0%, var(--mg-b) 55%, var(--mg-c) 100%);
 }
 
-/* Segmented liquid-glass toggle */
 .mockup-toggle {
   position: relative;
   z-index: 1;
@@ -184,7 +264,8 @@
   border: 1px solid rgb(255 255 255 / 0.14);
   box-shadow:
     inset 0 1px 1px rgb(255 255 255 / 0.2),
-    0 8px 24px rgb(0 0 0 / 0.25);
+    0 8px 24px rgb(0 0 0 / 0.25),
+    0 0 30px color-mix(in srgb, var(--mg-a) 10%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
   backdrop-filter: blur(14px) saturate(160%);
 }
@@ -196,11 +277,15 @@
   left: 0.3rem;
   width: calc((100% - 0.6rem) / 4);
   border-radius: 9999px;
-  background: var(--mg-accent-soft);
-  border: 1px solid color-mix(in srgb, var(--mg-accent) 45%, white 20%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mg-a) 35%, transparent),
+    color-mix(in srgb, var(--mg-b) 28%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--mg-a) 50%, white 15%);
   box-shadow:
     inset 0 1px 1px rgb(255 255 255 / 0.35),
-    0 4px 12px rgb(0 0 0 / 0.25);
+    0 4px 14px color-mix(in srgb, var(--mg-a) 30%, transparent);
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
@@ -260,15 +345,41 @@
 .mockup-palette-chip[aria-pressed="true"] {
   color: var(--mg-accent-text);
   background: var(--mg-accent-soft);
-  border-color: color-mix(in srgb, var(--mg-accent) 40%, white 15%);
+  border-color: color-mix(in srgb, var(--mg-a) 45%, white 15%);
+}
+
+.mockup-swatches {
+  display: inline-flex;
+  align-items: center;
 }
 
 .mockup-swatch {
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 9999px;
-  background: var(--swatch, var(--mg-accent));
+  background: var(--swatch, var(--mg-a));
   box-shadow: 0 0 0 1px rgb(255 255 255 / 0.25);
+  margin-left: -0.15rem;
+}
+
+.mockup-swatch:first-child {
+  margin-left: 0;
+}
+
+.mockup-company {
+  background: linear-gradient(90deg, var(--mg-a), var(--mg-b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600;
+}
+
+.mockup-spine {
+  background: linear-gradient(180deg, var(--mg-a), var(--mg-b), var(--mg-c));
+}
+
+.mockup-dot {
+  background: linear-gradient(135deg, var(--mg-a), var(--mg-b));
 }
 
 @media (prefers-reduced-transparency: reduce) {
@@ -281,5 +392,11 @@
   }
   .mockup-glass::after {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockup-toggle-thumb {
+    transition: none;
   }
 }
