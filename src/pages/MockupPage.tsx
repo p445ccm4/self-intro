@@ -14,6 +14,7 @@ const DEFAULT_TUNE = {
   mist: 70,      // mist brightness %
   blur: 16,      // glass blur px
   opacity: 16,   // glass fill opacity % (higher = less see-through)
+  tint: 0,       // glass accent color intensity % (0 = clearest)
 } as const;
 
 const PALETTES: {
@@ -111,11 +112,36 @@ export const MockupPage = () => {
   const [mist, setMist] = useState<number>(DEFAULT_TUNE.mist);
   const [blur, setBlur] = useState<number>(DEFAULT_TUNE.blur);
   const [opacity, setOpacity] = useState<number>(DEFAULT_TUNE.opacity);
+  const [tint, setTint] = useState<number>(DEFAULT_TUNE.tint);
+  const [colorA, setColorA] = useState<string>(() => {
+    const p = isPalette(param) ? param : 'cyberpunk';
+    return PALETTES.find((x) => x.id === p)!.swatches[0];
+  });
+  const [colorB, setColorB] = useState<string>(() => {
+    const p = isPalette(param) ? param : 'cyberpunk';
+    return PALETTES.find((x) => x.id === p)!.swatches[1];
+  });
+  const [colorC, setColorC] = useState<string>(() => {
+    const p = isPalette(param) ? param : 'cyberpunk';
+    return PALETTES.find((x) => x.id === p)!.swatches[2];
+  });
   const { personal } = portfolioData;
 
   useEffect(() => {
     setSearchParams({ palette }, { replace: true });
   }, [palette, setSearchParams]);
+
+  const applyPaletteColors = (id: Palette) => {
+    const swatches = PALETTES.find((p) => p.id === id)!.swatches;
+    setColorA(swatches[0]);
+    setColorB(swatches[1]);
+    setColorC(swatches[2]);
+  };
+
+  const selectPalette = (id: Palette) => {
+    setPalette(id);
+    applyPaletteColors(id);
+  };
 
   const filterIndex = FILTERS.findIndex((f) => f.id === filter);
   const items = useMemo(
@@ -129,18 +155,25 @@ export const MockupPage = () => {
     '--mg-mist-brightness': String(mist / 100),
     '--mg-glass-blur': `${blur}px`,
     '--mg-glass-alpha': String(opacity / 100),
+    '--mg-glass-tint': String(tint / 100),
+    '--mg-a': colorA,
+    '--mg-b': colorB,
+    '--mg-c': colorC,
   } as CSSProperties;
 
   const resetTune = () => {
     setMist(DEFAULT_TUNE.mist);
     setBlur(DEFAULT_TUNE.blur);
     setOpacity(DEFAULT_TUNE.opacity);
+    setTint(DEFAULT_TUNE.tint);
+    applyPaletteColors(palette);
   };
 
   const readablePreset = () => {
     setMist(45);
     setBlur(20);
     setOpacity(28);
+    setTint(0);
   };
 
   return (
@@ -171,7 +204,7 @@ export const MockupPage = () => {
                   type="button"
                   className="mockup-palette-chip"
                   aria-pressed={palette === p.id}
-                  onClick={() => setPalette(p.id)}
+                  onClick={() => selectPalette(p.id)}
                 >
                   <span className="mockup-swatches" aria-hidden>
                     {p.swatches.map((hex) => (
@@ -194,10 +227,49 @@ export const MockupPage = () => {
             </p>
 
             <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
+              Accent colors
+            </h3>
+            <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
+              Pick A / B / C for mist, rim, title, and CTA. Palette chips reset these.
+            </p>
+            <div className="mockup-color-row">
+              <label className="mockup-color-picker" htmlFor="accent-a">
+                <span>A</span>
+                <input
+                  id="accent-a"
+                  type="color"
+                  value={colorA}
+                  onChange={(e) => setColorA(e.target.value)}
+                />
+                <span className="mockup-color-hex">{colorA}</span>
+              </label>
+              <label className="mockup-color-picker" htmlFor="accent-b">
+                <span>B</span>
+                <input
+                  id="accent-b"
+                  type="color"
+                  value={colorB}
+                  onChange={(e) => setColorB(e.target.value)}
+                />
+                <span className="mockup-color-hex">{colorB}</span>
+              </label>
+              <label className="mockup-color-picker" htmlFor="accent-c">
+                <span>C</span>
+                <input
+                  id="accent-c"
+                  type="color"
+                  value={colorC}
+                  onChange={(e) => setColorC(e.target.value)}
+                />
+                <span className="mockup-color-hex">{colorC}</span>
+              </label>
+            </div>
+
+            <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
               Tune visibility
             </h3>
             <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
-              If text is hard to read: lower mist, raise glass opacity, or soften blur.
+              If text is hard to read: lower mist, raise glass opacity, or keep tint at 0%.
             </p>
 
             <div className="mockup-tune-row">
@@ -242,6 +314,21 @@ export const MockupPage = () => {
                 max={45}
                 value={opacity}
                 onChange={(e) => setOpacity(Number(e.target.value))}
+              />
+            </div>
+
+            <div className="mockup-tune-row">
+              <label htmlFor="glass-tint">
+                <span>Glass color tint</span>
+                <span>{tint}%</span>
+              </label>
+              <input
+                id="glass-tint"
+                type="range"
+                min={0}
+                max={100}
+                value={tint}
+                onChange={(e) => setTint(Number(e.target.value))}
               />
             </div>
 
