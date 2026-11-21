@@ -13,8 +13,8 @@ export const ThemeToggle = () => {
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={toggleTheme}
     >
-      <Sun size={14} className="theme-toggle-icon theme-toggle-icon-sun" aria-hidden />
-      <Moon size={14} className="theme-toggle-icon theme-toggle-icon-moon" aria-hidden />
+      <Sun size={14} strokeWidth={2.25} className="theme-toggle-icon theme-toggle-icon-sun" aria-hidden />
+      <Moon size={14} strokeWidth={2.25} className="theme-toggle-icon theme-toggle-icon-moon" aria-hidden />
       <span className="theme-toggle-thumb" aria-hidden />
     </button>
   );

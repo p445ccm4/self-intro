@@ -386,15 +386,17 @@
     transform: translateX(1.125rem);
   }
 
-  /* Light / Dark theme toggle (in-page top-right, not sticky) */
+  /* Light / Dark theme toggle — equal inset padding, icons centered in each half */
   .theme-toggle {
+    --theme-toggle-pad: 0.1875rem;
     position: relative;
-    display: inline-flex;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    justify-content: space-between;
-    width: 3.5rem;
-    height: 2rem;
-    padding: 0 0.4rem;
+    justify-items: center;
+    width: 3.25rem;
+    height: 1.875rem;
+    padding: var(--theme-toggle-pad);
     border: 1px solid var(--bea-border-light);
     border-radius: var(--radius-full);
     background-color: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 100%), transparent);
@@ -411,6 +413,10 @@
   .theme-toggle-icon {
     position: relative;
     z-index: 1;
+    display: block;
+    width: 0.875rem;
+    height: 0.875rem;
+    line-height: 0;
     transition: opacity 180ms ease, color 180ms ease;
   }
   .theme-toggle-icon-sun {
@@ -430,10 +436,10 @@
   }
   .theme-toggle-thumb {
     position: absolute;
-    top: 0.2rem;
-    left: 0.2rem;
-    width: 1.6rem;
-    height: 1.6rem;
+    top: var(--theme-toggle-pad);
+    left: var(--theme-toggle-pad);
+    width: calc((100% - (var(--theme-toggle-pad) * 2)) / 2);
+    height: calc(100% - (var(--theme-toggle-pad) * 2));
     border-radius: var(--radius-full);
     background-color: var(--bea-surface-subtle);
     border: 1px solid var(--bea-border-light);
@@ -441,7 +447,7 @@
     transition: transform 200ms ease, background-color 180ms ease, border-color 180ms ease;
   }
   .theme-toggle[aria-checked="true"] .theme-toggle-thumb {
-    transform: translateX(1.5rem);
+    transform: translateX(100%);
   }
 
   .site-backdrop {
