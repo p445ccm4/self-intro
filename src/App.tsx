@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { DetailPage } from './pages/DetailPage';
+import { MockupPage } from './pages/MockupPage';
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <div className="bg-gray-900 min-h-screen text-white overflow-x-hidden">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/mockup" element={<MockupPage />} />
           <Route path="/project/:id" element={<DetailPage />} />
           <Route path="/experience/:id" element={<DetailPage />} />
           <Route path="/education/:id" element={<DetailPage />} />

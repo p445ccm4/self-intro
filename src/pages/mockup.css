@@ -1,0 +1,285 @@
+/* Dark liquid glass mockup — self-contained, scoped under .mockup-root */
+
+.mockup-root {
+  --mg-bg: #07090f;
+  --mg-text: #e8ecf4;
+  --mg-muted: #9aa3b5;
+  --mg-glass: rgb(255 255 255 / 0.07);
+  --mg-glass-border: rgb(255 255 255 / 0.16);
+  --mg-glass-highlight: rgb(255 255 255 / 0.38);
+  --mg-radius: 1.25rem;
+  --mg-control-h: 2.5rem;
+  --mg-accent: #7dd3fc;
+  --mg-accent-soft: rgb(125 211 252 / 0.18);
+  --mg-accent-text: #e0f2fe;
+  --mg-mist-1: rgb(56 189 248 / 0.16);
+  --mg-mist-2: rgb(167 139 250 / 0.14);
+  --mg-mist-3: rgb(52 211 153 / 0.1);
+  --mg-mist-4: rgb(96 165 250 / 0.12);
+
+  min-height: 100vh;
+  color: var(--mg-text);
+  background-color: var(--mg-bg);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 8% -8%, var(--mg-mist-1), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 95% 5%, var(--mg-mist-2), transparent 52%),
+    radial-gradient(ellipse 60% 40% at 50% 45%, var(--mg-mist-4), transparent 58%),
+    radial-gradient(ellipse 55% 40% at 82% 88%, var(--mg-mist-3), transparent 55%);
+  background-attachment: fixed;
+  font-family: "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Palette themes */
+.mockup-root[data-palette="ice"] {
+  --mg-accent: #7dd3fc;
+  --mg-accent-soft: rgb(125 211 252 / 0.18);
+  --mg-accent-text: #e0f2fe;
+  --mg-mist-1: rgb(56 189 248 / 0.18);
+  --mg-mist-2: rgb(148 163 184 / 0.12);
+  --mg-mist-3: rgb(34 211 238 / 0.1);
+  --mg-mist-4: rgb(125 211 252 / 0.1);
+}
+
+.mockup-root[data-palette="aurora"] {
+  --mg-accent: #a78bfa;
+  --mg-accent-soft: rgb(167 139 250 / 0.2);
+  --mg-accent-text: #ede9fe;
+  --mg-mist-1: rgb(56 189 248 / 0.14);
+  --mg-mist-2: rgb(167 139 250 / 0.18);
+  --mg-mist-3: rgb(52 211 153 / 0.12);
+  --mg-mist-4: rgb(244 114 182 / 0.08);
+}
+
+.mockup-root[data-palette="mint"] {
+  --mg-accent: #5eead4;
+  --mg-accent-soft: rgb(94 234 212 / 0.16);
+  --mg-accent-text: #ccfbf1;
+  --mg-mist-1: rgb(45 212 191 / 0.16);
+  --mg-mist-2: rgb(56 189 248 / 0.1);
+  --mg-mist-3: rgb(74 222 128 / 0.1);
+  --mg-mist-4: rgb(165 243 252 / 0.1);
+}
+
+.mockup-root[data-palette="silver"] {
+  --mg-accent: #e2e8f0;
+  --mg-accent-soft: rgb(226 232 240 / 0.14);
+  --mg-accent-text: #f8fafc;
+  --mg-mist-1: rgb(148 163 184 / 0.14);
+  --mg-mist-2: rgb(100 116 139 / 0.12);
+  --mg-mist-3: rgb(226 232 240 / 0.06);
+  --mg-mist-4: rgb(71 85 105 / 0.16);
+}
+
+.mockup-root[data-palette="bea"] {
+  --mg-accent: #ff8f00;
+  --mg-accent-soft: rgb(237 23 31 / 0.2);
+  --mg-accent-text: #ffe4c4;
+  --mg-mist-1: rgb(255 204 0 / 0.14);
+  --mg-mist-2: rgb(255 143 0 / 0.14);
+  --mg-mist-3: rgb(237 23 31 / 0.12);
+  --mg-mist-4: rgb(234 65 32 / 0.1);
+}
+
+.mockup-glass {
+  position: relative;
+  isolation: isolate;
+  background: var(--mg-glass);
+  border: 1px solid var(--mg-glass-border);
+  border-radius: var(--mg-radius);
+  box-shadow:
+    0 10px 36px rgb(0 0 0 / 0.35),
+    inset 0 1px 1px var(--mg-glass-highlight),
+    inset 0 -1px 1px rgb(255 255 255 / 0.06);
+  -webkit-backdrop-filter: blur(16px) saturate(165%) brightness(1.05);
+  backdrop-filter: blur(16px) saturate(165%) brightness(1.05);
+}
+
+.mockup-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.22) 0%,
+    rgb(255 255 255 / 0.05) 28%,
+    transparent 58%
+  );
+  mix-blend-mode: screen;
+}
+
+.mockup-title-grad {
+  background: linear-gradient(100deg, #fff 0%, var(--mg-accent) 55%, #fff 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Unified hero buttons — same height / radius / padding */
+.mockup-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: var(--mg-control-h);
+  min-width: 6.5rem;
+  padding: 0 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--mg-text);
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.28),
+    0 4px 14px rgb(0 0 0 / 0.2);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mockup-btn:hover {
+  background: rgb(255 255 255 / 0.14);
+  border-color: rgb(255 255 255 / 0.28);
+}
+
+.mockup-btn:active {
+  transform: translateY(1px);
+}
+
+.mockup-btn-accent {
+  color: #0b1220;
+  background: linear-gradient(135deg, #fff 0%, var(--mg-accent) 100%);
+  border-color: rgb(255 255 255 / 0.35);
+  box-shadow:
+    0 6px 18px color-mix(in srgb, var(--mg-accent) 35%, transparent),
+    inset 0 1px 1px rgb(255 255 255 / 0.55);
+}
+
+.mockup-btn-accent:hover {
+  filter: brightness(1.05);
+  background: linear-gradient(135deg, #fff 0%, var(--mg-accent) 100%);
+}
+
+/* Segmented liquid-glass toggle */
+.mockup-toggle {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 0.3rem;
+  width: min(100%, 28rem);
+  margin-inline: auto;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.2),
+    0 8px 24px rgb(0 0 0 / 0.25);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+}
+
+.mockup-toggle-thumb {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0.3rem;
+  width: calc((100% - 0.6rem) / 4);
+  border-radius: 9999px;
+  background: var(--mg-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--mg-accent) 45%, white 20%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.35),
+    0 4px 12px rgb(0 0 0 / 0.25);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.mockup-toggle-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 2.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--mg-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.mockup-toggle-btn[aria-pressed="true"] {
+  color: var(--mg-accent-text);
+}
+
+.mockup-card {
+  padding: 1.1rem 1.15rem 1.2rem;
+}
+
+.mockup-tag {
+  display: inline-flex;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--mg-muted);
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+
+.mockup-palette-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mg-muted);
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  cursor: pointer;
+}
+
+.mockup-palette-chip[aria-pressed="true"] {
+  color: var(--mg-accent-text);
+  background: var(--mg-accent-soft);
+  border-color: color-mix(in srgb, var(--mg-accent) 40%, white 15%);
+}
+
+.mockup-swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: var(--swatch, var(--mg-accent));
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.25);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .mockup-glass,
+  .mockup-btn,
+  .mockup-toggle {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: #141821;
+  }
+  .mockup-glass::after {
+    display: none;
+  }
+}
