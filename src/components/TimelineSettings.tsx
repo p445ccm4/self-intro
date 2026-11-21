@@ -1,5 +1,6 @@
 import { Briefcase, Code, GraduationCap, Clock, ArrowDown, ArrowUp } from 'lucide-react';
 import type { Category } from '../utils/timeline';
+import { cn } from '../utils/cn';
 
 interface TimelineSettingsProps {
   filter: Exclude<Category, 'milestone'> | 'all';
@@ -15,11 +16,10 @@ export const TimelineSettings = ({ filter, onFilterChange, sortOrder, onSortChan
         <button
           key={cat}
           onClick={() => onFilterChange(cat)}
-          className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 border ${
-            filter === cat
-              ? 'bg-gray-800 text-white border-gray-600 shadow-lg shadow-blue-500/10'
-              : 'bg-transparent text-gray-400 border-gray-800 hover:border-gray-700 hover:bg-gray-800/50'
-          }`}
+          className={cn(
+            'btn btn-sm',
+            filter === cat ? 'btn-primary' : 'btn-secondary'
+          )}
         >
           {cat === 'all' && <Clock size={14} />}
           {cat === 'work' && <Briefcase size={14} />}
@@ -29,11 +29,11 @@ export const TimelineSettings = ({ filter, onFilterChange, sortOrder, onSortChan
         </button>
       ))}
 
-      <div className="w-px h-8 bg-gray-800 mx-2 hidden sm:block" />
+      <div className="w-px h-8 bg-bea-border mx-2 hidden sm:block self-center" />
 
       <button
         onClick={onSortChange}
-        className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 border bg-transparent text-gray-400 border-gray-800 hover:border-gray-700 hover:bg-gray-800/50"
+        className="btn btn-sm btn-secondary"
       >
         {sortOrder === 'desc' ? <ArrowDown size={14} /> : <ArrowUp size={14} />}
         {sortOrder === 'desc' ? 'Newest First' : 'Oldest First'}
@@ -41,4 +41,3 @@ export const TimelineSettings = ({ filter, onFilterChange, sortOrder, onSortChan
     </div>
   );
 };
-

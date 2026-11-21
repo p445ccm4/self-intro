@@ -17,7 +17,7 @@ export const DetailPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-  
+
   const isProject = pathname.startsWith('/project/');
   const isExperience = pathname.startsWith('/experience/');
   const isEducation = pathname.startsWith('/education/');
@@ -30,9 +30,9 @@ export const DetailPage = () => {
 
   if (!item) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-bea-canvas text-bea-text-strong flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold mb-4">Item Not Found</h1>
-        <Link to="/" className="text-blue-400 hover:underline">Back to Home</Link>
+        <Link to="/" className="link">Back to Home</Link>
       </div>
     );
   }
@@ -49,10 +49,10 @@ export const DetailPage = () => {
   const youtubeLinks = project?.youtubeLinks || work?.youtubeLinks || [];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-bea-canvas text-bea-text-primary p-8">
       <Link
         to={state?.scrollToId ? `/#${state.scrollToId}` : '/'}
-        className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors"
+        className="inline-flex items-center gap-2 link mb-8"
       >
         <ArrowLeft size={20} /> Back to Home
       </Link>
@@ -63,21 +63,21 @@ export const DetailPage = () => {
         transition={{ duration: 0.5 }}
         className="max-w-4xl mx-auto"
       >
-        <h1 className="text-5xl font-bold mb-4">{title}</h1>
-        
-        <div className="flex flex-wrap gap-6 text-gray-300 mb-8">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-bea-text-strong">{title}</h1>
+
+        <div className="flex flex-wrap gap-6 text-bea-text-primary mb-8">
           <div className="flex items-center gap-2">
-            {education ? <GraduationCap size={20} className="text-green-400" /> : <Briefcase size={20} className="text-blue-400" />}
-            <span className="text-xl">{subtitle}</span>
+            {education ? <GraduationCap size={20} className="text-bea-teal" /> : <Briefcase size={20} className="text-bea-blue" />}
+            <span className="text-xl text-bea-text-strong">{subtitle}</span>
           </div>
           {role && role !== title && (
              <div className="flex items-center gap-2">
-             <Briefcase size={20} className="text-blue-400" />
+             <Briefcase size={20} className="text-bea-blue" />
              <span className="text-xl">{role}</span>
            </div>
           )}
           <div className="flex items-center gap-2">
-            <Calendar size={20} className="text-blue-400" />
+            <Calendar size={20} className="text-solar-red" />
             <span className="text-xl">{date}</span>
           </div>
         </div>
@@ -85,7 +85,7 @@ export const DetailPage = () => {
         {tech.length > 0 && (
           <div className="section-card">
             <h2 className="section-title">
-              <Code className="text-blue-400" /> Tech Stack
+              <Code className="text-solar-red" /> Tech Stack
             </h2>
             <div className="flex flex-wrap gap-3">
               {tech.map((t, i) => (
@@ -100,7 +100,7 @@ export const DetailPage = () => {
         {githubLinks && githubLinks.length > 0 && (
           <div className="section-card">
             <h2 className="section-title">
-              <Github className="text-blue-400" /> GitHub Repositories
+              <Github className="text-bea-text-strong" /> GitHub Repositories
             </h2>
             <div className="flex flex-col gap-3">
               {githubLinks.map((link: string, i: number) => (
@@ -122,14 +122,14 @@ export const DetailPage = () => {
         {youtubeLinks && youtubeLinks.length > 0 && (
           <div className="section-card">
             <h2 className="section-title">
-              <Youtube className="text-red-500" /> YouTube Demos
+              <Youtube className="text-solar-red" /> YouTube Demos
             </h2>
             <div className="grid grid-cols-1 gap-6">
               {youtubeLinks.map((link: string, i: number) => {
                  const embedUrl = getEmbedUrl(link);
                  if (!embedUrl) return null;
                  return (
-                  <div key={i} className="aspect-video rounded-lg overflow-hidden border border-card-border bg-black">
+                  <div key={i} className="aspect-video rounded-[var(--radius-control)] overflow-hidden border border-bea-border bg-bea-text-strong">
                     <iframe
                       width="100%"
                       height="100%"
@@ -146,33 +146,33 @@ export const DetailPage = () => {
           </div>
         )}
 
-        <div className="prose prose-invert max-w-none">
-          <h2 className="text-3xl font-bold mb-6">Details</h2>
-          
+        <div className="prose-bea max-w-none">
+          <h2 className="text-3xl font-bold mb-6 text-bea-text-strong">Details</h2>
+
           {/* Description handling */}
           {Array.isArray(description) ? (
              <ul className="space-y-4 mb-8">
              {description.map((desc, i) => (
                <li key={i} className="bullet-list-item">
-                 <span className="bullet-point bg-blue-500" />
+                 <span className="bullet-point" />
                  <span>{desc}</span>
                </li>
              ))}
            </ul>
           ) : (
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-xl text-bea-text-primary mb-8 leading-relaxed">
               {description}
             </p>
           )}
-          
+
           {/* Details (if any) */}
           {details && details.length > 0 && (
             <>
-              <h3 className="text-2xl font-bold mb-4">Key Highlights</h3>
+              <h3 className="text-2xl font-bold mb-4 text-bea-text-strong">Key Highlights</h3>
               <ul className="space-y-4">
                 {details.map((detail, i) => (
                   <li key={i} className="bullet-list-item text-base">
-                    <span className="bullet-point bg-purple-500" />
+                    <span className="bullet-point" style={{ background: 'var(--bea-vibrant-orange)' }} />
                     <span className="leading-relaxed">{detail}</span>
                   </li>
                 ))}

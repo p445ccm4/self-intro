@@ -39,10 +39,10 @@ export const TimelineSpine = memo(({ items, minDate, maxDate, laneCount, hovered
 
   const getPillColor = (category: Category) => {
     switch (category) {
-      case 'work': return 'bg-blue-500';
-      case 'project': return 'bg-purple-500';
-      case 'education': return 'bg-green-500';
-      case 'milestone': return 'bg-yellow-500';
+      case 'work': return 'bg-bea-blue';
+      case 'project': return 'bg-solar-red';
+      case 'education': return 'bg-bea-emerald';
+      case 'milestone': return 'bg-solar-yellow';
     }
   };
 
@@ -78,9 +78,9 @@ export const TimelineSpine = memo(({ items, minDate, maxDate, laneCount, hovered
                 className="absolute w-full flex items-center justify-center"
                 style={{ top: `${top}%` }}
               >
-                <div className={`w-full h-px ${isYearStart ? 'bg-gray-800/50' : 'bg-gray-800/30'}`} />
+                <div className={`w-full h-px ${isYearStart ? 'bg-bea-border' : 'bg-bea-border/50'}`} />
                 {isYearStart && (
-                  <span className="absolute z-30 bg-gray-900 px-2 py-1 rounded-full text-xs font-mono text-gray-500 border border-gray-800">
+                  <span className="absolute z-30 bg-bea-card px-2 py-1 rounded-full text-xs font-mono text-bea-text-secondary border border-bea-border shadow-[var(--shadow-card)]">
                     {year}
                   </span>
                 )}
@@ -95,7 +95,7 @@ export const TimelineSpine = memo(({ items, minDate, maxDate, laneCount, hovered
           {Array.from({ length: laneCount }).map((_, i) => (
             <div
               key={`lane-${i}`}
-              className="absolute top-0 bottom-0 w-px bg-gray-800/30"
+              className="absolute top-0 bottom-0 w-px bg-bea-border/70"
               style={{
                 left: i * (LANE_WIDTH + LANE_GAP) + LANE_WIDTH / 2
               }}

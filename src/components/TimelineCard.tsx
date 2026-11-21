@@ -40,7 +40,7 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
     >
       {/* Mobile Dot */}
       <div className={cn(
-        "md:hidden absolute left-6 w-3 h-3 rounded-full transform -translate-x-1/2 mt-6 z-10 border-2 border-gray-900",
+        "md:hidden absolute left-6 w-3 h-3 rounded-full transform -translate-x-1/2 mt-6 z-10 border-2 border-bea-canvas",
         getPillColor(item.category)
       )} />
 
@@ -56,8 +56,8 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
           animate={isHovered ? "hover" : "rest"}
           whileHover="hover"
           className={cn(
-            "group relative bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border transition-colors cursor-pointer overflow-hidden pointer-events-auto",
-            isHovered ? "border-gray-600 shadow-[0_0_15px_rgba(59,130,246,0.15)]" : "border-gray-800 hover:border-gray-700"
+            "group relative bg-bea-card p-6 rounded-[var(--radius-card)] border border-bea-border transition-colors cursor-pointer overflow-hidden pointer-events-auto shadow-[var(--shadow-card)]",
+            isHovered && "border-bea-border-strong"
           )}
           onClick={() => item.link && navigate(item.link, { state: { scrollToId: item.id } })}
           onMouseEnter={() => setHoveredItemId(item.id)}
@@ -75,15 +75,15 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
             whileHover="visible"
           />
 
-          <div className="flex flex-col md:items-start">
+          <div className="relative flex flex-col md:items-start z-10 pr-10">
             {/* Header: Date & Duration */}
-            <div className="flex items-center gap-3 text-xs font-mono text-gray-500 mb-2">
+            <div className="flex items-center gap-3 text-xs font-mono text-bea-text-secondary mb-2">
               <span className="flex items-center gap-1.5">
                 <Calendar size={12} />
                 {item.dateString}
               </span>
               {item.duration && (
-                <span className="px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 border border-gray-700/50">
+                <span className="tag tag-neutral">
                   {item.duration}
                 </span>
               )}
@@ -91,15 +91,15 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
 
             {/* Title & Subtitle */}
             <h3 className={cn(
-              "text-lg font-bold transition-colors flex items-center gap-2",
-              isHovered ? "text-blue-400" : "text-white group-hover:text-blue-400"
+              "text-lg font-bold transition-colors flex items-center gap-2 text-bea-text-strong",
+              isHovered && "text-solar-red"
             )}>
               {item.title}
               {item.link && (
                 <ChevronRight
                   size={16}
                   className={cn(
-                    "transition-all",
+                    "transition-all text-solar-red",
                     isHovered
                       ? "opacity-100 translate-x-0"
                       : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
@@ -113,7 +113,7 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
 
             {/* Description */}
             {item.description && (
-              <div className="mt-4 text-gray-400 text-sm leading-relaxed line-clamp-3 md:text-left">
+              <div className="mt-4 text-bea-text-primary text-sm leading-relaxed line-clamp-3 md:text-left">
                 {Array.isArray(item.description) ? (
                   <ul className="space-y-1 list-disc list-inside">
                     {item.description.slice(0, 2).map((desc, i) => (
@@ -130,36 +130,36 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
             {item.tags && item.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4 md:justify-start">
                 {item.tags.slice(0, 3).map((tag, i) => (
-                  <span key={i} className="text-xs px-2.5 py-1 bg-gray-800/50 rounded-md text-gray-500 border border-gray-700/30">
+                  <span key={i} className="tag tag-neutral">
                     {tag}
                   </span>
                 ))}
                 {item.tags.length > 3 && (
-                  <span className="text-xs px-2 py-1 text-gray-600">+{item.tags.length - 3}</span>
+                  <span className="text-xs px-2 py-1 text-bea-text-secondary">+{item.tags.length - 3}</span>
                 )}
               </div>
             )}
-            
-            {/* Category Icon Badge (Absolute positioned) */}
-            <motion.div
-              className={cn(
-                "absolute top-4 right-4 md:right-4 p-2 rounded-lg flex items-center gap-2 z-20",
-                getCategoryColor(item.category)
-              )}
-              layout
-              transition={springTransition}
-            >
-              <motion.span
-                className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden"
-                variants={categoryTextVariants}
-                initial="collapsed"
-                animate={isHovered ? "expanded" : "collapsed"}
-              >
-                {item.category}
-              </motion.span>
-              {getIcon(item.category)}
-            </motion.div>
           </div>
+
+          {/* Category Icon Badge */}
+          <motion.div
+            className={cn(
+              "absolute top-4 right-4 p-2 rounded-lg flex items-center gap-2 z-20 border",
+              getCategoryColor(item.category)
+            )}
+            layout
+            transition={springTransition}
+          >
+            <motion.span
+              className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden"
+              variants={categoryTextVariants}
+              initial="collapsed"
+              animate={isHovered ? "expanded" : "collapsed"}
+            >
+              {item.category}
+            </motion.span>
+            {getIcon(item.category)}
+          </motion.div>
         </motion.div>
       </div>
     </motion.div>

@@ -82,6 +82,7 @@
   --color-bea-surface-subtle: var(--bea-surface-subtle);
   --color-bea-card: var(--bea-card-bg);
   --color-bea-border: var(--bea-border-light);
+  --color-bea-border-strong: var(--bea-border-strong);
   --font-sans: "Hando", Arial, Helvetica, sans-serif;
 }
 

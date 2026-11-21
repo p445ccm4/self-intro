@@ -36,19 +36,19 @@ export const pillVariants: Variants = {
 // Hover animation for cards
 export const cardHover = {
   y: -4,
-  boxShadow: '0 0 15px rgba(59,130,246,0.15)',
+  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 4px 10px -4px rgba(237, 23, 31, 0.08)',
   transition: springTransition,
 };
 
 // Variants for TimelineCard content (border and shadow)
 export const cardContentVariants: Variants = {
   rest: {
-    borderColor: 'var(--color-gray-800)',
-    boxShadow: '0 0 0px rgba(59,130,246,0)',
+    borderColor: 'var(--bea-border-light)',
+    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.04)',
   },
   hover: {
-    borderColor: 'var(--color-gray-600)',
-    ...cardHover, // Reuse cardHover for y-offset and boxShadow
+    borderColor: 'var(--bea-border-strong)',
+    ...cardHover,
   }
 };
 

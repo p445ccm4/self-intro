@@ -57,7 +57,7 @@ export const Timeline = () => {
   return (
     <section className="py-20 px-4 max-w-7xl mx-auto relative overflow-hidden">
       <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+        <h2 className="text-4xl font-bold mb-6 solar-on-white">
           My Journey
         </h2>
         
@@ -106,7 +106,7 @@ export const Timeline = () => {
         />
         
         {/* Mobile Spine (Left) */}
-        <div className="md:hidden absolute left-6 top-0 bottom-0 w-px bg-gray-800" />
+        <div className="md:hidden absolute left-6 top-0 bottom-0 w-px bg-bea-border" />
         <div className="space-y-4 md:space-y-0">
           <AnimatePresence mode='popLayout'>
             {filteredItems.map((item) => {

@@ -6,61 +6,63 @@ import { cn } from '../utils/cn';
 export const Hero = () => {
   const { personal } = portfolioData;
 
-  const socialLinkBaseClass = "flex items-center gap-2 px-6 py-3 rounded-full transition-colors text-white";
-
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pb-32 relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black opacity-50"></div>
-      
+    <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pb-32 relative overflow-hidden bg-bea-card">
+      <div
+        className="absolute inset-0 -z-10 opacity-90"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255, 204, 0, 0.18), transparent 55%), radial-gradient(ellipse 70% 50% at 85% 20%, rgba(255, 143, 0, 0.12), transparent 50%), radial-gradient(ellipse 60% 40% at 10% 30%, rgba(237, 23, 31, 0.08), transparent 50%)',
+        }}
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-3xl"
+        className="max-w-3xl animate-view-fade-in"
       >
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 solar-on-white">
           {personal.name}
         </h1>
-        <h2 className="text-2xl md:text-3xl text-gray-300 mb-8">
+        <h2 className="text-2xl md:text-3xl text-bea-text-strong mb-8">
           {personal.title}
         </h2>
-        <p className="text-lg text-gray-400 mb-10 leading-relaxed">
+        <p className="text-lg text-bea-text-primary mb-10 leading-relaxed">
           {personal.summary}
         </p>
 
-        <div className="flex flex-wrap justify-center gap-6">
-          <a
-            href={`mailto:${personal.email}`}
-            className={cn(socialLinkBaseClass, "bg-gray-800 hover:bg-gray-700")}
-          >
-            <Mail size={20} />
+        <div className="flex flex-wrap justify-center gap-3">
+          <a href={`mailto:${personal.email}`} className="btn btn-primary">
+            <Mail size={18} />
             <span>Email</span>
           </a>
           <a
             href={personal.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(socialLinkBaseClass, "bg-[#0077b5] hover:bg-[#006396]")}
+            className="btn btn-secondary"
           >
-            <Linkedin size={20} />
+            <Linkedin size={18} />
             <span>LinkedIn</span>
           </a>
           <a
             href={personal.github}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(socialLinkBaseClass, "bg-[#333] hover:bg-[#242424]")}
+            className="btn btn-secondary"
           >
-            <Github size={20} />
+            <Github size={18} />
             <span>GitHub</span>
           </a>
-           <a
+          <a
             href={personal.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(socialLinkBaseClass, "bg-[#25D366] hover:bg-[#20bd5a]")}
+            className={cn('btn text-white border-transparent')}
+            style={{ backgroundColor: '#25D366' }}
           >
-            <MessageCircle size={20} />
+            <MessageCircle size={18} />
             <span>WhatsApp</span>
           </a>
           <a
@@ -68,9 +70,9 @@ export const Hero = () => {
             target="_blank"
             rel="noopener noreferrer"
             download
-            className={cn(socialLinkBaseClass, "bg-white text-black hover:bg-gray-200")}
+            className="btn btn-solar"
           >
-            <FileText size={20} />
+            <FileText size={18} />
             <span>Resume</span>
           </a>
         </div>
@@ -82,8 +84,8 @@ export const Hero = () => {
         transition={{ delay: 1, duration: 1 }}
         className="absolute bottom-4 md:bottom-10 animate-bounce flex flex-col items-center"
       >
-        <span className="text-gray-500 text-lg">Scroll Down</span>
-        <ChevronDown className="text-gray-500 mt-2" size={24} />
+        <span className="text-bea-text-secondary text-lg">Scroll Down</span>
+        <ChevronDown className="text-bea-text-secondary mt-2" size={24} />
       </motion.div>
     </section>
   );
