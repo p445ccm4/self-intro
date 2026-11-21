@@ -108,9 +108,9 @@ export const MockupPage = () => {
   const param = searchParams.get('palette');
   const [palette, setPalette] = useState<Palette>(() => (isPalette(param) ? param : 'cyberpunk'));
   const [filter, setFilter] = useState<Filter>('all');
-  const [mist, setMist] = useState(DEFAULT_TUNE.mist);
-  const [blur, setBlur] = useState(DEFAULT_TUNE.blur);
-  const [opacity, setOpacity] = useState(DEFAULT_TUNE.opacity);
+  const [mist, setMist] = useState<number>(DEFAULT_TUNE.mist);
+  const [blur, setBlur] = useState<number>(DEFAULT_TUNE.blur);
+  const [opacity, setOpacity] = useState<number>(DEFAULT_TUNE.opacity);
   const { personal } = portfolioData;
 
   useEffect(() => {
