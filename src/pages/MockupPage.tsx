@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Briefcase, Code, GraduationCap, Clock, Mail, Linkedin, Github, FileText, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
+import { ThemeToggle } from '../components/ThemeToggle';
 import './mockup.css';
 
 type Palette = 'cyberpunk' | 'vice' | 'neon' | 'monokai' | 'aurora' | 'ice' | 'bea';
@@ -210,9 +211,12 @@ export const MockupPage = () => {
           <Link to="/" className="mockup-btn !min-w-0 px-4 text-sm">
             ← Live site
           </Link>
-          <p className="text-xs uppercase tracking-[0.14em] text-[color:var(--mg-muted)]">
-            /mockup · multi-color dark glass
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-xs uppercase tracking-[0.14em] text-[color:var(--mg-muted)]">
+              /mockup · multi-color dark glass
+            </p>
+            <ThemeToggle />
+          </div>
         </div>
 
         <section className="mockup-glass mb-8 p-4 md:p-5">

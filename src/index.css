@@ -1,85 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  /* BEA Core Brand Colors (Solar Gradient & Accents) */
+  /* Accent triad from mockup config (A / B / C) */
+  --accent-a: #FFCDB6;
+  --accent-b: #FFDAA3;
+  --accent-c: #FFFFFF;
+
+  /* Brand / semantic accents */
   --bea-primary-red: #ED171F;
   --bea-red-orange: #EA4120;
   --bea-vibrant-orange: #FF8F00;
   --bea-golden-yellow: #FFCC00;
   --bea-soft-coral: #F8A2A5;
   --bea-deep-burgundy: #640000;
-
-  /* BEA Secondary & Semantic Colors */
   --bea-deep-teal: #004742;
   --bea-emerald-green: #29BA74;
   --bea-hyperlink-blue: #0563C1;
   --bea-warning-amber: #D97706;
 
-  /* BEA Neutrals & Surfaces */
-  --bea-text-primary: #595959;
-  --bea-text-secondary: #797979;
-  --bea-text-strong: #262626;
-  --bea-canvas-bg: #F2F2F2;
-  --bea-surface-subtle: #F8F8F8;
+  /* Light theme (inverted from dark glass home) */
+  --bea-text-primary: #2A3A30;
+  --bea-text-secondary: #5A6B60;
+  --bea-text-strong: #0F1A12;
+  --bea-canvas-bg: #F3F7F4;
+  --bea-surface-subtle: #EAF1EC;
   --bea-card-bg: #FFFFFF;
-  --bea-border-light: #DEDEDE;
-  --bea-border-strong: #BDBDBD;
+  --bea-border-light: #D5E0D8;
+  --bea-border-strong: #B4C4BA;
 
-  /* Semantic Aliases */
   --background: var(--bea-card-bg);
   --foreground: var(--bea-text-primary);
   --solar-red: var(--bea-primary-red);
   --solar-orange: var(--bea-vibrant-orange);
   --solar-yellow: var(--bea-golden-yellow);
-  --focus-ring: rgba(237, 23, 31, 0.25);
+  --focus-ring: rgba(255, 205, 182, 0.45);
 
-  /* Unified Spacing, Sizing, Radii & Elevation */
-  --control-height: 2.25rem;
+  --mist-brightness: 0.55;
+  --glass-blur: 18px;
+  --glass-alpha: 0.55;
+
+  --control-height: 2.5rem;
   --control-height-sm: 1.875rem;
   --radius-badge: 0.25rem;
-  --radius-control: 0.5rem;
-  --radius-card: 0.75rem;
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
   --radius-full: 9999px;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 4px 10px -4px rgba(0, 0, 0, 0.06);
 
-  /* "Solar on White": words have gradient on a white background (Red on left -> Yellow on right) */
+  /* Stronger stops for light surfaces so title stays readable */
   --solar-on-white-gradient: linear-gradient(
     90deg,
-    #ED171F 0%,
-    #FF8F00 70%,
-    #FFCC00 100%
+    #E28B6A 0%,
+    #E0A45A 55%,
+    #C9893A 100%
   );
 
-  /* "White on Solar": white words on a solar gradient background (Yellow on left -> Red on right) */
   --white-on-solar-gradient: linear-gradient(
     90deg,
-    #FFCC00 0%,
-    #FF8F00 30%,
-    #EA4120 75%,
-    #ED171F 100%
+    var(--accent-a) 0%,
+    var(--accent-b) 50%,
+    var(--accent-c) 100%
   );
 
   --solar-gradient: var(--solar-on-white-gradient);
 }
 
-/* Dark mode: invert surfaces (black bg) and text (white) */
+/* Dark home config from mockup: bg #001F08, words #FFFFFF, mist/glass tuned */
 :root[data-theme="dark"] {
-  --bea-text-primary: #D4D4D4;
-  --bea-text-secondary: #A3A3A3;
-  --bea-text-strong: #F5F5F5;
-  --bea-canvas-bg: #0A0A0A;
-  --bea-surface-subtle: #141414;
-  --bea-card-bg: #111111;
-  --bea-border-light: #2E2E2E;
-  --bea-border-strong: #4A4A4A;
+  --bea-text-primary: #FFFFFF;
+  --bea-text-secondary: color-mix(in srgb, #FFFFFF 78%, transparent);
+  --bea-text-strong: #FFFFFF;
+  --bea-canvas-bg: #001F08;
+  --bea-surface-subtle: color-mix(in srgb, #FFFFFF 8%, #001F08);
+  --bea-card-bg: color-mix(in srgb, #FFFFFF 8%, #001F08);
+  --bea-border-light: color-mix(in srgb, #FFFFFF 18%, transparent);
+  --bea-border-strong: color-mix(in srgb, #FFFFFF 28%, transparent);
+  --bea-hyperlink-blue: #9AD7FF;
 
-  --background: var(--bea-card-bg);
+  --background: var(--bea-canvas-bg);
   --foreground: var(--bea-text-primary);
-  --focus-ring: rgba(255, 143, 0, 0.35);
+  --focus-ring: rgba(255, 205, 182, 0.35);
 
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --mist-brightness: 1.06;
+  --glass-blur: 23px;
+  --glass-alpha: 0.26;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
   --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.55), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
+
+  --solar-on-white-gradient: linear-gradient(
+    90deg,
+    var(--accent-a) 0%,
+    var(--accent-b) 55%,
+    var(--accent-c) 100%
+  );
 }
 
 @theme inline {
@@ -167,7 +182,8 @@
     justify-content: center;
     gap: 0.5rem;
     min-height: var(--control-height);
-    padding: 0 0.875rem;
+    min-width: 7.5rem;
+    padding: 0 1rem;
     border-radius: var(--radius-control);
     font-size: 0.875rem;
     font-weight: 600;
@@ -177,6 +193,12 @@
     border: 1px solid transparent;
     transition: background-color 150ms ease, border-color 150ms ease, opacity 150ms ease, transform 100ms ease;
     user-select: none;
+  }
+  .btn > svg {
+    flex-shrink: 0;
+  }
+  .btn > span {
+    line-height: 1;
   }
   .btn:active:not(:disabled) {
     transform: translateY(1px);
@@ -216,7 +238,7 @@
     background-clip: border-box;
     background-repeat: no-repeat;
     border-color: transparent;
-    color: #FFFFFF;
+    color: #0F1A12;
   }
   .btn-solar:hover:not(:disabled) {
     filter: brightness(0.96);
@@ -230,6 +252,27 @@
   .btn-secondary:hover:not(:disabled) {
     background-color: var(--bea-surface-subtle);
     border-color: var(--bea-border-strong);
+  }
+
+  .btn-glass {
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 100%), transparent);
+    color: var(--bea-text-strong);
+    border-color: var(--bea-border-light);
+    -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.55)) saturate(140%);
+    backdrop-filter: blur(calc(var(--glass-blur) * 0.55)) saturate(140%);
+    box-shadow: inset 0 1px 1px color-mix(in srgb, #FFFFFF 35%, transparent);
+  }
+  .btn-glass:hover:not(:disabled) {
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 130%), transparent);
+    border-color: var(--bea-border-strong);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .btn-ghost {
@@ -329,13 +372,7 @@
     transform: translateX(1.125rem);
   }
 
-  /* Light / Dark theme toggle */
-  .theme-toggle-bar {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 40;
-  }
+  /* Light / Dark theme toggle (in-page top-right, not sticky) */
   .theme-toggle {
     position: relative;
     display: inline-flex;
@@ -346,9 +383,11 @@
     padding: 0 0.4rem;
     border: 1px solid var(--bea-border-light);
     border-radius: var(--radius-full);
-    background-color: var(--bea-card-bg);
+    background-color: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 100%), transparent);
     box-shadow: var(--shadow-card);
     color: var(--bea-text-secondary);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
   }
   .theme-toggle:hover {
@@ -391,17 +430,18 @@
     transform: translateX(1.5rem);
   }
 
-  .hero-glow {
-    background:
-      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255, 204, 0, 0.18), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 85% 20%, rgba(255, 143, 0, 0.12), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 10% 30%, rgba(237, 23, 31, 0.08), transparent 50%);
-  }
-  :root[data-theme="dark"] .hero-glow {
-    background:
-      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255, 204, 0, 0.12), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 85% 20%, rgba(255, 143, 0, 0.1), transparent 50%),
-      radial-gradient(ellipse 60% 40% at 10% 30%, rgba(237, 23, 31, 0.1), transparent 50%);
+  .site-mist {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--mist-brightness);
+    background-image:
+      radial-gradient(ellipse 80% 55% at 5% 0%, color-mix(in srgb, var(--accent-a) 70%, transparent), transparent 58%),
+      radial-gradient(ellipse 70% 50% at 100% 8%, color-mix(in srgb, var(--accent-b) 65%, transparent), transparent 55%),
+      radial-gradient(ellipse 60% 45% at 50% 40%, color-mix(in srgb, var(--accent-c) 35%, transparent), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 15% 85%, color-mix(in srgb, var(--accent-a) 45%, transparent), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 88% 92%, color-mix(in srgb, var(--accent-b) 40%, transparent), transparent 55%);
   }
 
   /* Dropdown Menu */
@@ -601,11 +641,13 @@
   }
 
   .card {
-    background: var(--bea-card-bg);
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 70%), var(--bea-card-bg));
     border: 1px solid var(--bea-border-light);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card);
     padding: 1.25rem;
+    -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.4));
+    backdrop-filter: blur(calc(var(--glass-blur) * 0.4));
   }
 
   .tabs-list {

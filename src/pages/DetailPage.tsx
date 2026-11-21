@@ -1,8 +1,9 @@
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { portfolioData } from '../data/portfolio';
-import { ArrowLeft, Calendar, Briefcase, Code, GraduationCap, Github, Youtube } from 'lucide-react';
+import { ArrowLeft, Calendar, Briefcase, Code, GraduationCap, Github, Youtube, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 const getEmbedUrl = (url: string) => {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -46,16 +47,20 @@ export const DetailPage = () => {
   const tech = project ? project.tech : [];
   const role = project ? project.role : work?.role || '';
   const githubLinks = project?.githubLinks || work?.githubLinks || [];
+  const demoLinks = project?.demoLinks || [];
   const youtubeLinks = project?.youtubeLinks || work?.youtubeLinks || [];
 
   return (
     <div className="min-h-screen bg-bea-canvas text-bea-text-primary p-8">
-      <Link
-        to={state?.scrollToId ? `/#${state.scrollToId}` : '/'}
-        className="inline-flex items-center gap-2 link mb-8"
-      >
-        <ArrowLeft size={20} /> Back to Home
-      </Link>
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <Link
+          to={state?.scrollToId ? `/#${state.scrollToId}` : '/'}
+          className="inline-flex items-center gap-2 link"
+        >
+          <ArrowLeft size={20} /> Back to Home
+        </Link>
+        <ThemeToggle />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -92,6 +97,28 @@ export const DetailPage = () => {
                 <span key={i} className="tech-tag">
                   {t}
                 </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {demoLinks.length > 0 && (
+          <div className="section-card">
+            <h2 className="section-title">
+              <ExternalLink className="text-bea-text-strong" /> Live Links
+            </h2>
+            <div className="flex flex-col gap-3">
+              {demoLinks.map((link: string, i: number) => (
+                <a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-item"
+                >
+                  <ExternalLink size={16} />
+                  {link}
+                </a>
               ))}
             </div>
           </div>

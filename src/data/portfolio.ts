@@ -9,21 +9,32 @@ export const portfolioData: PortfolioData = {
     whatsapp: "https://wa.me/85260358263",
     linkedin: "https://linkedin.com/in/michael-chanchunming",
     github: "https://github.com/p445ccm4",
-    resume: "/Resume 03-2026.pdf",
-    summary: "AI Agent Engineer with over 3 years of experience in Machine Learning, Python and Full-Stack Development. Specializes in building Agentic AI systems using LLMs, Vector Databases, and RAG frameworks. Currently developing enterprise meeting assistants at HKT, utilizing React.js and Nest.js within a strict CI/CD environment. Experienced in high-performance backend architecture, including GoLang microservices and gRPC. Adept at translating business needs into technical designs and driving digital transformation for non-technical stakeholders."
+    resume: "/Resume 10-2026.pdf",
+    summary:
+      "AI Agent Engineer with over 3 years of experience in AI Agent and Full-Stack Software Development. Specializes in building Enterprise GenAI Platforms and Solutions for financial institutions. Adept at translating business needs into technical designs and driving digital/AI transformation for non-technical stakeholders.",
   },
   experience: [
     {
+      id: "bea-manager",
+      role: "Manager",
+      company: "The Bank of East Asia Limited",
+      period: "September 2026 – Now",
+      description: "Research and development of Agentic AI Solutions within a strict compliance environment.",
+      details: [
+        "Research and development of Agentic AI Solutions within a strict compliance environment.",
+        "Collaborate with cross-functional teams, fostering a cooperative environment.",
+      ],
+    },
+    {
       id: "hkt-senior-ai-dev",
       role: "Senior AI Application Developer",
-      company: "Hong Kong Telecom",
-      period: "November 2025 – Now",
-      description: "Develop enterprise-grade GenAI platform and applications for internal use.",
+      company: "Hong Kong Telecom Services Limited",
+      period: "November 2025 – September 2026",
+      description: "Developed and maintained Generative AI Platforms within a large-scale enterprise environment.",
       details: [
-        "Developing and maintaining Generative AI solutions within a large-scale enterprise environment.",
+        "Developed and maintained Generative AI Platforms within a large-scale enterprise environment.",
         "Collaborating with cross-functional teams to integrate AI tools into the corporate ecosystem.",
-        "Adhering to strict GitLab CI/CD workflows and Agile methodologies to ensure code quality and security."
-      ]
+      ],
     },
     {
       id: "oodles-ai-engineer",
@@ -33,9 +44,9 @@ export const portfolioData: PortfolioData = {
       description: "Designed and implemented an AI Agent system to automate workflows for multiple departments.",
       details: [
         "Independently designed, developed and deployed an AI Agent system from scratch, including LLMOps, MCP servers, agent orchestration, vector database, RAG, access management, backend, frontend, CI/CD in a scalable, secure, agile manner.",
-        "Kept abreast of SOTA AI models and algorithms, including generative models for text, images, speech-to-text, speech, video, and 3D, as well as model training methods and architectures.",
-        "Met regularly with the CEO and Department Heads to align on AI vision and strategies."
-      ]
+        "Kept abreast of SOTA AI models and algorithms, such as open-source models for generating text, images, speech, music, video and 3D models for generic or specific scenarios, as well as model training algorithms and architectures.",
+        "Met frequently with the CEO and Department Heads on AI vision and strategy.",
+      ],
     },
     {
       id: "hku-ai-engineer",
@@ -47,8 +58,7 @@ export const portfolioData: PortfolioData = {
         "Successfully led multiple ICT award-winning projects. Clients include LCSD, OGCIO, MTR, HOHCS, and more.",
         "Successfully handled multiple projects encompassing the entire MLOps lifecycle from data collection, model training and testing, pruning, to deployment and fine-tuning.",
         "Proactively researched and built PoCs for ML/CV related projects, measuring and optimizing performance of data pipelines, model training, and inferencing.",
-        "Led a group of interns and collaborated with cross-functional teams, fostering a cooperative environment."
-      ]
+      ],
     },
     {
       id: "thinking-in-reverse-founder",
@@ -59,8 +69,8 @@ export const portfolioData: PortfolioData = {
       details: [
         "Managed a team of 5 tutors and served 50 students at peak.",
         "Built the admin, finance, and lesson management system using Excel VBA to streamline operations.",
-        "Created the company website using Wix, integrating appointment and inquiry forms with email and WhatsApp automation."
-      ]
+        "Created the company website using Wix, integrating appointment and inquiry forms with email and WhatsApp automation.",
+      ],
     },
     {
       id: "friday-web-intern",
@@ -68,10 +78,7 @@ export const portfolioData: PortfolioData = {
       company: "Friday Company Limited",
       period: "June 2020 – August 2020",
       description: "Frontend development internship.",
-      details: [
-        "Developed the frontend of the company website",
-        "Engaged in business development and marketing meetings"
-      ]
+      details: ["Developed the frontend of the company website", "Engaged in business development and marketing meetings"],
     },
     {
       id: "cas-rnd-intern",
@@ -80,36 +87,107 @@ export const portfolioData: PortfolioData = {
       period: "June 2019 – August 2019",
       description: "R&D internship focusing on sonar data visualising.",
       details: [
-        "Researched and implemented Sonar Data Visualization, Cleansing and Denoising Algorithms for an Autonomous Underwater Vehicle project."
+        "Researched and implemented Sonar Data Visualization, Cleansing and Denoising Algorithms for an Autonomous Underwater Vehicle project.",
       ],
-      youtubeLinks: ["https://www.youtube.com/watch?v=wsrc4_r5DRI", "https://www.youtube.com/watch?v=hYieObGts7M"]
-    }
+      youtubeLinks: [
+        "https://www.youtube.com/watch?v=wsrc4_r5DRI",
+        "https://www.youtube.com/watch?v=hYieObGts7M",
+      ],
+    },
   ],
   projects: [
+    {
+      id: "bea-hackathon-score-sheet",
+      title: "BEA x Google Cloud AI Hackathon Score Sheet",
+      role: "Builder",
+      company: "Self Project",
+      period: "November 2026",
+      description: "Scoring sheet web app for the BEA x Google Cloud AI Hackathon 2026.",
+      details: [
+        "Built a dedicated score-sheet experience for hackathon judging and review.",
+        "Live demo: https://bea-hackathon-score-sheet.vercel.app/",
+      ],
+      tech: ["Next.js", "React", "Vercel"],
+      demoLinks: ["https://bea-hackathon-score-sheet.vercel.app/"],
+    },
+    {
+      id: "ying-lai-renovation",
+      title: "盈麗樓裝修採購追蹤",
+      role: "Builder",
+      company: "Self Project",
+      period: "November 2026",
+      description: "Mobile-first renovation procurement tracker for Hong Kong new-home fit-outs.",
+      details: [
+        "Supports appliance/furniture model comparison, receipt logging, and delivery/install scheduling.",
+        "Live demo: https://ying-lai-renovation.vercel.app/",
+      ],
+      tech: ["Next.js", "React", "PWA", "Vercel"],
+      demoLinks: ["https://ying-lai-renovation.vercel.app/"],
+    },
+    {
+      id: "ask-ask-something",
+      title: "AskAsk* (ask-ask-something)",
+      role: "Builder",
+      company: "Self Project",
+      period: "November 2026",
+      description:
+        "Reusable Agent Skill & Antigravity Plugin for concurrent multi-turn AI agent UAT batch evaluation with LLM-as-a-Judge.",
+      details: [
+        "Runs concurrent multi-turn UAT conversations against agent endpoints.",
+        "Scores answers with Gemini LLM-as-a-Judge and writes results back to Excel in original formatting.",
+        "Installable as an agent skill / Antigravity plugin for regression-friendly prompt/RAG iteration.",
+      ],
+      tech: ["Python", "Agent Skills", "LLM-as-a-Judge", "UAT", "Excel"],
+      githubLinks: ["https://github.com/p445ccm4/ask-ask-something"],
+    },
+    {
+      id: "pptx-studio",
+      title: "PPTX Studio",
+      role: "Builder",
+      company: "Self Project",
+      period: "November 2026",
+      description: "Studio tooling for creating and iterating on PowerPoint decks.",
+      details: ["GitHub: https://github.com/p445ccm4/pptx-studio"],
+      tech: ["TypeScript", "PPTX"],
+      githubLinks: ["https://github.com/p445ccm4/pptx-studio"],
+    },
     {
       id: "ai-meeting-summary",
       title: "AI Meeting Summary App",
       role: "Senior AI Application Developer",
       company: "HKT",
       period: "January 2026 - Now",
-      description: "A platform to generate summary and insights from meeting recordings",
+      description: "High-privacy, on-premise solution for generating insights from meeting recordings.",
       details: [
-        "Developing an enterprise-grade meeting assistant that transcribes audio (Whisper) and generates summaries, action points and insights.",
-        "Engineered an asynchronous task queue system (BullMQ) to handle high-concurrency audio processing."
+        "Architected a fully on-premise deployment to ensure maximum data privacy and compliance with enterprise standards.",
+        "Engineered an asynchronous task queue (BullMQ) to manage high-concurrency, long-running audio processing workflows.",
       ],
-      tech: ["Whisper", "BullMQ", "React", "Nest.js", "AI Security", "K8S", "AWS", "CI/CD"]
+      tech: ["Whisper", "BullMQ", "React", "Nest.js", "AI Security", "K8S", "AWS", "CI/CD", "On-premise"],
     },
     {
       id: "hkt-genai-platform",
-      title: "Internal GenAI Platform",
+      title: "GenAI Platform",
       role: "Senior AI Application Developer",
       company: "HKT",
       period: "November 2025 - Now",
-      description: "An internal platform integrating various GenAI tools with high security standards for enterprise use.",
+      description:
+        "Enterprise AI Gateway providing secure, multi-modal LLM access for internal solutions.",
       details: [
-        "Collaborated on the full SDLC within a strict CI/CD environment."
+        "Maintained and enhanced a unified API hub integrating LLMs like Gemini, ChatGPT, Qwen with PII detection, rate limiting and high security standard.",
+        "Developed a central RAG architecture serving both a Perplexity-style chat interface and various internal digital products.",
       ],
-      tech: ["GenAI Platform", "React.js", "Nest.js", "Java Spring Boot", "CI/CD", "AWS", "K8S", "API development"]
+      tech: [
+        "GenAI Platform",
+        "RAG",
+        "React.js",
+        "Nest.js",
+        "Java Spring Boot",
+        "CI/CD",
+        "AWS",
+        "K8S",
+        "API development",
+        "PII Detection",
+      ],
     },
     {
       id: "enterprise-hrms",
@@ -118,36 +196,56 @@ export const portfolioData: PortfolioData = {
       period: "January 2026 - March 2026",
       description: "An Enterprise HRMS built with React.js, GoLang, Microservices and gRPC",
       details: [],
-      tech: ["React.js", "GoLang", "Microservices", "gRPC"]
+      tech: ["React.js", "GoLang", "Microservices", "gRPC"],
     },
     {
       id: "sb-ai-agent",
       title: "AI Agent",
       role: "Artificial Intelligence Engineer",
-      company: "Success Base Engineering Limited",
+      company: "Oodles Systems / Success Base Engineering Limited",
       period: "March 2025 - October 2025",
-      description: "A smart system automating complex tasks without human interference.",
+      description: "Agentic system automating Tender and HR workflows via real-time data synchronization.",
       details: [
-        "Designed a fully autonomous agentic system that automates workflows for Tender, HR and Admin depts.",
-        "Implemented RAG on NAS servers and orchestrated multiple agents using Model Context Protocol (MCP).",
-        "Successfully automated complex tasks like resume filtering and payment voucher processing."
+        "Built a real-time vector database that automatically syncs with internal file servers to maintain an up-to-date knowledge base.",
+        "Developed agents capable of sending emails, editing Excel files, and executing scheduled workflows without human intervention.",
       ],
-      tech: ["AI Agent", "RAG", "MCP", "LLMs", "Vector DB", "OCR", "On-premise Deployment", "Python", "React.js", "Docker"],
-      githubLinks: ["https://github.com/p445ccm4/AI_Agent", "https://github.com/p445ccm4/ai-agent-frontend-v2", "https://github.com/p445ccm4/Local_Agent", "https://github.com/p445ccm4/comprehension-mcp-server", "https://github.com/p445ccm4/Google-Search-MCP-server-with-Streamable-HTTP"],
-      youtubeLinks: ["https://www.youtube.com/watch?v=-MrheQ6qReo", "https://www.youtube.com/watch?v=e3O8_sPGVoc", "https://www.youtube.com/watch?v=fFg6FHFKT_w"]
+      tech: [
+        "AI Agent",
+        "RAG",
+        "MCP",
+        "LLMs",
+        "Vector DB",
+        "OCR",
+        "On-premise Deployment",
+        "Python",
+        "React.js",
+        "Docker",
+      ],
+      githubLinks: [
+        "https://github.com/p445ccm4/AI_Agent",
+        "https://github.com/p445ccm4/ai-agent-frontend-v2",
+        "https://github.com/p445ccm4/Local_Agent",
+        "https://github.com/p445ccm4/comprehension-mcp-server",
+        "https://github.com/p445ccm4/Google-Search-MCP-server-with-Streamable-HTTP",
+      ],
+      youtubeLinks: [
+        "https://www.youtube.com/watch?v=-MrheQ6qReo",
+        "https://www.youtube.com/watch?v=e3O8_sPGVoc",
+        "https://www.youtube.com/watch?v=fFg6FHFKT_w",
+      ],
     },
     {
       id: "ai-youtuber",
       title: "AI YouTuber",
       company: "Self Project",
       period: "November 2024 - October 2025",
-      description: "A platform to create and edit long videos with just a few clicks",
+      description: "Automated platform for multi-modal video creation and editing.",
       details: [
-        "Uses many SOTA AI models to generate script, speech, image and music, then integrate them into wonderful YouTube videos.",
-        "Autonomously making 1000+ views per video with super low maintenance."
+        "Orchestrated a pipeline to transform text/video inputs into synchronized visual, audio, musical assets using SOTA GenAI models, then compose into one video and upload to YouTube.",
+        "Built a natural language interface for granular editing of scripts, prompts, and generative outputs.",
       ],
       tech: ["GenAI", "Automation", "Open Source SOTA Models", "Python", "Ollama", "Gradio", "Google APIs"],
-      githubLinks: ["https://github.com/p445ccm4/AI_YouTuber"]
+      githubLinks: ["https://github.com/p445ccm4/AI_YouTuber"],
     },
     {
       id: "oodles-smart",
@@ -159,11 +257,23 @@ export const portfolioData: PortfolioData = {
       details: [
         "Researched algorithms for removing furniture, generating empty rooms, and reverse image searching for textures.",
         "Implemented features to replace wallpaper and simulate renovation styles.",
-        "Product Website: https://oodles-smart.com/"
+        "Product Website: https://oodles-smart.com/",
       ],
-      tech: ["Python", "Computer Vision", "GenAI", "OpenAI CLIP", "Object Segmentation", "Edge Detection", "Stable Diffusion"],
-      githubLinks: ["https://github.com/p445ccm4/flux", "https://github.com/p445ccm4/ViewCrafter", "https://github.com/p445ccm4/DimensionX"],
-      youtubeLinks: ["https://www.youtube.com/watch?v=aXK1OQNoMDE"]
+      tech: [
+        "Python",
+        "Computer Vision",
+        "GenAI",
+        "OpenAI CLIP",
+        "Object Segmentation",
+        "Edge Detection",
+        "Stable Diffusion",
+      ],
+      githubLinks: [
+        "https://github.com/p445ccm4/flux",
+        "https://github.com/p445ccm4/ViewCrafter",
+        "https://github.com/p445ccm4/DimensionX",
+      ],
+      youtubeLinks: ["https://www.youtube.com/watch?v=aXK1OQNoMDE"],
     },
     {
       id: "customer-attention-tracking",
@@ -173,9 +283,20 @@ export const portfolioData: PortfolioData = {
       period: "April 2024 – May 2024",
       description: "A system to record which products customers are looking at or touching",
       details: [],
-      tech: ["Computer Vision", "Real-time Edge Device Inference", "Human Posture Tracking", "Depth Camera", "3D Reconstruction", "Python", "PyTorch", "ONNX", "OpenCV", "Matplotlib"],
+      tech: [
+        "Computer Vision",
+        "Real-time Edge Device Inference",
+        "Human Posture Tracking",
+        "Depth Camera",
+        "3D Reconstruction",
+        "Python",
+        "PyTorch",
+        "ONNX",
+        "OpenCV",
+        "Matplotlib",
+      ],
       githubLinks: ["https://github.com/p445ccm4/retail-shelf-intersection-frequency-estimation"],
-      youtubeLinks: ["https://www.youtube.com/watch?v=9JnbChvqUFE"]
+      youtubeLinks: ["https://www.youtube.com/watch?v=9JnbChvqUFE"],
     },
     {
       id: "child-abuse-detection",
@@ -187,11 +308,27 @@ export const portfolioData: PortfolioData = {
       details: [
         "Performs object detection for video with 95% accuracy, real-time and low resource",
         "Recommended by OGCIO as the best model in child abuse detection",
-        "Now being deployed to multiple childcare homes"
+        "Now being deployed to multiple childcare homes",
       ],
-      tech: ["Python", "OpenCV", "Computer Vision", "TensorRT", "Real-time inference on Edge Device", "Research"],
-      githubLinks: ["https://github.com/p445ccm4/YOLO-TSM-2stage-detection", "https://github.com/p445ccm4/yolov7-TSM", "https://github.com/p445ccm4/tsm-tensorrt", "https://github.com/p445ccm4/temporal-shift-module-with-labelling-tools", "https://github.com/p445ccm4/TSM-Labelling-Tools-With-YOLOv7"],
-      youtubeLinks: ["https://www.youtube.com/watch?v=ovAKLTOF3ng", "https://www.youtube.com/watch?v=9JnbChvqUFE"]
+      tech: [
+        "Python",
+        "OpenCV",
+        "Computer Vision",
+        "TensorRT",
+        "Real-time inference on Edge Device",
+        "Research",
+      ],
+      githubLinks: [
+        "https://github.com/p445ccm4/YOLO-TSM-2stage-detection",
+        "https://github.com/p445ccm4/yolov7-TSM",
+        "https://github.com/p445ccm4/tsm-tensorrt",
+        "https://github.com/p445ccm4/temporal-shift-module-with-labelling-tools",
+        "https://github.com/p445ccm4/TSM-Labelling-Tools-With-YOLOv7",
+      ],
+      youtubeLinks: [
+        "https://www.youtube.com/watch?v=ovAKLTOF3ng",
+        "https://www.youtube.com/watch?v=9JnbChvqUFE",
+      ],
     },
     {
       id: "drowning-detection",
@@ -202,11 +339,18 @@ export const portfolioData: PortfolioData = {
       description: "Real-time drowning detection system implemented by YOLOv7.",
       details: [
         "Participated in the machine learning life cycle: data collection, labelling, training, finetuning, and transformation to TensorRT static models.",
-        "Deployed on Nvidia Jetson series edge computers."
+        "Deployed on Nvidia Jetson series edge computers.",
       ],
       tech: ["Python", "C++", "OpenCV", "Numpy", "Nvidia Jetson", "TensorRT", "YOLOv7", "Object Detection"],
-      githubLinks: ["https://github.com/p445ccm4/yolov7-deepsort", "https://github.com/p445ccm4/yolo_bytetrack_batch_pybind", "https://github.com/p445ccm4/YOLOv7-TRT-multi-threading"],
-      youtubeLinks: ["https://www.youtube.com/watch?v=wWwbyJGKAak", "https://www.youtube.com/watch?v=9JnbChvqUFE"]
+      githubLinks: [
+        "https://github.com/p445ccm4/yolov7-deepsort",
+        "https://github.com/p445ccm4/yolo_bytetrack_batch_pybind",
+        "https://github.com/p445ccm4/YOLOv7-TRT-multi-threading",
+      ],
+      youtubeLinks: [
+        "https://www.youtube.com/watch?v=wWwbyJGKAak",
+        "https://www.youtube.com/watch?v=9JnbChvqUFE",
+      ],
     },
     {
       id: "momentum-transformer",
@@ -216,7 +360,7 @@ export const portfolioData: PortfolioData = {
       period: "September 2022 – November 2023",
       description: "An finetuned, optimized transformer model for trading",
       details: [],
-      tech: ["Transformer", "FinTech", "Finetuning & Optimization", "Python"]
+      tech: ["Transformer", "FinTech", "Finetuning & Optimization", "Python"],
     },
     {
       id: "lightweight-cnn",
@@ -226,46 +370,73 @@ export const portfolioData: PortfolioData = {
       period: "September 2020 – May 2021",
       description: "A mobile app deployed with finetuned MobileNet, ShuffleNet and Xception",
       details: [],
-      tech: ["Python", "TensorFlow", "Mobile App Development", "CNN", "MobileNet", "ShuffleNet", "Xception", "Android Studio", "Flutter"]
-    }
+      tech: [
+        "Python",
+        "TensorFlow",
+        "Mobile App Development",
+        "CNN",
+        "MobileNet",
+        "ShuffleNet",
+        "Xception",
+        "Android Studio",
+        "Flutter",
+      ],
+    },
   ],
   education: [
     {
       id: "hku-msc-cs",
       degree: "Master of Science (Computer Science)",
       school: "University of Hong Kong",
-      period: "September 2021 – November 2023"
+      period: "September 2021 – November 2023",
     },
     {
       id: "hku-beng-cs",
       degree: "Bachelor of Engineering (Computer Science)",
       school: "University of Hong Kong",
-      period: "September 2017 – June 2021"
-    }
+      period: "September 2017 – June 2021",
+    },
   ],
   milestones: [
     {
-      id: 'milestone-manus',
-      title: 'Manus Released',
-      subtitle: 'Era of AI Agents',
-      date: 'March 2025',
+      id: "milestone-manus",
+      title: "Manus Released",
+      subtitle: "Era of AI Agents",
+      date: "March 2025",
       description: "The world's first fully autonomous AI agent, Manus, was released.",
-      tags: ['AI Agent', 'Milestone'],
+      tags: ["AI Agent", "Milestone"],
     },
     {
-      id: 'milestone-chatgpt',
-      title: 'ChatGPT Released',
-      subtitle: 'Dawn of Generative AI',
-      date: 'November 2022',
+      id: "milestone-chatgpt",
+      title: "ChatGPT Released",
+      subtitle: "Dawn of Generative AI",
+      date: "November 2022",
       description: "ChatGPT's release revolutionized the world's understanding of GenAI.",
-      tags: ['GenAI', 'Milestone'],
-    }
+      tags: ["GenAI", "Milestone"],
+    },
   ],
   skills: {
-    genAI: ["Agentic Workflows", "RAG", "Prompt Engineering", "MCP"],
-    mlOps: ["Python", "PyTorch", "TensorFlow", "FastMCP", "LangChain", "LangGraph", "HuggingFace Libraries", "OpenAI libraries", "ONNX", "TensorRT", "OpenCV", "Numpy", "Pandas"],
-    database: ["Vector DB", "SQL", "PostgreSQL", "Milvus", "MySQL", "MongoDB", "Prisma ORM"],
-    web: ["React.js", "Nest.js", "GoLang", "Microservices", "gRPC", "FastAPI", "TypeScript", "Java Spring Boot"],
-    devOps: ["Docker", "Kubernetes", "GitLab CI/CD", "AWS", "Grafana/Promtail", "SSO/OAuth/KeyCloak"]
-  }
+    genAI: [
+      "Agentic AI Workflows",
+      "Agent Harness",
+      "RAG",
+      "Prompt Engineering",
+      "MCP",
+      "Context Management",
+      "LLMOps",
+    ],
+    mlOps: [
+      "On-premise LLM hosting",
+      "PyTorch",
+      "TensorFlow",
+      "FastMCP",
+      "Agent SDKs",
+      "OCR",
+      "ONNX",
+      "TensorRT",
+    ],
+    database: ["Vector DB", "noSQL", "SQL", "ORM", "DB Migration"],
+    web: ["RESTFUL", "gRPC", "React.js", "Nest.js", "GoLang", "Spring Boot", "Flutter"],
+    devOps: ["Docker", "Kubernetes", "CI/CD", "AWS", "GCP", "Azure", "ELK", "IAM"],
+  },
 };

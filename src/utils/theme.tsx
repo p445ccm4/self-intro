@@ -29,7 +29,7 @@ const getInitialTheme = (): Theme => {
   } catch {
     /* ignore */
   }
-  return 'light';
+  return 'dark';
 };
 
 const applyTheme = (theme: Theme) => {

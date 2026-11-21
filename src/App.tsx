@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { DetailPage } from './pages/DetailPage';
 import { MockupPage } from './pages/MockupPage';
-import { ThemeToggle } from './components/ThemeToggle';
 import { ThemeProvider } from './utils/theme';
 import { Analytics } from "@vercel/analytics/react"
 
@@ -10,10 +9,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="bg-bea-canvas min-h-screen text-bea-text-primary overflow-x-hidden transition-colors duration-300">
-          <div className="theme-toggle-bar">
-            <ThemeToggle />
-          </div>
+        <div className="site-shell bg-bea-canvas min-h-screen text-bea-text-primary overflow-x-hidden transition-colors duration-300">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/mockup" element={<MockupPage />} />

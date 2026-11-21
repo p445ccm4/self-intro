@@ -19,6 +19,7 @@ export interface Project {
   details: string[];
   tech: string[];
   githubLinks?: string[];
+  demoLinks?: string[];
   youtubeLinks?: string[];
 }
 

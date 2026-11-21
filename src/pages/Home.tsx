@@ -9,7 +9,7 @@ export const Home = () => {
       <Timeline />
       <Skills />
 
-      <footer className="py-8 text-center text-bea-text-secondary text-sm border-t border-bea-border mt-20 bg-bea-card">
+      <footer className="py-8 text-center text-bea-text-secondary text-sm border-t border-bea-border mt-20 bg-bea-card/80">
         <p>© {new Date().getFullYear()} Chan Chun Ming, Michael. All rights reserved.</p>
       </footer>
     </>
