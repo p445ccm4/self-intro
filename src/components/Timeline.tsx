@@ -68,7 +68,7 @@ export const Timeline = () => {
         <TimelineSettings filter={filter} onFilterChange={setFilter} />
       </div>
 
-      <div className="timeline-toolbar mb-4 md:mb-5">
+      <div className="timeline-toolbar mb-3 md:mb-4">
         <button
           type="button"
           onClick={toggleSort}

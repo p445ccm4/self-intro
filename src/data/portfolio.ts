@@ -113,7 +113,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "ying-lai-renovation",
-      title: "盈麗樓裝修採購追蹤",
+      title: "Ying Lai Renovation Procurement Tracker",
       role: "Builder",
       company: "Self Project",
       period: "November 2026",

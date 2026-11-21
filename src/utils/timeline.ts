@@ -157,3 +157,25 @@ export const SPINE_LAYOUT = {
 
 /** True when period string is a date range (contains a dash separator). */
 export const isPeriodRange = (period: string): boolean => PERIOD_SEPARATOR.test(period);
+
+const MONTH_SHORT: Record<string, string> = {
+  january: 'Jan',
+  february: 'Feb',
+  march: 'Mar',
+  april: 'Apr',
+  may: 'May',
+  june: 'Jun',
+  july: 'Jul',
+  august: 'Aug',
+  september: 'Sep',
+  october: 'Oct',
+  november: 'Nov',
+  december: 'Dec',
+};
+
+/** Compact period label for dense timeline cards (e.g. "Nov 2025 – Sep 2026"). */
+export const formatShortPeriod = (period: string): string =>
+  period.replace(
+    /\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/gi,
+    (month) => MONTH_SHORT[month.toLowerCase()] ?? month
+  );

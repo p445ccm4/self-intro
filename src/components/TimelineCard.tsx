@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import type { TimelineItem } from '../utils/timeline';
+import { formatShortPeriod, type TimelineItem } from '../utils/timeline';
 import { getCategoryColor, getIcon, getPillColor, getGradient, getSubtitleColor } from '../utils/timeline-theme';
 import { cn } from '../utils/cn';
 import { cardVariants, cardContentVariants, hoverGradientVariants, categoryTextVariants, springTransition } from '../utils/animations';
@@ -19,6 +19,7 @@ interface TimelineCardProps {
 export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, setHoveredItemId, hoveredItemId }: TimelineCardProps) => {
   const navigate = useNavigate();
   const isHovered = hoveredItemId === item.id;
+  const shortDate = formatShortPeriod(item.dateString);
 
   return (
     <motion.div
@@ -56,14 +57,13 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
           animate={isHovered ? "hover" : "rest"}
           whileHover="hover"
           className={cn(
-            "group relative glass-panel p-6 transition-colors cursor-pointer overflow-hidden pointer-events-auto",
+            "group relative glass-panel p-5 md:p-6 transition-colors cursor-pointer overflow-hidden pointer-events-auto",
             isHovered && "border-bea-border-strong"
           )}
           onClick={() => item.link && navigate(item.link, { state: { scrollToId: item.id } })}
           onMouseEnter={() => setHoveredItemId(item.id)}
           onMouseLeave={() => setHoveredItemId(null)}
         >
-          {/* Hover Gradient Background */}
           <motion.div
             className={cn(
               "absolute inset-0 bg-gradient-to-br",
@@ -75,21 +75,40 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
             whileHover="visible"
           />
 
-          <div className="relative flex flex-col md:items-start z-10 pr-10">
-            {/* Header: Date & Duration */}
-            <div className="flex items-center gap-3 text-xs font-mono text-bea-text-secondary mb-2">
-              <span className="flex items-center gap-1.5">
-                <Calendar size={12} />
-                {item.dateString}
-              </span>
-              {item.duration && (
-                <span className="tag tag-neutral">
-                  {item.duration}
+          <div className="relative z-10 flex flex-col md:items-start">
+            {/* Meta row: date + duration + category stay on one baseline */}
+            <div className="timeline-card-meta mb-2">
+              <div className="timeline-card-meta-main">
+                <span className="timeline-card-date">
+                  <Calendar size={12} className="shrink-0" aria-hidden />
+                  <span className="truncate">{shortDate}</span>
                 </span>
-              )}
+                {item.duration && (
+                  <span className="tag tag-neutral shrink-0">
+                    {item.duration}
+                  </span>
+                )}
+              </div>
+              <motion.div
+                className={cn(
+                  "timeline-card-category shrink-0 border",
+                  getCategoryColor(item.category)
+                )}
+                layout
+                transition={springTransition}
+              >
+                <motion.span
+                  className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden"
+                  variants={categoryTextVariants}
+                  initial="collapsed"
+                  animate={isHovered ? "expanded" : "collapsed"}
+                >
+                  {item.category}
+                </motion.span>
+                {getIcon(item.category)}
+              </motion.div>
             </div>
 
-            {/* Title & Subtitle */}
             <h3 className={cn(
               "text-lg font-bold transition-colors flex items-center gap-2 text-bea-text-strong",
               isHovered && "text-solar-red"
@@ -99,7 +118,7 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
                 <ChevronRight
                   size={16}
                   className={cn(
-                    "transition-all text-solar-red",
+                    "transition-all text-solar-red shrink-0",
                     isHovered
                       ? "opacity-100 translate-x-0"
                       : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
@@ -111,7 +130,6 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
               <span className="text-sm font-medium">{item.subtitle}</span>
             </div>
 
-            {/* Description */}
             {item.description && (
               <div className="mt-4 text-bea-text-primary text-sm leading-relaxed line-clamp-3 md:text-left">
                 {Array.isArray(item.description) ? (
@@ -126,7 +144,6 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
               </div>
             )}
 
-            {/* Tags */}
             {item.tags && item.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4 md:justify-start">
                 {item.tags.slice(0, 3).map((tag, i) => (
@@ -140,26 +157,6 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
               </div>
             )}
           </div>
-
-          {/* Category Icon Badge */}
-          <motion.div
-            className={cn(
-              "absolute top-4 right-4 p-2 rounded-lg flex items-center gap-2 z-20 border",
-              getCategoryColor(item.category)
-            )}
-            layout
-            transition={springTransition}
-          >
-            <motion.span
-              className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap overflow-hidden"
-              variants={categoryTextVariants}
-              initial="collapsed"
-              animate={isHovered ? "expanded" : "collapsed"}
-            >
-              {item.category}
-            </motion.span>
-            {getIcon(item.category)}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

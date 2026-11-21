@@ -560,13 +560,55 @@
     }
   }
 
+  /* Align sorter with spine: left on mobile, centered on desktop */
   .timeline-toolbar {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-start;
+    /* Center the icon button on the mobile spine (left-6 = 1.5rem) */
+    padding-left: calc(1.5rem - (var(--control-height-sm) / 2));
   }
   .timeline-sort-btn {
     min-width: var(--control-height-sm);
+  }
+  @media (min-width: 768px) {
+    .timeline-toolbar {
+      justify-content: center;
+      padding-left: 0;
+    }
+  }
+
+  .timeline-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .timeline-card-meta-main {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.55rem;
+    min-width: 0;
+    flex: 1;
+  }
+  .timeline-card-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    color: var(--bea-text-secondary);
+  }
+  .timeline-card-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem;
+    border-radius: var(--radius-control);
   }
 
   @media (prefers-reduced-motion: reduce) {

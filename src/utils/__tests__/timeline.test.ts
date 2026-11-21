@@ -4,6 +4,7 @@ import {
   parsePeriod,
   calculateDuration,
   isPeriodRange,
+  formatShortPeriod,
 } from '../timeline';
 
 describe('parseDateStr', () => {
@@ -80,5 +81,13 @@ describe('isPeriodRange', () => {
     expect(isPeriodRange('November 2025 – Now')).toBe(true);
     expect(isPeriodRange('November 2025 — Now')).toBe(true);
     expect(isPeriodRange('March 2025')).toBe(false);
+  });
+});
+
+describe('formatShortPeriod', () => {
+  it('abbreviates full month names in ranges and single dates', () => {
+    expect(formatShortPeriod('November 2025 – September 2026')).toBe('Nov 2025 – Sep 2026');
+    expect(formatShortPeriod('January 2026 - Now')).toBe('Jan 2026 - Now');
+    expect(formatShortPeriod('March 2025')).toBe('Mar 2025');
   });
 });
