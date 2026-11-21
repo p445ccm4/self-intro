@@ -76,10 +76,11 @@ export const hoverGradientVariants: Variants = {
 
 // Variants for TimelineCard category text expansion
 export const categoryTextVariants: Variants = {
-  collapsed: { maxWidth: 0, opacity: 0 },
+  collapsed: { maxWidth: 0, opacity: 0, marginRight: 0 },
   expanded: {
     maxWidth: 100,
     opacity: 1,
+    marginRight: 6,
     transition: springTransition
   }
 };

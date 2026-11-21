@@ -6,12 +6,12 @@ export const SPINE_LAYOUT = {
   LANE_GAP: 8,
 };
 
-export const getIcon = (category: Category) => {
+export const getIcon = (category: Category, size = 16) => {
   switch (category) {
-    case 'work': return <Briefcase size={18} />;
-    case 'project': return <Code size={18} />;
-    case 'education': return <GraduationCap size={18} />;
-    case 'milestone': return <Zap size={18} />;
+    case 'work': return <Briefcase size={size} />;
+    case 'project': return <Code size={size} />;
+    case 'education': return <GraduationCap size={size} />;
+    case 'milestone': return <Zap size={size} />;
   }
 };
 
