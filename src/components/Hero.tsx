@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronDown, FileText, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
+import { ChevronDown, FileText, Github, Linkedin, Mail, MessageCircle, Sparkles } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
 import { cn } from '../utils/cn';
 
@@ -7,13 +8,10 @@ export const Hero = () => {
   const { personal } = portfolioData;
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pb-32 relative overflow-hidden bg-bea-card">
+    <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pb-32 relative overflow-hidden bg-bea-card transition-colors duration-300">
       <div
-        className="absolute inset-0 -z-10 opacity-90"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255, 204, 0, 0.18), transparent 55%), radial-gradient(ellipse 70% 50% at 85% 20%, rgba(255, 143, 0, 0.12), transparent 50%), radial-gradient(ellipse 60% 40% at 10% 30%, rgba(237, 23, 31, 0.08), transparent 50%)',
-        }}
+        className="absolute inset-0 -z-10 opacity-90 hero-glow"
+        aria-hidden
       />
 
       <motion.div
@@ -75,6 +73,10 @@ export const Hero = () => {
             <FileText size={18} />
             <span>Resume</span>
           </a>
+          <Link to="/mockup" className="btn btn-secondary">
+            <Sparkles size={18} />
+            <span>Mockup</span>
+          </Link>
         </div>
       </motion.div>
 
