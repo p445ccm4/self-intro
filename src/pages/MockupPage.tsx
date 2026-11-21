@@ -17,52 +17,70 @@ const DEFAULT_TUNE = {
   tint: 0,       // glass accent color intensity % (0 = clearest)
 } as const;
 
+const DEFAULT_TEXT = '#ffffff';
+
 const PALETTES: {
   id: Palette;
   label: string;
   note: string;
+  bg: string;
+  text: string;
   swatches: string[];
 }[] = [
   {
     id: 'cyberpunk',
     label: 'Cyberpunk',
     note: 'Cyan + hot magenta + holo purple on void black (neon megacity).',
+    bg: '#0a0a0f',
+    text: DEFAULT_TEXT,
     swatches: ['#00f0ff', '#ff0080', '#b000ff'],
   },
   {
     id: 'vice',
     label: 'Vice City',
     note: 'Miami neon — pink, teal, violet. Strong multi-color mists.',
+    bg: '#0b0614',
+    text: DEFAULT_TEXT,
     swatches: ['#ff2e97', '#00e5ff', '#c084fc'],
   },
   {
     id: 'neon',
     label: 'Neon Lights',
     note: 'Signage triad: electric cyan, hot pink, yellow.',
+    bg: '#020408',
+    text: DEFAULT_TEXT,
     swatches: ['#00f5ff', '#ff006e', '#ffe600'],
   },
   {
     id: 'monokai',
     label: 'Monokai',
     note: 'Editor classic — pink / green / cyan (+ orange & violet in the mist).',
+    bg: '#272822',
+    text: DEFAULT_TEXT,
     swatches: ['#f92672', '#a6e22e', '#66d9ef'],
   },
   {
     id: 'aurora',
     label: 'Aurora',
     note: 'Night sky glass — cyan, violet, pink pools.',
+    bg: '#070b14',
+    text: DEFAULT_TEXT,
     swatches: ['#22d3ee', '#a78bfa', '#f472b6'],
   },
   {
     id: 'ice',
     label: 'Ice',
     note: 'Cool multi-blue glass — closer to Apple liquid glass.',
+    bg: '#07090f',
+    text: DEFAULT_TEXT,
     swatches: ['#7dd3fc', '#67e8f9', '#a5b4fc'],
   },
   {
     id: 'bea',
     label: 'BEA Solar',
     note: 'Warm solar red→orange→yellow (kept for comparison).',
+    bg: '#10080a',
+    text: DEFAULT_TEXT,
     swatches: ['#ed171f', '#ff8f00', '#ffcc00'],
   },
 ];
@@ -113,18 +131,22 @@ export const MockupPage = () => {
   const [blur, setBlur] = useState<number>(DEFAULT_TUNE.blur);
   const [opacity, setOpacity] = useState<number>(DEFAULT_TUNE.opacity);
   const [tint, setTint] = useState<number>(DEFAULT_TUNE.tint);
-  const [colorA, setColorA] = useState<string>(() => {
-    const p = isPalette(param) ? param : 'cyberpunk';
-    return PALETTES.find((x) => x.id === p)!.swatches[0];
-  });
-  const [colorB, setColorB] = useState<string>(() => {
-    const p = isPalette(param) ? param : 'cyberpunk';
-    return PALETTES.find((x) => x.id === p)!.swatches[1];
-  });
-  const [colorC, setColorC] = useState<string>(() => {
-    const p = isPalette(param) ? param : 'cyberpunk';
-    return PALETTES.find((x) => x.id === p)!.swatches[2];
-  });
+  const initialPalette = isPalette(param) ? param : 'cyberpunk';
+  const [bgColor, setBgColor] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.bg
+  );
+  const [textColor, setTextColor] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.text
+  );
+  const [colorA, setColorA] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.swatches[0]
+  );
+  const [colorB, setColorB] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.swatches[1]
+  );
+  const [colorC, setColorC] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.swatches[2]
+  );
   const { personal } = portfolioData;
 
   useEffect(() => {
@@ -132,10 +154,12 @@ export const MockupPage = () => {
   }, [palette, setSearchParams]);
 
   const applyPaletteColors = (id: Palette) => {
-    const swatches = PALETTES.find((p) => p.id === id)!.swatches;
-    setColorA(swatches[0]);
-    setColorB(swatches[1]);
-    setColorC(swatches[2]);
+    const preset = PALETTES.find((p) => p.id === id)!;
+    setBgColor(preset.bg);
+    setTextColor(preset.text);
+    setColorA(preset.swatches[0]);
+    setColorB(preset.swatches[1]);
+    setColorC(preset.swatches[2]);
   };
 
   const selectPalette = (id: Palette) => {
@@ -156,6 +180,8 @@ export const MockupPage = () => {
     '--mg-glass-blur': `${blur}px`,
     '--mg-glass-alpha': String(opacity / 100),
     '--mg-glass-tint': String(tint / 100),
+    '--mg-bg': bgColor,
+    '--mg-text': textColor,
     '--mg-a': colorA,
     '--mg-b': colorB,
     '--mg-c': colorC,
@@ -225,6 +251,35 @@ export const MockupPage = () => {
               </span>{' '}
               {activePalette.note}
             </p>
+
+            <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
+              Background & words
+            </h3>
+            <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
+              Adjust page background and word color independently. Palette chips reset both.
+            </p>
+            <div className="mockup-color-row">
+              <label className="mockup-color-picker" htmlFor="bg-color">
+                <span>Background</span>
+                <input
+                  id="bg-color"
+                  type="color"
+                  value={bgColor}
+                  onChange={(e) => setBgColor(e.target.value)}
+                />
+                <span className="mockup-color-hex">{bgColor}</span>
+              </label>
+              <label className="mockup-color-picker" htmlFor="text-color">
+                <span>Words</span>
+                <input
+                  id="text-color"
+                  type="color"
+                  value={textColor}
+                  onChange={(e) => setTextColor(e.target.value)}
+                />
+                <span className="mockup-color-hex">{textColor}</span>
+              </label>
+            </div>
 
             <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
               Accent colors
