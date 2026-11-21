@@ -1,6 +1,10 @@
 import { Briefcase, Code, GraduationCap, Clock, ArrowDown, ArrowUp } from 'lucide-react';
 import type { Category } from '../utils/timeline';
-import { cn } from '../utils/cn';
+import {
+  getTimelineFilterIndex,
+  TIMELINE_FILTERS,
+  type TimelineFilter,
+} from '../utils/timeline-filters';
 
 interface TimelineSettingsProps {
   filter: Exclude<Category, 'milestone'> | 'all';
@@ -9,34 +13,49 @@ interface TimelineSettingsProps {
   onSortChange: () => void;
 }
 
-export const TimelineSettings = ({ filter, onFilterChange, sortOrder, onSortChange }: TimelineSettingsProps) => {
+const FILTER_ICONS = {
+  all: Clock,
+  work: Briefcase,
+  project: Code,
+  education: GraduationCap,
+} as const;
+
+export const TimelineSettings = ({
+  filter,
+  onFilterChange,
+  sortOrder,
+  onSortChange,
+}: TimelineSettingsProps) => {
+  const filterIndex = getTimelineFilterIndex(filter as TimelineFilter);
+
   return (
-    <div className="flex flex-wrap justify-center gap-3">
-      {(['all', 'work', 'project', 'education'] as const).map((cat) => (
-        <button
-          key={cat}
-          onClick={() => onFilterChange(cat)}
-          className={cn(
-            'btn btn-sm',
-            filter === cat ? 'btn-primary' : 'btn-secondary'
-          )}
-        >
-          {cat === 'all' && <Clock size={14} />}
-          {cat === 'work' && <Briefcase size={14} />}
-          {cat === 'project' && <Code size={14} />}
-          {cat === 'education' && <GraduationCap size={14} />}
-          {cat.charAt(0).toUpperCase() + cat.slice(1)}
-        </button>
-      ))}
+    <div className="flex flex-col items-center gap-4 w-full">
+      <div className="journey-toggle" role="group" aria-label="Filter timeline">
+        <span
+          className="journey-toggle-thumb"
+          style={{ transform: `translateX(${filterIndex * 100}%)` }}
+          aria-hidden
+        />
+        {TIMELINE_FILTERS.map(({ id, label }) => {
+          const Icon = FILTER_ICONS[id];
+          return (
+            <button
+              key={id}
+              type="button"
+              className="journey-toggle-btn"
+              aria-pressed={filter === id}
+              onClick={() => onFilterChange(id)}
+            >
+              <Icon size={14} aria-hidden />
+              {label}
+            </button>
+          );
+        })}
+      </div>
 
-      <div className="w-px h-8 bg-bea-border mx-2 hidden sm:block self-center" />
-
-      <button
-        onClick={onSortChange}
-        className="btn btn-sm btn-secondary"
-      >
-        {sortOrder === 'desc' ? <ArrowDown size={14} /> : <ArrowUp size={14} />}
-        {sortOrder === 'desc' ? 'Newest First' : 'Oldest First'}
+      <button type="button" onClick={onSortChange} className="btn btn-sm btn-glass">
+        {sortOrder === 'desc' ? <ArrowDown size={14} aria-hidden /> : <ArrowUp size={14} aria-hidden />}
+        <span>{sortOrder === 'desc' ? 'Newest First' : 'Oldest First'}</span>
       </button>
     </div>
   );

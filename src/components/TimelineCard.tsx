@@ -56,7 +56,7 @@ export const TimelineCard = memo(({ item, isLeftTrack, spacerHeight, cardRef, se
           animate={isHovered ? "hover" : "rest"}
           whileHover="hover"
           className={cn(
-            "group relative bg-bea-card p-6 rounded-[var(--radius-card)] border border-bea-border transition-colors cursor-pointer overflow-hidden pointer-events-auto shadow-[var(--shadow-card)]",
+            "group relative glass-panel p-6 transition-colors cursor-pointer overflow-hidden pointer-events-auto",
             isHovered && "border-bea-border-strong"
           )}
           onClick={() => item.link && navigate(item.link, { state: { scrollToId: item.id } })}

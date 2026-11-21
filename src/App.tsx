@@ -9,14 +9,20 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="site-shell bg-bea-canvas min-h-screen text-bea-text-primary overflow-x-hidden transition-colors duration-300">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/mockup" element={<MockupPage />} />
-            <Route path="/project/:id" element={<DetailPage />} />
-            <Route path="/experience/:id" element={<DetailPage />} />
-            <Route path="/education/:id" element={<DetailPage />} />
-          </Routes>
+        <div className="site-shell min-h-screen text-bea-text-primary overflow-x-hidden transition-colors duration-300">
+          <div className="site-backdrop" aria-hidden>
+            <div className="site-backdrop-fill" />
+            <div className="site-mist" />
+          </div>
+          <div className="site-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/mockup" element={<MockupPage />} />
+              <Route path="/project/:id" element={<DetailPage />} />
+              <Route path="/experience/:id" element={<DetailPage />} />
+              <Route path="/education/:id" element={<DetailPage />} />
+            </Routes>
+          </div>
           <Analytics />
         </div>
       </Router>

@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  /* Accent triad from mockup config (A / B / C) */
+  /* Accent triad — constant across light/dark */
   --accent-a: #FFCDB6;
   --accent-b: #FFDAA3;
   --accent-c: #FFFFFF;
 
-  /* Brand / semantic accents */
+  /* Brand / semantic accents — constant across light/dark */
   --bea-primary-red: #ED171F;
   --bea-red-orange: #EA4120;
   --bea-vibrant-orange: #FF8F00;
@@ -18,26 +18,26 @@
   --bea-hyperlink-blue: #0563C1;
   --bea-warning-amber: #D97706;
 
-  /* Light theme (inverted from dark glass home) */
-  --bea-text-primary: #2A3A30;
-  --bea-text-secondary: #5A6B60;
-  --bea-text-strong: #0F1A12;
-  --bea-canvas-bg: #F3F7F4;
-  --bea-surface-subtle: #EAF1EC;
-  --bea-card-bg: #FFFFFF;
-  --bea-border-light: #D5E0D8;
-  --bea-border-strong: #B4C4BA;
+  /* Light: black text / white surfaces (accents unchanged) */
+  --bea-text-primary: #111111;
+  --bea-text-secondary: #4A4A4A;
+  --bea-text-strong: #000000;
+  --bea-canvas-bg: #FFFFFF;
+  --bea-surface-subtle: #F5F5F5;
+  --bea-card-bg: rgb(255 255 255 / 0.55);
+  --bea-border-light: rgb(0 0 0 / 0.12);
+  --bea-border-strong: rgb(0 0 0 / 0.22);
 
-  --background: var(--bea-card-bg);
+  --background: var(--bea-canvas-bg);
   --foreground: var(--bea-text-primary);
   --solar-red: var(--bea-primary-red);
   --solar-orange: var(--bea-vibrant-orange);
   --solar-yellow: var(--bea-golden-yellow);
   --focus-ring: rgba(255, 205, 182, 0.45);
 
-  --mist-brightness: 0.55;
-  --glass-blur: 18px;
-  --glass-alpha: 0.55;
+  --mist-brightness: 0.72;
+  --glass-blur: 23px;
+  --glass-alpha: 0.42;
 
   --control-height: 2.5rem;
   --control-height-sm: 1.875rem;
@@ -48,12 +48,12 @@
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 4px 10px -4px rgba(0, 0, 0, 0.06);
 
-  /* Stronger stops for light surfaces so title stays readable */
+  /* Same accent gradient in both themes */
   --solar-on-white-gradient: linear-gradient(
     90deg,
-    #E28B6A 0%,
-    #E0A45A 55%,
-    #C9893A 100%
+    var(--accent-a) 0%,
+    var(--accent-b) 55%,
+    var(--accent-c) 100%
   );
 
   --white-on-solar-gradient: linear-gradient(
@@ -66,14 +66,14 @@
   --solar-gradient: var(--solar-on-white-gradient);
 }
 
-/* Dark home config from mockup: bg #001F08, words #FFFFFF, mist/glass tuned */
+/* Dark: white text / black-green surfaces (accents unchanged) */
 :root[data-theme="dark"] {
   --bea-text-primary: #FFFFFF;
   --bea-text-secondary: color-mix(in srgb, #FFFFFF 78%, transparent);
   --bea-text-strong: #FFFFFF;
   --bea-canvas-bg: #001F08;
   --bea-surface-subtle: color-mix(in srgb, #FFFFFF 8%, #001F08);
-  --bea-card-bg: color-mix(in srgb, #FFFFFF 8%, #001F08);
+  --bea-card-bg: color-mix(in srgb, #FFFFFF 10%, transparent);
   --bea-border-light: color-mix(in srgb, #FFFFFF 18%, transparent);
   --bea-border-strong: color-mix(in srgb, #FFFFFF 28%, transparent);
   --bea-hyperlink-blue: #9AD7FF;
@@ -88,13 +88,6 @@
 
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
   --shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.55), 0 4px 10px -4px rgba(0, 0, 0, 0.4);
-
-  --solar-on-white-gradient: linear-gradient(
-    90deg,
-    var(--accent-a) 0%,
-    var(--accent-b) 55%,
-    var(--accent-c) 100%
-  );
 }
 
 @theme inline {
@@ -129,12 +122,12 @@
   }
 
   body {
-    background: var(--background);
+    background: transparent;
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
-    transition: background-color 280ms ease, color 280ms ease;
+    transition: color 280ms ease;
   }
 
   button,
@@ -430,10 +423,22 @@
     transform: translateX(1.5rem);
   }
 
+  .site-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .site-backdrop-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--bea-canvas-bg);
+    transition: background-color 280ms ease;
+  }
   .site-mist {
     position: absolute;
     inset: 0;
-    z-index: 0;
     pointer-events: none;
     opacity: var(--mist-brightness);
     background-image:
@@ -442,6 +447,84 @@
       radial-gradient(ellipse 60% 45% at 50% 40%, color-mix(in srgb, var(--accent-c) 35%, transparent), transparent 60%),
       radial-gradient(ellipse 55% 40% at 15% 85%, color-mix(in srgb, var(--accent-a) 45%, transparent), transparent 55%),
       radial-gradient(ellipse 50% 40% at 88% 92%, color-mix(in srgb, var(--accent-b) 40%, transparent), transparent 55%);
+  }
+  .site-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glass-panel {
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 100%), transparent);
+    border: 1px solid var(--bea-border-light);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  }
+
+  /* Journey filter toggle (mockup-style sliding thumb) */
+  .journey-toggle {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 0.3rem;
+    width: min(100%, 28rem);
+    margin-inline: auto;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 70%), transparent);
+    border: 1px solid var(--bea-border-light);
+    box-shadow:
+      inset 0 1px 1px color-mix(in srgb, #FFFFFF 35%, transparent),
+      var(--shadow-card);
+    -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.85)) saturate(160%);
+    backdrop-filter: blur(calc(var(--glass-blur) * 0.85)) saturate(160%);
+  }
+  .journey-toggle-thumb {
+    position: absolute;
+    top: 0.3rem;
+    bottom: 0.3rem;
+    left: 0.3rem;
+    width: calc((100% - 0.6rem) / 4);
+    border-radius: var(--radius-full);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent-a) 55%, transparent),
+      color-mix(in srgb, var(--accent-b) 45%, transparent)
+    );
+    border: 1px solid color-mix(in srgb, var(--accent-a) 55%, white 20%);
+    box-shadow:
+      inset 0 1px 1px color-mix(in srgb, #FFFFFF 45%, transparent),
+      0 4px 14px color-mix(in srgb, var(--accent-a) 28%, transparent);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  .journey-toggle-btn {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    height: 2.15rem;
+    border: 0;
+    background: transparent;
+    color: var(--bea-text-secondary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: color 160ms ease;
+  }
+  .journey-toggle-btn[aria-pressed="true"] {
+    color: var(--bea-text-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .journey-toggle-thumb {
+      transition: none;
+    }
   }
 
   /* Dropdown Menu */
@@ -641,13 +724,13 @@
   }
 
   .card {
-    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 70%), var(--bea-card-bg));
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 100%), transparent);
     border: 1px solid var(--bea-border-light);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card);
     padding: 1.25rem;
-    -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.4));
-    backdrop-filter: blur(calc(var(--glass-blur) * 0.4));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   }
 
   .tabs-list {
@@ -783,6 +866,11 @@
   background-clip: text;
   color: transparent;
 }
+/* Keep accent gradient identical; add contrast only in light mode */
+:root:not([data-theme="dark"]) .solar-on-white,
+:root:not([data-theme="dark"]) .text-solar {
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.18));
+}
 
 @keyframes pill-fade-in {
   from {
@@ -824,12 +912,14 @@
 /* Portfolio detail helpers (kept for existing pages) */
 @layer components {
   .section-card {
-    background: var(--bea-card-bg);
+    background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 100%), transparent);
     border: 1px solid var(--bea-border-light);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card);
     padding: 2rem;
     margin-bottom: 2rem;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   }
 
   .section-title {

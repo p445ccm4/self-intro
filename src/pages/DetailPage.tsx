@@ -31,7 +31,7 @@ export const DetailPage = () => {
 
   if (!item) {
     return (
-      <div className="min-h-screen bg-bea-canvas text-bea-text-strong flex flex-col items-center justify-center">
+      <div className="min-h-screen text-bea-text-strong flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold mb-4">Item Not Found</h1>
         <Link to="/" className="link">Back to Home</Link>
       </div>
@@ -51,7 +51,7 @@ export const DetailPage = () => {
   const youtubeLinks = project?.youtubeLinks || work?.youtubeLinks || [];
 
   return (
-    <div className="min-h-screen bg-bea-canvas text-bea-text-primary p-8">
+    <div className="min-h-screen text-bea-text-primary p-8">
       <div className="mb-8 flex items-center justify-between gap-4">
         <Link
           to={state?.scrollToId ? `/#${state.scrollToId}` : '/'}

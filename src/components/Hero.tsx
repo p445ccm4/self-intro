@@ -8,9 +8,7 @@ export const Hero = () => {
   const { personal } = portfolioData;
 
   return (
-    <section className="min-h-screen flex flex-col relative overflow-hidden bg-bea-card transition-colors duration-300">
-      <div className="site-mist" aria-hidden />
-
+    <section className="min-h-screen flex flex-col relative overflow-hidden">
       <header className="relative z-[2] flex items-center justify-end px-5 pt-6 md:px-8 md:pt-8">
         <ThemeToggle />
       </header>
@@ -20,7 +18,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl animate-view-fade-in"
+          className="max-w-3xl animate-view-fade-in glass-panel px-6 py-8 md:px-10 md:py-10"
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-6 solar-on-white">
             {personal.name}
