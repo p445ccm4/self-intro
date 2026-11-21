@@ -14,6 +14,7 @@ const DEFAULT_TUNE = {
   mist: 70,      // mist brightness %
   blur: 16,      // glass blur px
   opacity: 16,   // glass fill opacity % (higher = less see-through)
+  tint: 55,      // glass accent color intensity %
 } as const;
 
 const PALETTES: {
@@ -111,6 +112,7 @@ export const MockupPage = () => {
   const [mist, setMist] = useState<number>(DEFAULT_TUNE.mist);
   const [blur, setBlur] = useState<number>(DEFAULT_TUNE.blur);
   const [opacity, setOpacity] = useState<number>(DEFAULT_TUNE.opacity);
+  const [tint, setTint] = useState<number>(DEFAULT_TUNE.tint);
   const { personal } = portfolioData;
 
   useEffect(() => {
@@ -129,18 +131,21 @@ export const MockupPage = () => {
     '--mg-mist-brightness': String(mist / 100),
     '--mg-glass-blur': `${blur}px`,
     '--mg-glass-alpha': String(opacity / 100),
+    '--mg-glass-tint': String(tint / 100),
   } as CSSProperties;
 
   const resetTune = () => {
     setMist(DEFAULT_TUNE.mist);
     setBlur(DEFAULT_TUNE.blur);
     setOpacity(DEFAULT_TUNE.opacity);
+    setTint(DEFAULT_TUNE.tint);
   };
 
   const readablePreset = () => {
     setMist(45);
     setBlur(20);
     setOpacity(28);
+    setTint(25);
   };
 
   return (
@@ -242,6 +247,21 @@ export const MockupPage = () => {
                 max={45}
                 value={opacity}
                 onChange={(e) => setOpacity(Number(e.target.value))}
+              />
+            </div>
+
+            <div className="mockup-tune-row">
+              <label htmlFor="glass-tint">
+                <span>Glass color tint</span>
+                <span>{tint}%</span>
+              </label>
+              <input
+                id="glass-tint"
+                type="range"
+                min={0}
+                max={100}
+                value={tint}
+                onChange={(e) => setTint(Number(e.target.value))}
               />
             </div>
 
