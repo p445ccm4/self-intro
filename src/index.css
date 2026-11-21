@@ -261,11 +261,32 @@
   }
 
   .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+    width: 100%;
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 0.5rem;
+  }
+  @media (min-width: 768px) {
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: none;
+    }
+    .hero-actions .btn {
+      width: auto;
+      min-width: 7.5rem;
+      padding-inline: 1rem;
+    }
   }
 
   .btn-ghost {
@@ -463,6 +484,10 @@
   }
 
   /* Journey filter toggle (mockup-style sliding thumb) */
+  .timeline-section .journey-toggle,
+  .timeline-toolbar {
+    width: 100%;
+  }
   .journey-toggle {
     position: relative;
     z-index: 1;
@@ -470,7 +495,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
     padding: 0.3rem;
-    width: min(100%, 28rem);
+    width: 100%;
     margin-inline: auto;
     border-radius: var(--radius-full);
     background: color-mix(in srgb, #FFFFFF calc(var(--glass-alpha) * 70%), transparent);
@@ -497,8 +522,8 @@
     box-shadow:
       inset 0 1px 1px color-mix(in srgb, #FFFFFF 45%, transparent),
       0 4px 14px color-mix(in srgb, var(--accent-a) 28%, transparent);
-    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
+    will-change: transform;
   }
   .journey-toggle-btn {
     position: relative;
@@ -506,24 +531,47 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
+    gap: 0.3rem;
+    min-width: 0;
     height: 2.15rem;
+    padding: 0 0.25rem;
     border: 0;
     background: transparent;
     color: var(--bea-text-secondary);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     font-weight: 600;
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: color 160ms ease;
   }
+  .journey-toggle-btn span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .journey-toggle-btn[aria-pressed="true"] {
     color: var(--bea-text-strong);
+  }
+  @media (min-width: 640px) {
+    .journey-toggle-btn {
+      gap: 0.35rem;
+      font-size: 0.8125rem;
+      padding: 0 0.5rem;
+    }
+  }
+
+  .timeline-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .timeline-sort-btn {
+    min-width: var(--control-height-sm);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .journey-toggle-thumb {
-      transition: none;
+      transition: none !important;
     }
   }
 

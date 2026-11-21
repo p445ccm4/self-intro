@@ -49,6 +49,7 @@ export const DetailPage = () => {
   const githubLinks = project?.githubLinks || work?.githubLinks || [];
   const demoLinks = project?.demoLinks || [];
   const youtubeLinks = project?.youtubeLinks || work?.youtubeLinks || [];
+  const accessNote = project?.accessNote;
 
   return (
     <div className="min-h-screen text-bea-text-primary p-8">
@@ -102,6 +103,15 @@ export const DetailPage = () => {
           </div>
         )}
 
+        {accessNote && (
+          <div className="section-card">
+            <p className="text-bea-text-primary text-base leading-relaxed">
+              <span className="font-semibold text-bea-text-strong">Access: </span>
+              {accessNote}
+            </p>
+          </div>
+        )}
+
         {demoLinks.length > 0 && (
           <div className="section-card">
             <h2 className="section-title">
@@ -121,6 +131,9 @@ export const DetailPage = () => {
                 </a>
               ))}
             </div>
+            {accessNote && (
+              <p className="hint-text mt-3">{accessNote}</p>
+            )}
           </div>
         )}
 
@@ -143,6 +156,9 @@ export const DetailPage = () => {
                 </a>
               ))}
             </div>
+            {accessNote && (
+              <p className="hint-text mt-3">{accessNote}</p>
+            )}
           </div>
         )}
 

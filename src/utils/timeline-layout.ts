@@ -32,11 +32,12 @@ export const calculateTimelineLayout = ({
 }: TimelineLayoutProps) => {
   const totalDuration = maxDate.getTime() - minDate.getTime();
   
-  // 1. Calculate Spacers
+  // 1. Calculate Spacers (keep a small visual gap between stacked cards)
+  const CARD_GAP = 16;
   const cardSpacers = new Map<string, number>();
   let currentStackY = 0;
 
-  items.forEach((item) => {
+  items.forEach((item, index) => {
     const dims = cardDimensions.get(item.id);
     if (!dims) return;
 
@@ -51,7 +52,8 @@ export const calculateTimelineLayout = ({
     }
 
     const idealY = Math.max(0, Math.min(1, timePercent)) * totalHeight;
-    const targetY = Math.max(idealY, currentStackY);
+    const minStart = index === 0 ? 0 : currentStackY + CARD_GAP;
+    const targetY = Math.max(idealY, minStart);
     const marginTop = Math.max(0, targetY - currentStackY);
     
     cardSpacers.set(item.id, marginTop);

@@ -109,6 +109,7 @@ export const portfolioData: PortfolioData = {
       ],
       tech: ["Next.js", "React", "Vercel"],
       demoLinks: ["https://bea-hackathon-score-sheet.vercel.app/"],
+      accessNote: "Reach out to me for access.",
     },
     {
       id: "ying-lai-renovation",
@@ -123,6 +124,7 @@ export const portfolioData: PortfolioData = {
       ],
       tech: ["Next.js", "React", "PWA", "Vercel"],
       demoLinks: ["https://ying-lai-renovation.vercel.app/"],
+      accessNote: "Reach out to me for access.",
     },
     {
       id: "ask-ask-something",
@@ -146,10 +148,15 @@ export const portfolioData: PortfolioData = {
       role: "Builder",
       company: "Self Project",
       period: "November 2026",
-      description: "Studio tooling for creating and iterating on PowerPoint decks.",
-      details: ["GitHub: https://github.com/p445ccm4/pptx-studio"],
-      tech: ["TypeScript", "PPTX"],
+      description:
+        "Multi-stage PowerPoint (.pptx) generation, surgical TDD editing, visual QA plugin, and Antigravity SDK web workbench.",
+      details: [
+        "Private GitHub repository: https://github.com/p445ccm4/pptx-studio",
+        "Covers multi-stage deck generation, surgical TDD editing, visual QA plugin, and an Antigravity SDK web workbench.",
+      ],
+      tech: ["TypeScript", "PPTX", "TDD", "Antigravity SDK"],
       githubLinks: ["https://github.com/p445ccm4/pptx-studio"],
+      accessNote: "Reach out to me for access.",
     },
     {
       id: "ai-meeting-summary",

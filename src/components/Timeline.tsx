@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import type { Category } from '../utils/timeline';
 import { TimelineSpine } from './TimelineSpine';
 import { useTimelineData } from '../hooks/useTimelineData';
@@ -16,7 +17,6 @@ export const Timeline = () => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const isSortingRef = useRef(false);
 
-  // Filter now excludes milestones (they are always shown)
   const [filter, setFilter] = useState<Exclude<Category, 'milestone'> | 'all'>('all');
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,9 +34,7 @@ export const Timeline = () => {
     cardRefs,
   });
 
-  // Handle scroll restoration from DetailPage
   useEffect(() => {
-    // If we are sorting, ignore the scroll restoration for this update
     if (isSortingRef.current) {
       isSortingRef.current = false;
       return;
@@ -46,7 +44,6 @@ export const Timeline = () => {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        // Small delay to ensure layout is stable
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
@@ -54,47 +51,55 @@ export const Timeline = () => {
     }
   }, [location.hash, cardSpacers]);
 
+  const toggleSort = () => {
+    isSortingRef.current = true;
+    setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'));
+    if (location.hash) {
+      navigate(location.pathname, { replace: true });
+    }
+  };
+
   return (
-    <section className="py-20 px-4 max-w-7xl mx-auto relative overflow-hidden">
-      <div className="text-center mb-16">
+    <section className="timeline-section py-16 md:py-20 px-4 max-w-7xl mx-auto relative overflow-hidden">
+      <div className="text-center mb-8 md:mb-10">
         <h2 className="text-4xl font-bold mb-6 solar-on-white">
           My Journey
         </h2>
-        
-        <div className="flex flex-col items-center gap-4">
-          <TimelineSettings
-            filter={filter}
-            onFilterChange={setFilter}
-            sortOrder={sortOrder}
-            onSortChange={() => {
-              isSortingRef.current = true;
-              setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'));
-              if (location.hash) {
-                navigate(location.pathname, { replace: true });
-              }
-            }}
-          />
-        </div>
+        <TimelineSettings filter={filter} onFilterChange={setFilter} />
       </div>
 
-      <div className="relative h-auto md:h-[var(--total-height)]" ref={containerRef} style={{ '--total-height': `${totalHeight}px` } as React.CSSProperties}>
-        {/* Connector Lines (Desktop) */}
+      <div className="timeline-toolbar mb-4 md:mb-5">
+        <button
+          type="button"
+          onClick={toggleSort}
+          className="btn btn-sm btn-glass btn-icon timeline-sort-btn"
+          aria-label={sortOrder === 'desc' ? 'Sort oldest first' : 'Sort newest first'}
+          title={sortOrder === 'desc' ? 'Newest first' : 'Oldest first'}
+        >
+          {sortOrder === 'desc' ? <ArrowDown size={16} aria-hidden /> : <ArrowUp size={16} aria-hidden />}
+        </button>
+      </div>
+
+      <div
+        className="relative h-auto md:h-[var(--total-height)]"
+        ref={containerRef}
+        style={{ '--total-height': `${totalHeight}px` } as React.CSSProperties}
+      >
         <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0">
-          {connectorPaths.map(p => (
+          {connectorPaths.map((p) => (
             <motion.path
               key={p.id}
               d={p.d}
               stroke={p.color}
-              strokeWidth={hoveredItemId === p.id ? "2.5" : "1.5"}
+              strokeWidth={hoveredItemId === p.id ? '2.5' : '1.5'}
               fill="none"
-              opacity={hoveredItemId === p.id ? "1" : "0.3"}
+              opacity={hoveredItemId === p.id ? '1' : '0.3'}
               layout
               transition={connectorTransition}
             />
           ))}
         </svg>
 
-        {/* Central Spine (Desktop) - Multi-lane */}
         <TimelineSpine
           items={filteredItems}
           minDate={minDate}
@@ -104,11 +109,10 @@ export const Timeline = () => {
           setHoveredItemId={setHoveredItemId}
           sortOrder={sortOrder}
         />
-        
-        {/* Mobile Spine (Left) */}
+
         <div className="md:hidden absolute left-6 top-0 bottom-0 w-px bg-bea-border" />
         <div className="space-y-4 md:space-y-0">
-          <AnimatePresence mode='popLayout'>
+          <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => {
               const isLeftTrack = item.category === 'work' || item.category === 'education';
               const spacerHeight = cardSpacers.get(item.id) || 0;
@@ -134,4 +138,3 @@ export const Timeline = () => {
     </section>
   );
 };
-

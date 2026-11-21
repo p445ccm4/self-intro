@@ -21,6 +21,8 @@ export interface Project {
   githubLinks?: string[];
   demoLinks?: string[];
   youtubeLinks?: string[];
+  /** Shown when GitHub is private and/or live demos are password-locked */
+  accessNote?: string;
 }
 
 export interface Education {

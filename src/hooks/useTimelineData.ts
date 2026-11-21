@@ -45,7 +45,9 @@ export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', 
         dateString: dateStr,
         // Only show duration if it's a range (period contains separator)
         duration: isPeriodRange(dateStr) ? calculateDuration(start, end) : undefined,
-        description: proj.description,
+        description: proj.accessNote
+          ? `${proj.description} (${proj.accessNote})`
+          : proj.description,
         tags: proj.tech,
         link: `/project/${proj.id}`
       };
