@@ -8,8 +8,8 @@ export const Home = () => {
       <Hero />
       <Timeline />
       <Skills />
-      
-      <footer className="py-8 text-center text-gray-500 text-sm border-t border-card-border mt-20">
+
+      <footer className="py-8 text-center text-bea-text-secondary text-sm border-t border-bea-border mt-20 bg-bea-card">
         <p>© {new Date().getFullYear()} Chan Chun Ming, Michael. All rights reserved.</p>
       </footer>
     </>

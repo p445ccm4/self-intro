@@ -7,7 +7,8 @@ import {
   calculateDuration,
   assignLanes,
   getTimelineRange,
-  parseDateStr
+  parseDateStr,
+  isPeriodRange,
 } from '../utils/timeline';
 
 export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', sortOrder: 'asc' | 'desc' = 'desc') => {
@@ -43,7 +44,7 @@ export const useTimelineData = (filter: Exclude<Category, 'milestone'> | 'all', 
         endDate: end,
         dateString: dateStr,
         // Only show duration if it's a range (period contains separator)
-        duration: new RegExp(/[–-]/).exec(dateStr) ? calculateDuration(start, end) : undefined,
+        duration: isPeriodRange(dateStr) ? calculateDuration(start, end) : undefined,
         description: proj.description,
         tags: proj.tech,
         link: `/project/${proj.id}`

@@ -17,45 +17,45 @@ export const getIcon = (category: Category) => {
 
 export const getCategoryColor = (category: Category) => {
   switch (category) {
-    case 'work': return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
-    case 'project': return 'text-purple-400 bg-purple-400/10 border-purple-400/20';
-    case 'education': return 'text-green-400 bg-green-400/10 border-green-400/20';
-    case 'milestone': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20';
+    case 'work': return 'text-bea-blue bg-bea-blue/10 border-bea-blue/20';
+    case 'project': return 'text-solar-red bg-solar-red/10 border-solar-red/20';
+    case 'education': return 'text-bea-teal bg-bea-emerald/15 border-bea-emerald/30';
+    case 'milestone': return 'text-[color:var(--bea-warning-amber)] bg-solar-yellow/20 border-solar-yellow/40';
   }
 };
 
 export const getPillColor = (category: Category) => {
   switch (category) {
-    case 'work': return 'bg-blue-500';
-    case 'project': return 'bg-purple-500';
-    case 'education': return 'bg-green-500';
-    case 'milestone': return 'bg-yellow-500';
+    case 'work': return 'bg-bea-blue';
+    case 'project': return 'bg-solar-red';
+    case 'education': return 'bg-bea-emerald';
+    case 'milestone': return 'bg-solar-yellow';
   }
 };
 
 export const getGradient = (category: Category) => {
   switch (category) {
-    case 'work': return 'from-blue-500/5 via-transparent to-transparent';
-    case 'project': return 'from-purple-500/5 via-transparent to-transparent';
-    case 'education': return 'from-green-500/5 via-transparent to-transparent';
-    case 'milestone': return 'from-yellow-500/5 via-transparent to-transparent';
+    case 'work': return 'from-bea-blue/8 via-transparent to-transparent';
+    case 'project': return 'from-solar-red/8 via-transparent to-transparent';
+    case 'education': return 'from-bea-emerald/10 via-transparent to-transparent';
+    case 'milestone': return 'from-solar-yellow/15 via-transparent to-transparent';
   }
 };
 
 export const getConnectorColor = (category: Category) => {
   switch (category) {
-    case 'work': return '#60a5fa'; // blue-400
-    case 'project': return '#c084fc'; // purple-400
-    case 'education': return '#4ade80'; // green-400
-    case 'milestone': return '#facc15'; // yellow-400
+    case 'work': return '#0563C1'; // bea-hyperlink-blue
+    case 'project': return '#ED171F'; // bea-primary-red
+    case 'education': return '#29BA74'; // bea-emerald-green
+    case 'milestone': return '#FFCC00'; // bea-golden-yellow
   }
 };
 
 export const getSubtitleColor = (category: Category) => {
   switch (category) {
-    case 'work': return 'text-blue-300';
-    case 'project': return 'text-purple-300';
-    case 'education': return 'text-green-300';
-    case 'milestone': return 'text-yellow-300';
+    case 'work': return 'text-bea-blue';
+    case 'project': return 'text-solar-red-orange';
+    case 'education': return 'text-bea-teal';
+    case 'milestone': return 'text-[color:var(--bea-warning-amber)]';
   }
 };

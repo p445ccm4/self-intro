@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react"
 function App() {
   return (
     <Router>
-      <div className="bg-gray-900 min-h-screen text-white overflow-x-hidden">
+      <div className="bg-bea-canvas min-h-screen text-bea-text-primary overflow-x-hidden">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mockup" element={<MockupPage />} />
