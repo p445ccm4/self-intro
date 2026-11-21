@@ -15,26 +15,46 @@ export interface TimelineItem {
   lane?: number; // Assigned lane index
 }
 
+const MONTH_INDEX: Record<string, number> = {
+  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+  jan: 0, feb: 1, mar: 2, apr: 3, jun: 5, jul: 6, aug: 7,
+  sep: 8, sept: 8, oct: 9, nov: 10, dec: 11,
+};
+
+/** Split on hyphen, en-dash, or em-dash (with optional surrounding spaces). */
+const PERIOD_SEPARATOR = /\s*[–—-]\s*/;
+
 // Helper: Parse a single date string
 export const parseDateStr = (dateStr: string): Date => {
-  const lower = dateStr.trim().toLowerCase();
+  const trimmed = dateStr.trim();
+  const lower = trimmed.toLowerCase();
   if (lower === 'now' || lower === 'present') return new Date();
-  
-  // Try parsing "Month Year" or full date
-  const parsed = Date.parse(dateStr);
+
+  // "Month Year" / "Mon Year" — do not rely on Date.parse (Safari returns NaN)
+  const monthYear = /^([A-Za-z]+)\s+(\d{4})$/.exec(trimmed);
+  if (monthYear) {
+    const month = MONTH_INDEX[monthYear[1].toLowerCase()];
+    const year = Number(monthYear[2]);
+    if (month !== undefined && !Number.isNaN(year)) {
+      return new Date(year, month, 1);
+    }
+  }
+
+  // Year only (e.g., "2026")
+  if (/^\d{4}$/.test(trimmed)) return new Date(Number(trimmed), 0, 1);
+
+  // ISO / other formats Date.parse handles reliably
+  const parsed = Date.parse(trimmed);
   if (!Number.isNaN(parsed)) return new Date(parsed);
-  
-  // Handle "Year" only (e.g., "2026")
-  if (/^\d{4}$/.test(dateStr)) return new Date(`${dateStr}-01-01`);
-  
+
   return new Date(0); // Fallback
 };
 
 // Helper: Parse period string "Start - End" or "Date"
 export const parsePeriod = (period: string): { start: Date; end: Date | 'Present' } => {
-  // Handle en-dash '–' and hyphen '-'
-  const parts = period.split(/[–-]/).map(s => s.trim());
-  
+  const parts = period.split(PERIOD_SEPARATOR).map(s => s.trim()).filter(Boolean);
+
   if (parts.length >= 2) {
     const start = parseDateStr(parts[0]);
     const endStr = parts[1];
@@ -43,7 +63,7 @@ export const parsePeriod = (period: string): { start: Date; end: Date | 'Present
       : parseDateStr(endStr);
     return { start, end };
   }
-  
+
   // Single date
   const date = parseDateStr(period);
   return { start: date, end: date }; // Point in time
@@ -52,21 +72,21 @@ export const parsePeriod = (period: string): { start: Date; end: Date | 'Present
 // Helper: Calculate duration string
 export const calculateDuration = (start: Date, end: Date | 'Present') => {
   const endDate = end === 'Present' ? new Date() : end;
-  
+
   let months = (endDate.getFullYear() - start.getFullYear()) * 12;
   months -= start.getMonth();
   months += endDate.getMonth();
-  
+
   // Ensure at least 1 month if dates are close but not identical
-  if (months <= 0) months = 0; 
-  
+  if (months <= 0) months = 0;
+
   const years = Math.floor(months / 12);
   const remainingMonths = months % 12;
-  
+
   const parts = [];
   if (years > 0) parts.push(`${years} yr${years > 1 ? 's' : ''}`);
   if (remainingMonths > 0) parts.push(`${remainingMonths} mo${remainingMonths > 1 ? 's' : ''}`);
-  
+
   return parts.length > 0 ? parts.join(' ') : '1 mo';
 };
 
@@ -89,7 +109,7 @@ export const getTimelineRange = (items: TimelineItem[]) => {
 export const assignLanes = (items: TimelineItem[]): { items: TimelineItem[], laneCount: number } => {
   // Sort by start date
   const sortedItems = [...items].sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
-  
+
   const lanes: Date[] = []; // Stores the end date of the last item in each lane
   const processedItems: TimelineItem[] = [];
 
@@ -123,10 +143,10 @@ export const assignLanes = (items: TimelineItem[]): { items: TimelineItem[], lan
   // The original code sorts by Start Date Descending (Newest first).
   // So we should probably return them in the order the UI expects, or let the UI sort them.
   // The UI currently does: return allItems.sort((a, b) => b.startDate.getTime() - a.startDate.getTime());
-  
+
   // Let's return the processed items, the UI can re-sort them for display list if needed,
   // but for the spine rendering, we might need them in a specific order or just use the lane index.
-  
+
   return { items: processedItems, laneCount: lanes.length };
 };
 
@@ -134,3 +154,6 @@ export const SPINE_LAYOUT = {
   LANE_WIDTH: 6,
   LANE_GAP: 8,
 };
+
+/** True when period string is a date range (contains a dash separator). */
+export const isPeriodRange = (period: string): boolean => PERIOD_SEPARATOR.test(period);
