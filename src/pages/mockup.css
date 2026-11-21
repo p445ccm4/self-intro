@@ -7,7 +7,7 @@
   --mg-glass-alpha: 0.16;
   --mg-glass-blur: 16px;
   --mg-mist-brightness: 0.7;
-  --mg-glass-tint: 0.55; /* 0 = neutral glass, 1 = strong accent color on glass */
+  --mg-glass-tint: 0; /* 0 = neutral glass, 1 = strong accent color on glass */
   --mg-glass: color-mix(
     in srgb,
     var(--mg-a) calc(var(--mg-glass-tint) * 18%),
@@ -133,14 +133,6 @@
   --mg-mist-3: color-mix(in srgb, var(--mg-c) 60%, transparent);
   --mg-mist-4: color-mix(in srgb, var(--mg-a) 48%, transparent);
   --mg-mist-5: color-mix(in srgb, var(--mg-b) 42%, transparent);
-}
-
-.mockup-root[data-palette="monokai"] {
-  --mg-mist-1: color-mix(in srgb, #f92672 62%, transparent);
-  --mg-mist-2: color-mix(in srgb, #a6e22e 55%, transparent);
-  --mg-mist-3: color-mix(in srgb, #66d9ef 58%, transparent);
-  --mg-mist-4: color-mix(in srgb, #fd971f 52%, transparent);
-  --mg-mist-5: color-mix(in srgb, #ae81ff 52%, transparent);
 }
 
 /* Glass panels — multi-color edge via gradient border trick */
@@ -285,6 +277,57 @@
     0 0 30px color-mix(in srgb, var(--mg-a) 10%, transparent);
   -webkit-backdrop-filter: blur(calc(var(--mg-glass-blur) * 0.85)) saturate(160%);
   backdrop-filter: blur(calc(var(--mg-glass-blur) * 0.85)) saturate(160%);
+}
+
+/* Accent color pickers */
+.mockup-color-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.mockup-color-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.35rem;
+  padding: 0.25rem 0.65rem 0.25rem 0.55rem;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mockup-color-picker input[type="color"] {
+  width: 1.65rem;
+  height: 1.65rem;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 0.4rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mockup-color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.mockup-color-picker input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 0.3rem;
+}
+
+.mockup-color-hex {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
 /* Tune panel controls */
