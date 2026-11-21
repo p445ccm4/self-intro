@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Briefcase, Code, GraduationCap, Clock, Mail, Linkedin, Github, FileText, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
@@ -9,6 +9,12 @@ type Filter = 'all' | 'work' | 'project' | 'education';
 
 const isPalette = (v: string | null): v is Palette =>
   !!v && ['cyberpunk', 'vice', 'neon', 'monokai', 'aurora', 'ice', 'bea'].includes(v);
+
+const DEFAULT_TUNE = {
+  mist: 70,      // mist brightness %
+  blur: 16,      // glass blur px
+  opacity: 16,   // glass fill opacity % (higher = less see-through)
+} as const;
 
 const PALETTES: {
   id: Palette;
@@ -102,6 +108,9 @@ export const MockupPage = () => {
   const param = searchParams.get('palette');
   const [palette, setPalette] = useState<Palette>(() => (isPalette(param) ? param : 'cyberpunk'));
   const [filter, setFilter] = useState<Filter>('all');
+  const [mist, setMist] = useState(DEFAULT_TUNE.mist);
+  const [blur, setBlur] = useState(DEFAULT_TUNE.blur);
+  const [opacity, setOpacity] = useState(DEFAULT_TUNE.opacity);
   const { personal } = portfolioData;
 
   useEffect(() => {
@@ -116,8 +125,27 @@ export const MockupPage = () => {
 
   const activePalette = PALETTES.find((p) => p.id === palette)!;
 
+  const rootStyle = {
+    '--mg-mist-brightness': String(mist / 100),
+    '--mg-glass-blur': `${blur}px`,
+    '--mg-glass-alpha': String(opacity / 100),
+  } as CSSProperties;
+
+  const resetTune = () => {
+    setMist(DEFAULT_TUNE.mist);
+    setBlur(DEFAULT_TUNE.blur);
+    setOpacity(DEFAULT_TUNE.opacity);
+  };
+
+  const readablePreset = () => {
+    setMist(45);
+    setBlur(20);
+    setOpacity(28);
+  };
+
   return (
-    <div className="mockup-root" data-palette={palette}>
+    <div className="mockup-root" data-palette={palette} style={rootStyle}>
+      <div className="mockup-mist" aria-hidden />
       <div className="relative z-[1] mx-auto max-w-3xl px-4 py-8 md:py-12">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <Link to="/" className="mockup-btn !min-w-0 px-4 text-sm">
@@ -164,6 +192,67 @@ export const MockupPage = () => {
               </span>{' '}
               {activePalette.note}
             </p>
+
+            <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
+              Tune visibility
+            </h3>
+            <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
+              If text is hard to read: lower mist, raise glass opacity, or soften blur.
+            </p>
+
+            <div className="mockup-tune-row">
+              <label htmlFor="mist-brightness">
+                <span>Mist brightness</span>
+                <span>{mist}%</span>
+              </label>
+              <input
+                id="mist-brightness"
+                type="range"
+                min={0}
+                max={120}
+                value={mist}
+                onChange={(e) => setMist(Number(e.target.value))}
+              />
+            </div>
+
+            <div className="mockup-tune-row">
+              <label htmlFor="glass-blur">
+                <span>Glass blur</span>
+                <span>{blur}px</span>
+              </label>
+              <input
+                id="glass-blur"
+                type="range"
+                min={0}
+                max={40}
+                value={blur}
+                onChange={(e) => setBlur(Number(e.target.value))}
+              />
+            </div>
+
+            <div className="mockup-tune-row">
+              <label htmlFor="glass-opacity">
+                <span>Glass opacity</span>
+                <span>{opacity}% fill</span>
+              </label>
+              <input
+                id="glass-opacity"
+                type="range"
+                min={4}
+                max={45}
+                value={opacity}
+                onChange={(e) => setOpacity(Number(e.target.value))}
+              />
+            </div>
+
+            <div className="mockup-tune-actions">
+              <button type="button" className="mockup-btn !min-w-0 px-4 text-sm" onClick={readablePreset}>
+                Readable preset
+              </button>
+              <button type="button" className="mockup-btn !min-w-0 px-4 text-sm" onClick={resetTune}>
+                Reset
+              </button>
+            </div>
           </div>
         </section>
 

@@ -2,9 +2,12 @@
 
 .mockup-root {
   --mg-bg: #07090f;
-  --mg-text: #e8ecf4;
-  --mg-muted: #9aa3b5;
-  --mg-glass: rgb(255 255 255 / 0.08);
+  --mg-text: #f2f5fb;
+  --mg-muted: #b6bfd0;
+  --mg-glass-alpha: 0.16;
+  --mg-glass-blur: 16px;
+  --mg-mist-brightness: 0.7;
+  --mg-glass: rgb(18 22 32 / var(--mg-glass-alpha));
   --mg-glass-border: rgb(255 255 255 / 0.18);
   --mg-glass-highlight: rgb(255 255 255 / 0.42);
   --mg-radius: 1.25rem;
@@ -16,11 +19,11 @@
   --mg-c: #b000ff;
   --mg-accent-soft: color-mix(in srgb, var(--mg-a) 22%, transparent);
   --mg-accent-text: #e8fbff;
-  --mg-mist-1: color-mix(in srgb, var(--mg-a) 55%, transparent);
-  --mg-mist-2: color-mix(in srgb, var(--mg-b) 50%, transparent);
-  --mg-mist-3: color-mix(in srgb, var(--mg-c) 45%, transparent);
-  --mg-mist-4: color-mix(in srgb, var(--mg-a) 35%, transparent);
-  --mg-mist-5: color-mix(in srgb, var(--mg-b) 30%, transparent);
+  --mg-mist-1: color-mix(in srgb, var(--mg-a) 70%, transparent);
+  --mg-mist-2: color-mix(in srgb, var(--mg-b) 65%, transparent);
+  --mg-mist-3: color-mix(in srgb, var(--mg-c) 60%, transparent);
+  --mg-mist-4: color-mix(in srgb, var(--mg-a) 45%, transparent);
+  --mg-mist-5: color-mix(in srgb, var(--mg-b) 40%, transparent);
 
   position: relative;
   isolation: isolate;
@@ -31,14 +34,23 @@
   overflow-x: hidden;
 }
 
-/* Fixed mist layer — visible on mobile (background-attachment:fixed often fails) */
+/* Solid page base */
 .mockup-root::before {
   content: "";
   position: fixed;
   inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: var(--mg-bg);
+}
+
+/* Tunable mist layer (opacity = mist brightness) */
+.mockup-mist {
+  position: fixed;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-color: var(--mg-bg);
+  opacity: var(--mg-mist-brightness);
   background-image:
     radial-gradient(ellipse 80% 55% at 5% 0%, var(--mg-mist-1), transparent 58%),
     radial-gradient(ellipse 70% 50% at 100% 8%, var(--mg-mist-2), transparent 55%),
@@ -121,19 +133,19 @@
 /* Recompute soft fills from active A when palette changes */
 .mockup-root[data-palette] {
   --mg-accent-soft: color-mix(in srgb, var(--mg-a) 24%, transparent);
-  --mg-mist-1: color-mix(in srgb, var(--mg-a) 55%, transparent);
-  --mg-mist-2: color-mix(in srgb, var(--mg-b) 50%, transparent);
-  --mg-mist-3: color-mix(in srgb, var(--mg-c) 45%, transparent);
-  --mg-mist-4: color-mix(in srgb, var(--mg-a) 38%, transparent);
-  --mg-mist-5: color-mix(in srgb, var(--mg-b) 34%, transparent);
+  --mg-mist-1: color-mix(in srgb, var(--mg-a) 70%, transparent);
+  --mg-mist-2: color-mix(in srgb, var(--mg-b) 65%, transparent);
+  --mg-mist-3: color-mix(in srgb, var(--mg-c) 60%, transparent);
+  --mg-mist-4: color-mix(in srgb, var(--mg-a) 48%, transparent);
+  --mg-mist-5: color-mix(in srgb, var(--mg-b) 42%, transparent);
 }
 
 .mockup-root[data-palette="monokai"] {
-  --mg-mist-1: color-mix(in srgb, #f92672 48%, transparent);
-  --mg-mist-2: color-mix(in srgb, #a6e22e 42%, transparent);
-  --mg-mist-3: color-mix(in srgb, #66d9ef 45%, transparent);
-  --mg-mist-4: color-mix(in srgb, #fd971f 40%, transparent);
-  --mg-mist-5: color-mix(in srgb, #ae81ff 40%, transparent);
+  --mg-mist-1: color-mix(in srgb, #f92672 62%, transparent);
+  --mg-mist-2: color-mix(in srgb, #a6e22e 55%, transparent);
+  --mg-mist-3: color-mix(in srgb, #66d9ef 58%, transparent);
+  --mg-mist-4: color-mix(in srgb, #fd971f 52%, transparent);
+  --mg-mist-5: color-mix(in srgb, #ae81ff 52%, transparent);
 }
 
 /* Glass panels — multi-color edge via gradient border trick */
@@ -159,8 +171,8 @@
     inset 0 1px 1px var(--mg-glass-highlight),
     inset 0 -1px 1px rgb(255 255 255 / 0.05),
     0 0 40px color-mix(in srgb, var(--mg-a) 12%, transparent);
-  -webkit-backdrop-filter: blur(18px) saturate(170%) brightness(1.06);
-  backdrop-filter: blur(18px) saturate(170%) brightness(1.06);
+  -webkit-backdrop-filter: blur(var(--mg-glass-blur)) saturate(170%) brightness(1.06);
+  backdrop-filter: blur(var(--mg-glass-blur)) saturate(170%) brightness(1.06);
 }
 
 .mockup-glass::after {
@@ -216,8 +228,8 @@
   box-shadow:
     inset 0 1px 1px rgb(255 255 255 / 0.28),
     0 4px 14px rgb(0 0 0 / 0.2);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(calc(var(--mg-glass-blur) * 0.7)) saturate(160%);
+  backdrop-filter: blur(calc(var(--mg-glass-blur) * 0.7)) saturate(160%);
   transition: background 150ms ease, border-color 150ms ease, transform 100ms ease, box-shadow 150ms ease;
   cursor: pointer;
   white-space: nowrap;
@@ -266,8 +278,44 @@
     inset 0 1px 1px rgb(255 255 255 / 0.2),
     0 8px 24px rgb(0 0 0 / 0.25),
     0 0 30px color-mix(in srgb, var(--mg-a) 10%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(calc(var(--mg-glass-blur) * 0.85)) saturate(160%);
+  backdrop-filter: blur(calc(var(--mg-glass-blur) * 0.85)) saturate(160%);
+}
+
+/* Tune panel controls */
+.mockup-tune-row {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+}
+
+.mockup-tune-row label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mg-text);
+}
+
+.mockup-tune-row label span:last-child {
+  font-variant-numeric: tabular-nums;
+  color: var(--mg-muted);
+  font-weight: 500;
+}
+
+.mockup-tune-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--mg-a);
+  height: 1.25rem;
+}
+
+.mockup-tune-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
 }
 
 .mockup-toggle-thumb {
