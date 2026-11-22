@@ -26,15 +26,15 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl animate-view-fade-in glass-panel px-6 py-8 md:px-10 md:py-10"
+          className="w-full max-w-3xl min-w-0 animate-view-fade-in glass-panel px-4 py-7 sm:px-6 sm:py-8 md:px-10 md:py-10"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 solar-on-white">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-5 md:mb-6 solar-on-white break-words">
             {personal.name}
           </h1>
-          <h2 className="text-2xl md:text-3xl text-bea-text-strong mb-8">
+          <h2 className="text-xl sm:text-2xl md:text-3xl text-bea-text-strong mb-6 md:mb-8">
             {personal.title}
           </h2>
-          <p className="text-lg text-bea-text-primary mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg text-bea-text-primary mb-8 md:mb-10 leading-relaxed">
             {personal.summary}
           </p>
 
@@ -45,7 +45,7 @@ export const Hero = () => {
               aria-label="Email"
               title="Email"
             >
-              <Mail size={18} aria-hidden />
+              <Mail size={16} aria-hidden />
             </a>
             <a
               href={personal.linkedin}
@@ -55,7 +55,7 @@ export const Hero = () => {
               aria-label="LinkedIn"
               title="LinkedIn"
             >
-              <Linkedin size={18} aria-hidden />
+              <Linkedin size={16} aria-hidden />
             </a>
             <a
               href={personal.github}
@@ -65,7 +65,7 @@ export const Hero = () => {
               aria-label="GitHub"
               title="GitHub"
             >
-              <Github size={18} aria-hidden />
+              <Github size={16} aria-hidden />
             </a>
             <a
               href={personal.whatsapp}
@@ -75,7 +75,7 @@ export const Hero = () => {
               aria-label="WhatsApp"
               title="WhatsApp"
             >
-              <MessageCircle size={18} aria-hidden />
+              <MessageCircle size={16} aria-hidden />
             </a>
             <a
               href={personal.resume}
@@ -86,7 +86,7 @@ export const Hero = () => {
               aria-label="Download resume"
               title="Resume"
             >
-              <FileText size={18} aria-hidden />
+              <FileText size={16} aria-hidden />
             </a>
           </div>
         </motion.div>
