@@ -16,6 +16,8 @@ export const Timeline = () => {
   const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const isSortingRef = useRef(false);
+  // One-shot restore: consume hash once after layout is ready, then clear URL.
+  const pendingHashScrollRef = useRef<string | null>(null);
 
   const [filter, setFilter] = useState<Exclude<Category, 'milestone'> | 'all'>('all');
   const location = useLocation();
@@ -35,24 +37,40 @@ export const Timeline = () => {
   });
 
   useEffect(() => {
+    if (location.hash) {
+      pendingHashScrollRef.current = location.hash.replace('#', '');
+    }
+  }, [location.hash]);
+
+  useEffect(() => {
     if (isSortingRef.current) {
       isSortingRef.current = false;
+      pendingHashScrollRef.current = null;
       return;
     }
 
-    if (location.hash && cardSpacers.size > 0) {
-      const id = location.hash.replace('#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+    const id = pendingHashScrollRef.current;
+    if (!id || cardSpacers.size === 0) return;
+
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    // Consume immediately so later layout churn (resize / spacer recalc) cannot re-scroll.
+    pendingHashScrollRef.current = null;
+
+    const timeoutId = window.setTimeout(() => {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (location.hash) {
+        navigate({ pathname: location.pathname, search: location.search }, { replace: true });
       }
-    }
-  }, [location.hash, cardSpacers]);
+    }, 100);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [cardSpacers, location.hash, location.pathname, location.search, navigate]);
 
   const toggleSort = () => {
     isSortingRef.current = true;
+    pendingHashScrollRef.current = null;
     setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'));
     if (location.hash) {
       navigate(location.pathname, { replace: true });

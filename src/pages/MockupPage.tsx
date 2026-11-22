@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Briefcase, Code, GraduationCap, Clock, Mail, Linkedin, Github, FileText, MessageCircle } from 'lucide-react';
+import { Briefcase, Code, GraduationCap, Clock, Mail, Linkedin, Github, FileText, MessageCircle, Zap } from 'lucide-react';
 import { portfolioData } from '../data/portfolio';
-import { ThemeToggle } from '../components/ThemeToggle';
 import './mockup.css';
 
-type Palette = 'cyberpunk' | 'vice' | 'neon' | 'monokai' | 'aurora' | 'ice' | 'bea';
+type Palette = 'live' | 'cyberpunk' | 'vice' | 'neon' | 'monokai' | 'aurora' | 'ice' | 'bea';
 type Filter = 'all' | 'work' | 'project' | 'education';
+type CategoryAccent = 'work' | 'project' | 'education' | 'milestone';
 
 const isPalette = (v: string | null): v is Palette =>
-  !!v && ['cyberpunk', 'vice', 'neon', 'monokai', 'aurora', 'ice', 'bea'].includes(v);
+  !!v && ['live', 'cyberpunk', 'vice', 'neon', 'monokai', 'aurora', 'ice', 'bea'].includes(v);
 
 const DEFAULT_TUNE = {
   mist: 70,      // mist brightness %
@@ -20,6 +20,14 @@ const DEFAULT_TUNE = {
 
 const DEFAULT_TEXT = '#ffffff';
 
+/** Homepage live-site category accents (from timeline connectors). */
+const LIVE_CATEGORY = {
+  work: '#0563C1',
+  project: '#ED171F',
+  education: '#29BA74',
+  milestone: '#FFCC00',
+} as const;
+
 const PALETTES: {
   id: Palette;
   label: string;
@@ -27,7 +35,17 @@ const PALETTES: {
   bg: string;
   text: string;
   swatches: string[];
+  category: Record<CategoryAccent, string>;
 }[] = [
+  {
+    id: 'live',
+    label: 'Live Site',
+    note: 'Homepage accents — peach mist triad + work/project/education/milestone colors.',
+    bg: '#001F08',
+    text: DEFAULT_TEXT,
+    swatches: ['#FFCDB6', '#FFDAA3', '#FFFFFF'],
+    category: { ...LIVE_CATEGORY },
+  },
   {
     id: 'cyberpunk',
     label: 'Cyberpunk',
@@ -35,6 +53,7 @@ const PALETTES: {
     bg: '#0a0a0f',
     text: DEFAULT_TEXT,
     swatches: ['#00f0ff', '#ff0080', '#b000ff'],
+    category: { work: '#00f0ff', project: '#ff0080', education: '#b000ff', milestone: '#ffe600' },
   },
   {
     id: 'vice',
@@ -43,6 +62,7 @@ const PALETTES: {
     bg: '#0b0614',
     text: DEFAULT_TEXT,
     swatches: ['#ff2e97', '#00e5ff', '#c084fc'],
+    category: { work: '#00e5ff', project: '#ff2e97', education: '#c084fc', milestone: '#ffe66d' },
   },
   {
     id: 'neon',
@@ -51,6 +71,7 @@ const PALETTES: {
     bg: '#020408',
     text: DEFAULT_TEXT,
     swatches: ['#00f5ff', '#ff006e', '#ffe600'],
+    category: { work: '#00f5ff', project: '#ff006e', education: '#a78bfa', milestone: '#ffe600' },
   },
   {
     id: 'monokai',
@@ -59,6 +80,7 @@ const PALETTES: {
     bg: '#272822',
     text: DEFAULT_TEXT,
     swatches: ['#f92672', '#a6e22e', '#66d9ef'],
+    category: { work: '#66d9ef', project: '#f92672', education: '#a6e22e', milestone: '#fd971f' },
   },
   {
     id: 'aurora',
@@ -67,6 +89,7 @@ const PALETTES: {
     bg: '#070b14',
     text: DEFAULT_TEXT,
     swatches: ['#22d3ee', '#a78bfa', '#f472b6'],
+    category: { work: '#22d3ee', project: '#f472b6', education: '#a78bfa', milestone: '#fbbf24' },
   },
   {
     id: 'ice',
@@ -75,6 +98,7 @@ const PALETTES: {
     bg: '#07090f',
     text: DEFAULT_TEXT,
     swatches: ['#7dd3fc', '#67e8f9', '#a5b4fc'],
+    category: { work: '#7dd3fc', project: '#a5b4fc', education: '#67e8f9', milestone: '#fde68a' },
   },
   {
     id: 'bea',
@@ -83,6 +107,7 @@ const PALETTES: {
     bg: '#10080a',
     text: DEFAULT_TEXT,
     swatches: ['#ed171f', '#ff8f00', '#ffcc00'],
+    category: { work: '#0563C1', project: '#ed171f', education: '#29BA74', milestone: '#ffcc00' },
   },
 ];
 
@@ -121,18 +146,27 @@ const SAMPLE_ITEMS = [
     duration: '',
     blurb: 'Academic foundation for AI & systems work.',
   },
+  {
+    id: 'm1',
+    kind: 'milestone' as const,
+    title: 'First production GenAI launch',
+    company: 'Milestone',
+    period: '2024',
+    duration: '',
+    blurb: 'Shipped an internal assistant used daily across teams.',
+  },
 ];
 
 export const MockupPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const param = searchParams.get('palette');
-  const [palette, setPalette] = useState<Palette>(() => (isPalette(param) ? param : 'cyberpunk'));
+  const [palette, setPalette] = useState<Palette>(() => (isPalette(param) ? param : 'live'));
   const [filter, setFilter] = useState<Filter>('all');
   const [mist, setMist] = useState<number>(DEFAULT_TUNE.mist);
   const [blur, setBlur] = useState<number>(DEFAULT_TUNE.blur);
   const [opacity, setOpacity] = useState<number>(DEFAULT_TUNE.opacity);
   const [tint, setTint] = useState<number>(DEFAULT_TUNE.tint);
-  const initialPalette = isPalette(param) ? param : 'cyberpunk';
+  const initialPalette = isPalette(param) ? param : 'live';
   const [bgColor, setBgColor] = useState<string>(
     () => PALETTES.find((x) => x.id === initialPalette)!.bg
   );
@@ -148,6 +182,19 @@ export const MockupPage = () => {
   const [colorC, setColorC] = useState<string>(
     () => PALETTES.find((x) => x.id === initialPalette)!.swatches[2]
   );
+  const [catWork, setCatWork] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.category.work
+  );
+  const [catProject, setCatProject] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.category.project
+  );
+  const [catEducation, setCatEducation] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.category.education
+  );
+  const [catMilestone, setCatMilestone] = useState<string>(
+    () => PALETTES.find((x) => x.id === initialPalette)!.category.milestone
+  );
+  const [surface, setSurface] = useState<'light' | 'dark'>('dark');
   const { personal } = portfolioData;
 
   useEffect(() => {
@@ -161,11 +208,37 @@ export const MockupPage = () => {
     setColorA(preset.swatches[0]);
     setColorB(preset.swatches[1]);
     setColorC(preset.swatches[2]);
+    setCatWork(preset.category.work);
+    setCatProject(preset.category.project);
+    setCatEducation(preset.category.education);
+    setCatMilestone(preset.category.milestone);
+    setSurface('dark');
   };
 
   const selectPalette = (id: Palette) => {
     setPalette(id);
     applyPaletteColors(id);
+  };
+
+  /** Mockup-local light/dark — does not touch homepage ThemeProvider. */
+  const applyMockSurface = (mode: 'light' | 'dark') => {
+    setSurface(mode);
+    if (mode === 'light') {
+      setBgColor('#FFFFFF');
+      setTextColor('#111111');
+      setMist(42);
+      setBlur(20);
+      setOpacity(48);
+      setTint(0);
+    } else {
+      const preset = PALETTES.find((p) => p.id === palette)!;
+      setBgColor(preset.bg);
+      setTextColor(preset.text);
+      setMist(DEFAULT_TUNE.mist);
+      setBlur(DEFAULT_TUNE.blur);
+      setOpacity(DEFAULT_TUNE.opacity);
+      setTint(DEFAULT_TUNE.tint);
+    }
   };
 
   const filterIndex = FILTERS.findIndex((f) => f.id === filter);
@@ -175,6 +248,18 @@ export const MockupPage = () => {
   );
 
   const activePalette = PALETTES.find((p) => p.id === palette)!;
+  const categoryColor = (kind: CategoryAccent) => {
+    switch (kind) {
+      case 'work':
+        return catWork;
+      case 'project':
+        return catProject;
+      case 'education':
+        return catEducation;
+      case 'milestone':
+        return catMilestone;
+    }
+  };
 
   const rootStyle = {
     '--mg-mist-brightness': String(mist / 100),
@@ -186,6 +271,10 @@ export const MockupPage = () => {
     '--mg-a': colorA,
     '--mg-b': colorB,
     '--mg-c': colorC,
+    '--mg-cat-work': catWork,
+    '--mg-cat-project': catProject,
+    '--mg-cat-education': catEducation,
+    '--mg-cat-milestone': catMilestone,
   } as CSSProperties;
 
   const resetTune = () => {
@@ -204,19 +293,16 @@ export const MockupPage = () => {
   };
 
   return (
-    <div className="mockup-root" data-palette={palette} style={rootStyle}>
+    <div className="mockup-root" data-palette={palette} data-surface={surface} style={rootStyle}>
       <div className="mockup-mist" aria-hidden />
       <div className="relative z-[1] mx-auto max-w-3xl px-4 py-8 md:py-12">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <Link to="/" className="mockup-btn !min-w-0 px-4 text-sm">
             ← Live site
           </Link>
-          <div className="flex items-center gap-3">
-            <p className="text-xs uppercase tracking-[0.14em] text-[color:var(--mg-muted)]">
-              /mockup · multi-color dark glass
-            </p>
-            <ThemeToggle />
-          </div>
+          <p className="text-xs uppercase tracking-[0.14em] text-[color:var(--mg-muted)]">
+            /mockup · multi-color glass lab
+          </p>
         </div>
 
         <section className="mockup-glass mb-8 p-4 md:p-5">
@@ -261,7 +347,26 @@ export const MockupPage = () => {
             </h3>
             <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
               Adjust page background and word color independently. Palette chips reset both.
+              Light / Dark here only affect this mockup — not the homepage theme.
             </p>
+            <div className="mockup-tune-actions !mt-3">
+              <button
+                type="button"
+                className="mockup-btn !min-w-0 px-4 text-sm"
+                aria-pressed={surface === 'light'}
+                onClick={() => applyMockSurface('light')}
+              >
+                Light surface
+              </button>
+              <button
+                type="button"
+                className="mockup-btn !min-w-0 px-4 text-sm"
+                aria-pressed={surface === 'dark'}
+                onClick={() => applyMockSurface('dark')}
+              >
+                Dark surface
+              </button>
+            </div>
             <div className="mockup-color-row">
               <label className="mockup-color-picker" htmlFor="bg-color">
                 <span>Background</span>
@@ -325,6 +430,59 @@ export const MockupPage = () => {
             </div>
 
             <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
+              Timeline category accents
+            </h3>
+            <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
+              Colors for work / project / education / milestone cards. Live Site preset matches the homepage.
+            </p>
+            <div className="mockup-color-row">
+              <label className="mockup-color-picker" htmlFor="cat-work">
+                <Briefcase size={12} aria-hidden />
+                <span>Work</span>
+                <input
+                  id="cat-work"
+                  type="color"
+                  value={catWork}
+                  onChange={(e) => setCatWork(e.target.value)}
+                />
+                <span className="mockup-color-hex">{catWork}</span>
+              </label>
+              <label className="mockup-color-picker" htmlFor="cat-project">
+                <Code size={12} aria-hidden />
+                <span>Project</span>
+                <input
+                  id="cat-project"
+                  type="color"
+                  value={catProject}
+                  onChange={(e) => setCatProject(e.target.value)}
+                />
+                <span className="mockup-color-hex">{catProject}</span>
+              </label>
+              <label className="mockup-color-picker" htmlFor="cat-education">
+                <GraduationCap size={12} aria-hidden />
+                <span>Education</span>
+                <input
+                  id="cat-education"
+                  type="color"
+                  value={catEducation}
+                  onChange={(e) => setCatEducation(e.target.value)}
+                />
+                <span className="mockup-color-hex">{catEducation}</span>
+              </label>
+              <label className="mockup-color-picker" htmlFor="cat-milestone">
+                <Zap size={12} aria-hidden />
+                <span>Milestone</span>
+                <input
+                  id="cat-milestone"
+                  type="color"
+                  value={catMilestone}
+                  onChange={(e) => setCatMilestone(e.target.value)}
+                />
+                <span className="mockup-color-hex">{catMilestone}</span>
+              </label>
+            </div>
+
+            <h3 className="mt-5 text-sm font-semibold text-[color:var(--mg-text)]">
               Tune visibility
             </h3>
             <p className="mt-1 text-xs text-[color:var(--mg-muted)]">
@@ -370,7 +528,7 @@ export const MockupPage = () => {
                 id="glass-opacity"
                 type="range"
                 min={4}
-                max={45}
+                max={55}
                 value={opacity}
                 onChange={(e) => setOpacity(Number(e.target.value))}
               />
@@ -415,26 +573,28 @@ export const MockupPage = () => {
           </p>
 
           <div className="relative z-[1] mt-7 flex flex-wrap items-center justify-center gap-2.5">
-            <a href={`mailto:${personal.email}`} className="mockup-btn">
-              <Mail size={16} /> Email
+            <a href={`mailto:${personal.email}`} className="mockup-btn mockup-btn-icon" aria-label="Email" title="Email">
+              <Mail size={16} />
             </a>
-            <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="mockup-btn">
-              <Linkedin size={16} /> LinkedIn
+            <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="mockup-btn mockup-btn-icon" aria-label="LinkedIn" title="LinkedIn">
+              <Linkedin size={16} />
             </a>
-            <a href={personal.github} target="_blank" rel="noopener noreferrer" className="mockup-btn">
-              <Github size={16} /> GitHub
+            <a href={personal.github} target="_blank" rel="noopener noreferrer" className="mockup-btn mockup-btn-icon" aria-label="GitHub" title="GitHub">
+              <Github size={16} />
             </a>
-            <a href={personal.whatsapp} target="_blank" rel="noopener noreferrer" className="mockup-btn">
-              <MessageCircle size={16} /> WhatsApp
+            <a href={personal.whatsapp} target="_blank" rel="noopener noreferrer" className="mockup-btn mockup-btn-icon" aria-label="WhatsApp" title="WhatsApp">
+              <MessageCircle size={16} />
             </a>
             <a
               href={personal.resume}
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="mockup-btn mockup-btn-accent"
+              className="mockup-btn mockup-btn-icon mockup-btn-accent"
+              aria-label="Resume"
+              title="Resume"
             >
-              <FileText size={16} /> Resume
+              <FileText size={16} />
             </a>
           </div>
         </section>
@@ -467,21 +627,38 @@ export const MockupPage = () => {
 
         <div className="relative space-y-3 pl-5">
           <div className="mockup-spine absolute bottom-2 left-[0.45rem] top-2 w-0.5 rounded-full opacity-70" />
-          {items.map((item) => (
-            <article key={item.id} className="mockup-glass mockup-card relative">
-              <span className="mockup-dot absolute -left-[1.18rem] top-5 h-2.5 w-2.5 rounded-full border-2 border-[color:var(--mg-bg)]" />
-              <div className="relative z-[1] mb-1.5 flex flex-wrap items-center gap-2 font-mono text-[0.7rem] text-[color:var(--mg-muted)]">
-                <span>{item.period}</span>
-                {item.duration && <span className="mockup-tag">{item.duration}</span>}
-                <span className="mockup-tag capitalize">{item.kind}</span>
-              </div>
-              <h3 className="relative z-[1] text-base font-bold text-[color:var(--mg-text)]">{item.title}</h3>
-              <p className="mockup-company relative z-[1] mt-1 text-sm">{item.company}</p>
-              <p className="relative z-[1] mt-2 text-sm leading-relaxed text-[color:var(--mg-muted)]">
-                {item.blurb}
-              </p>
-            </article>
-          ))}
+          {items.map((item) => {
+            const accent = categoryColor(item.kind);
+            return (
+              <article key={item.id} className="mockup-glass mockup-card relative">
+                <span
+                  className="mockup-dot absolute -left-[1.18rem] top-5 h-2.5 w-2.5 rounded-full border-2 border-[color:var(--mg-bg)]"
+                  style={{ background: accent }}
+                />
+                <div className="relative z-[1] mb-1.5 flex flex-wrap items-center gap-2 font-mono text-[0.7rem] text-[color:var(--mg-muted)]">
+                  <span>{item.period}</span>
+                  {item.duration && <span className="mockup-tag">{item.duration}</span>}
+                  <span
+                    className="mockup-tag capitalize"
+                    style={{
+                      color: accent,
+                      borderColor: `color-mix(in srgb, ${accent} 45%, transparent)`,
+                      background: `color-mix(in srgb, ${accent} 16%, transparent)`,
+                    }}
+                  >
+                    {item.kind}
+                  </span>
+                </div>
+                <h3 className="relative z-[1] text-base font-bold text-[color:var(--mg-text)]">{item.title}</h3>
+                <p className="relative z-[1] mt-1 text-sm font-semibold" style={{ color: accent }}>
+                  {item.company}
+                </p>
+                <p className="relative z-[1] mt-2 text-sm leading-relaxed text-[color:var(--mg-muted)]">
+                  {item.blurb}
+                </p>
+              </article>
+            );
+          })}
           {items.length === 0 && (
             <p className="relative z-[1] py-8 text-center text-sm text-[color:var(--mg-muted)]">
               No items in this filter.

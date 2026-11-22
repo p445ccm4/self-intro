@@ -9,7 +9,15 @@ export const Hero = () => {
 
   return (
     <section className="min-h-screen flex flex-col relative overflow-hidden">
-      <header className="relative z-[2] flex items-center justify-end px-5 pt-6 md:px-8 md:pt-8">
+      <header className="relative z-[2] flex items-center justify-end gap-2 px-5 pt-6 md:px-8 md:pt-8">
+        <Link
+          to="/mockup"
+          className="hero-corner-btn"
+          aria-label="Open mockup playground"
+          title="Mockup"
+        >
+          <Sparkles size={14} strokeWidth={2.25} aria-hidden />
+        </Link>
         <ThemeToggle />
       </header>
 
@@ -31,51 +39,55 @@ export const Hero = () => {
           </p>
 
           <div className="hero-actions">
-            <a href={`mailto:${personal.email}`} className="btn btn-glass">
+            <a
+              href={`mailto:${personal.email}`}
+              className="btn btn-glass btn-icon"
+              aria-label="Email"
+              title="Email"
+            >
               <Mail size={18} aria-hidden />
-              <span>Email</span>
             </a>
             <a
               href={personal.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-glass"
+              className="btn btn-glass btn-icon"
+              aria-label="LinkedIn"
+              title="LinkedIn"
             >
               <Linkedin size={18} aria-hidden />
-              <span>LinkedIn</span>
             </a>
             <a
               href={personal.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-glass"
+              className="btn btn-glass btn-icon"
+              aria-label="GitHub"
+              title="GitHub"
             >
               <Github size={18} aria-hidden />
-              <span>GitHub</span>
             </a>
             <a
               href={personal.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-glass"
+              className="btn btn-glass btn-icon"
+              aria-label="WhatsApp"
+              title="WhatsApp"
             >
               <MessageCircle size={18} aria-hidden />
-              <span>WhatsApp</span>
             </a>
             <a
               href={personal.resume}
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="btn btn-solar"
+              className="btn btn-solar btn-icon"
+              aria-label="Download resume"
+              title="Resume"
             >
               <FileText size={18} aria-hidden />
-              <span>Resume</span>
             </a>
-            <Link to="/mockup" className="btn btn-glass">
-              <Sparkles size={18} aria-hidden />
-              <span>Mockup</span>
-            </Link>
           </div>
         </motion.div>
       </div>
