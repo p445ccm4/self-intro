@@ -6,6 +6,13 @@ export const SPINE_LAYOUT = {
   LANE_GAP: 8,
 };
 
+export const CATEGORY_COLORS: Record<Category, string> = {
+  work: '#CCCAFF',
+  project: '#FFC2C0',
+  education: '#9EFF9C',
+  milestone: '#FFD863',
+};
+
 export const getIcon = (category: Category, size = 16) => {
   switch (category) {
     case 'work': return <Briefcase size={size} />;
@@ -17,45 +24,42 @@ export const getIcon = (category: Category, size = 16) => {
 
 export const getCategoryColor = (category: Category) => {
   switch (category) {
-    case 'work': return 'text-bea-blue bg-bea-blue/10 border-bea-blue/20';
-    case 'project': return 'text-solar-red bg-solar-red/10 border-solar-red/20';
-    case 'education': return 'text-bea-teal bg-bea-emerald/15 border-bea-emerald/30';
-    case 'milestone': return 'text-[color:var(--bea-warning-amber)] bg-solar-yellow/20 border-solar-yellow/40';
+    case 'work':
+      return 'text-[color:var(--cat-work-fg)] bg-[color:color-mix(in_srgb,var(--cat-work)_18%,transparent)] border-[color:color-mix(in_srgb,var(--cat-work)_32%,transparent)]';
+    case 'project':
+      return 'text-[color:var(--cat-project-fg)] bg-[color:color-mix(in_srgb,var(--cat-project)_18%,transparent)] border-[color:color-mix(in_srgb,var(--cat-project)_32%,transparent)]';
+    case 'education':
+      return 'text-[color:var(--cat-education-fg)] bg-[color:color-mix(in_srgb,var(--cat-education)_18%,transparent)] border-[color:color-mix(in_srgb,var(--cat-education)_32%,transparent)]';
+    case 'milestone':
+      return 'text-[color:var(--cat-milestone-fg)] bg-[color:color-mix(in_srgb,var(--cat-milestone)_20%,transparent)] border-[color:color-mix(in_srgb,var(--cat-milestone)_36%,transparent)]';
   }
 };
 
 export const getPillColor = (category: Category) => {
   switch (category) {
-    case 'work': return 'bg-bea-blue';
-    case 'project': return 'bg-solar-red';
-    case 'education': return 'bg-bea-emerald';
-    case 'milestone': return 'bg-solar-yellow';
+    case 'work': return 'bg-[color:var(--cat-work)]';
+    case 'project': return 'bg-[color:var(--cat-project)]';
+    case 'education': return 'bg-[color:var(--cat-education)]';
+    case 'milestone': return 'bg-[color:var(--cat-milestone)]';
   }
 };
 
 export const getGradient = (category: Category) => {
   switch (category) {
-    case 'work': return 'from-bea-blue/8 via-transparent to-transparent';
-    case 'project': return 'from-solar-red/8 via-transparent to-transparent';
-    case 'education': return 'from-bea-emerald/10 via-transparent to-transparent';
-    case 'milestone': return 'from-solar-yellow/15 via-transparent to-transparent';
+    case 'work': return 'from-[color:color-mix(in_srgb,var(--cat-work)_22%,transparent)] via-transparent to-transparent';
+    case 'project': return 'from-[color:color-mix(in_srgb,var(--cat-project)_22%,transparent)] via-transparent to-transparent';
+    case 'education': return 'from-[color:color-mix(in_srgb,var(--cat-education)_22%,transparent)] via-transparent to-transparent';
+    case 'milestone': return 'from-[color:color-mix(in_srgb,var(--cat-milestone)_24%,transparent)] via-transparent to-transparent';
   }
 };
 
-export const getConnectorColor = (category: Category) => {
-  switch (category) {
-    case 'work': return '#0563C1'; // bea-hyperlink-blue
-    case 'project': return '#ED171F'; // bea-primary-red
-    case 'education': return '#29BA74'; // bea-emerald-green
-    case 'milestone': return '#FFCC00'; // bea-golden-yellow
-  }
-};
+export const getConnectorColor = (category: Category) => CATEGORY_COLORS[category];
 
 export const getSubtitleColor = (category: Category) => {
   switch (category) {
-    case 'work': return 'text-bea-blue';
-    case 'project': return 'text-solar-red-orange';
-    case 'education': return 'text-bea-teal';
-    case 'milestone': return 'text-[color:var(--bea-warning-amber)]';
+    case 'work': return 'text-[color:var(--cat-work-fg)]';
+    case 'project': return 'text-[color:var(--cat-project-fg)]';
+    case 'education': return 'text-[color:var(--cat-education-fg)]';
+    case 'milestone': return 'text-[color:var(--cat-milestone-fg)]';
   }
 };

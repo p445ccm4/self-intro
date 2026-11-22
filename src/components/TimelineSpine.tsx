@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { type TimelineItem, type Category, SPINE_LAYOUT } from '../utils/timeline';
+import { type TimelineItem } from '../utils/timeline';
+import { SPINE_LAYOUT, getPillColor } from '../utils/timeline-theme';
 import { pillVariants, pillHoverVariants } from '../utils/animations';
 
 interface TimelineSpineProps {
@@ -35,15 +36,6 @@ export const TimelineSpine = memo(({ items, minDate, maxDate, laneCount, hovered
     const duration = endDate.getTime() - start.getTime();
     const height = (duration / totalDuration) * 100;
     return Math.max(height, 0.2); // Ensure minimal visibility
-  };
-
-  const getPillColor = (category: Category) => {
-    switch (category) {
-      case 'work': return 'bg-bea-blue';
-      case 'project': return 'bg-solar-red';
-      case 'education': return 'bg-bea-emerald';
-      case 'milestone': return 'bg-solar-yellow';
-    }
   };
 
   // Calculate lane width and spacing

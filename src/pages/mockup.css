@@ -155,6 +155,16 @@
   --mg-glass-border: rgb(0 0 0 / 0.12);
   --mg-glass-highlight: rgb(255 255 255 / 0.72);
   --mg-accent-text: color-mix(in srgb, var(--mg-a) 55%, #111 45%);
+  /* Multiply so pastel mist reads on white (white C still needs a non-white stop). */
+  --mg-mist-1: color-mix(in srgb, var(--mg-a) 88%, #ff7a59 12%);
+  --mg-mist-2: color-mix(in srgb, var(--mg-b) 82%, #ffb020 18%);
+  --mg-mist-3: color-mix(in srgb, var(--mg-a) 50%, var(--mg-b) 50%);
+  --mg-mist-4: color-mix(in srgb, var(--mg-a) 72%, transparent);
+  --mg-mist-5: color-mix(in srgb, var(--mg-b) 68%, transparent);
+}
+
+.mockup-root[data-surface="light"] .mockup-mist {
+  mix-blend-mode: multiply;
 }
 
 /* Glass panels — multi-color edge via gradient border trick */

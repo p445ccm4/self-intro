@@ -6,6 +6,17 @@
   --accent-b: #FFDAA3;
   --accent-c: #FFFFFF;
 
+  /* Timeline category accents */
+  --cat-work: #CCCAFF;
+  --cat-project: #FFC2C0;
+  --cat-education: #9EFF9C;
+  --cat-milestone: #FFD863;
+  /* Text ink: slightly deepened on light so pastel labels stay readable */
+  --cat-work-fg: color-mix(in srgb, var(--cat-work) 48%, #1a1a1a 52%);
+  --cat-project-fg: color-mix(in srgb, var(--cat-project) 48%, #1a1a1a 52%);
+  --cat-education-fg: color-mix(in srgb, var(--cat-education) 42%, #1a1a1a 58%);
+  --cat-milestone-fg: color-mix(in srgb, var(--cat-milestone) 42%, #1a1a1a 58%);
+
   /* Brand / semantic accents — constant across light/dark */
   --bea-primary-red: #ED171F;
   --bea-red-orange: #EA4120;
@@ -35,7 +46,18 @@
   --solar-yellow: var(--bea-golden-yellow);
   --focus-ring: rgba(255, 205, 182, 0.45);
 
-  --mist-brightness: 0.72;
+  /*
+   * Light mist: pastel accents on white are nearly invisible with normal blending
+   * (esp. accent-c = #fff). Multiply makes A/B show; mist-c uses A so the center
+   * stop is not pure white-on-white.
+   */
+  --mist-brightness: 0.92;
+  --mist-blend: multiply;
+  --mist-1: color-mix(in srgb, var(--accent-a) 88%, #ff7a59 12%);
+  --mist-2: color-mix(in srgb, var(--accent-b) 82%, #ffb020 18%);
+  --mist-3: color-mix(in srgb, var(--accent-a) 55%, var(--accent-b) 45%);
+  --mist-4: color-mix(in srgb, var(--accent-a) 70%, transparent);
+  --mist-5: color-mix(in srgb, var(--accent-b) 65%, transparent);
   --glass-blur: 23px;
   --glass-alpha: 0.42;
 
@@ -78,11 +100,22 @@
   --bea-border-strong: color-mix(in srgb, #FFFFFF 28%, transparent);
   --bea-hyperlink-blue: #9AD7FF;
 
+  --cat-work-fg: var(--cat-work);
+  --cat-project-fg: var(--cat-project);
+  --cat-education-fg: var(--cat-education);
+  --cat-milestone-fg: var(--cat-milestone);
+
   --background: var(--bea-canvas-bg);
   --foreground: var(--bea-text-primary);
   --focus-ring: rgba(255, 205, 182, 0.35);
 
   --mist-brightness: 1.06;
+  --mist-blend: normal;
+  --mist-1: color-mix(in srgb, var(--accent-a) 70%, transparent);
+  --mist-2: color-mix(in srgb, var(--accent-b) 65%, transparent);
+  --mist-3: color-mix(in srgb, var(--accent-c) 35%, transparent);
+  --mist-4: color-mix(in srgb, var(--accent-a) 45%, transparent);
+  --mist-5: color-mix(in srgb, var(--accent-b) 40%, transparent);
   --glass-blur: 23px;
   --glass-alpha: 0.26;
 
@@ -488,12 +521,13 @@
     inset: 0;
     pointer-events: none;
     opacity: var(--mist-brightness);
+    mix-blend-mode: var(--mist-blend);
     background-image:
-      radial-gradient(ellipse 80% 55% at 5% 0%, color-mix(in srgb, var(--accent-a) 70%, transparent), transparent 58%),
-      radial-gradient(ellipse 70% 50% at 100% 8%, color-mix(in srgb, var(--accent-b) 65%, transparent), transparent 55%),
-      radial-gradient(ellipse 60% 45% at 50% 40%, color-mix(in srgb, var(--accent-c) 35%, transparent), transparent 60%),
-      radial-gradient(ellipse 55% 40% at 15% 85%, color-mix(in srgb, var(--accent-a) 45%, transparent), transparent 55%),
-      radial-gradient(ellipse 50% 40% at 88% 92%, color-mix(in srgb, var(--accent-b) 40%, transparent), transparent 55%);
+      radial-gradient(ellipse 80% 55% at 5% 0%, var(--mist-1), transparent 58%),
+      radial-gradient(ellipse 70% 50% at 100% 8%, var(--mist-2), transparent 55%),
+      radial-gradient(ellipse 60% 45% at 50% 40%, var(--mist-3), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 15% 85%, var(--mist-4), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 88% 92%, var(--mist-5), transparent 55%);
   }
   .site-content {
     position: relative;

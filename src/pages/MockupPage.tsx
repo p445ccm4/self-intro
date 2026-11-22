@@ -20,12 +20,12 @@ const DEFAULT_TUNE = {
 
 const DEFAULT_TEXT = '#ffffff';
 
-/** Homepage live-site category accents (from timeline connectors). */
+/** Homepage live-site category accents. */
 const LIVE_CATEGORY = {
-  work: '#0563C1',
-  project: '#ED171F',
-  education: '#29BA74',
-  milestone: '#FFCC00',
+  work: '#CCCAFF',
+  project: '#FFC2C0',
+  education: '#9EFF9C',
+  milestone: '#FFD863',
 } as const;
 
 const PALETTES: {
@@ -107,7 +107,7 @@ const PALETTES: {
     bg: '#10080a',
     text: DEFAULT_TEXT,
     swatches: ['#ed171f', '#ff8f00', '#ffcc00'],
-    category: { work: '#0563C1', project: '#ed171f', education: '#29BA74', milestone: '#ffcc00' },
+    category: { ...LIVE_CATEGORY },
   },
 ];
 
@@ -226,7 +226,12 @@ export const MockupPage = () => {
     if (mode === 'light') {
       setBgColor('#FFFFFF');
       setTextColor('#111111');
-      setMist(42);
+      // Pastels (+ especially white C) vanish on white with normal blend;
+      // keep A/B chromatic and raise mist so multiply can show atmosphere.
+      if (colorC.toLowerCase() === '#ffffff') {
+        setColorC(colorA);
+      }
+      setMist(78);
       setBlur(20);
       setOpacity(48);
       setTint(0);
